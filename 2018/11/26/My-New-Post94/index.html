@@ -14,7 +14,7 @@
 <meta property="og:description" content="hexo-math  A hexo plugin that uses MathJax/KaTeX to render math equations. Features: aaaaE * Dynamic MathJax/KaTeX injection on demand * Provide support to both inline math syntax and math tags * Serv">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://travis-ci.org/hexojs/hexo-math.svg?branch=master">
-<meta property="og:updated_time" content="2018-11-26T13:02:40.117Z">
+<meta property="og:updated_time" content="2018-11-26T13:15:55.500Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Markdown math">
 <meta name="twitter:description" content="hexo-math  A hexo plugin that uses MathJax/KaTeX to render math equations. Features: aaaaE * Dynamic MathJax/KaTeX injection on demand * Provide support to both inline math syntax and math tags * Serv">
@@ -162,7 +162,7 @@
 <p>Your config will be merged into default config: <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> DEFAULT_OPTS = &#123;</span><br><span class="line"> engine: <span class="string">'mathjax'</span>,</span><br><span class="line"> mathjax: &#123;</span><br><span class="line">   src: <span class="string">"https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"</span>,</span><br><span class="line">   config: &#123;</span><br><span class="line">     tex2jax: &#123;</span><br><span class="line">       inlineMath: [ [<span class="string">'$'</span>,<span class="string">'$'</span>], [<span class="string">"\\("</span>,<span class="string">"\\)"</span>] ],</span><br><span class="line">       skipTags: [<span class="string">'script'</span>, <span class="string">'noscript'</span>, <span class="string">'style'</span>, <span class="string">'textarea'</span>, <span class="string">'pre'</span>, <span class="string">'code'</span>],</span><br><span class="line">       processEscapes: <span class="literal">true</span></span><br><span class="line">     &#125;,</span><br><span class="line">     TeX: &#123;</span><br><span class="line">       equationNumbers: &#123;</span><br><span class="line">         autoNumber: <span class="string">"AMS"</span></span><br><span class="line">       &#125;</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;</span><br><span class="line"> &#125;,</span><br><span class="line"> katex: &#123;</span><br><span class="line">   css: <span class="string">"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css"</span>,</span><br><span class="line">   js: <span class="string">"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.js"</span>,</span><br><span class="line">   config: &#123;</span><br><span class="line">     throwOnError: <span class="literal">false</span>,</span><br><span class="line">     errorColor: <span class="string">"#cc0000"</span></span><br><span class="line">   &#125;</span><br><span class="line"> &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h2 id="usage">Usage</h2>
 <p>You can use inline math syntax directly. But always remember to escape any special characters by adding a <figure class="highlight plain"><figcaption><span>before it.</span></figcaption><table><tr><td class="code"><pre><span class="line">LaTex equations usually contains tones of special characters like ```\```, which makes it painful to escape them one by one. In such cases, you can use hexo-math&apos;s tags to make your life easier.</span><br><span class="line"></span><br><span class="line">**Inline:**</span><br><span class="line"></span><br><span class="line">```markdown</span><br><span class="line">Simple inline $a = b + c$.</span><br></pre></td></tr></table></figure></p>
-<p><strong>Block:</strong></p>
+<p>Simple inline <span class="math inline">\(a = b + c\)</span>. <strong>Block:</strong></p>
 <figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">$$\frac&#123;\partial u&#125;&#123;\partial t&#125;</span><br><span class="line">= h^2 \left( \frac&#123;\partial^2 u&#125;&#123;\partial x^2&#125; +</span><br><span class="line">\frac&#123;\partial^2 u&#125;&#123;\partial y^2&#125; +</span><br><span class="line">\frac&#123;\partial^2 u&#125;&#123;\partial z^2&#125;\right)$$</span><br></pre></td></tr></table></figure>
 <p><span class="math display">\[\frac{\partial u}{\partial t}
 = h^2 \left( \frac{\partial^2 u}{\partial x^2} +
@@ -171,6 +171,11 @@
 <p><strong>Tag:</strong></p>
 <p>Single line content will be parsed as inline math (same as <code>$...$</code>): <figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">This equation &#123;% math %&#125;\cos 2\theta = \cos^2 \theta - \sin^2 \theta =  2 \cos^2 \theta - 1 &#123;% endmath %&#125; is inline.</span><br></pre></td></tr></table></figure></p>
 <p>Multiple line content will be parsed as block math (same as <code>$$...$$</code>) <figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">&#123;% math %&#125;</span><br><span class="line">\begin&#123;aligned&#125;</span><br><span class="line">\dot&#123;x&#125; &amp; = \sigma(y-x) \\</span><br><span class="line">\dot&#123;y&#125; &amp; = \rho x - y - xz \\</span><br><span class="line">\dot&#123;z&#125; &amp; = -\beta z + xy</span><br><span class="line">\end&#123;aligned&#125;</span><br><span class="line">&#123;% endmath %&#125;</span><br></pre></td></tr></table></figure></p>
+<span>$$\begin{aligned}
+\dot{x} &amp; = \sigma(y-x) \\
+\dot{y} &amp; = \rho x - y - xz \\
+\dot{z} &amp; = -\beta z + xy
+\end{aligned}$$</span><!-- Has MathJax -->
 <blockquote>
 <p><strong>Deprecated since 2.0.0</strong></p>
 </blockquote>

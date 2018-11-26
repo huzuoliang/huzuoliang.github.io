@@ -7,7 +7,7 @@
       <link href="/2018/11/26/hello-world/"/>
       <url>/2018/11/26/hello-world/</url>
       
-        <content type="html"><![CDATA[<script type="math/tex; mode=display">F_a + F_b = F_c</script><p>sasf<br>$F_a + F_b = F_c$</p>]]></content>
+        <content type="html"><![CDATA[<p>因为x的至于如下：</p><script type="math/tex; mode=display">F_a + F_b = F_c</script><p>sasf<br><script type="math/tex">F_a + F_b = F_c</script></p><p>我们的饿太阳$aaa$<br><script type="math/tex">(\frac{\sqrt x}{y^3})</script></p><script type="math/tex; mode=display">\sum_{i=0}^N\int_{a}^{b}g(t,i)\text{d}t</script><p><script type="math/tex">\alpha</script></p><script type="math/tex; mode=display">\frac d{dx}x\dot x =\\ \dot x^2 + x\ddot x</script><script type="math/tex; mode=display">\begin{array}{c|lcr} n & \text{Left} & \text{Center} & \text{Right} \\ \hline 1 & 0.24 & 1 & 125 \\ 2 & -1 & 189 & -8 \\ 3 & -20 & 2000 & 1+10i \\ \end{array}</script>]]></content>
       
       
       

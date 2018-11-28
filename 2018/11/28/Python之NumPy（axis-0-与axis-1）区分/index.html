@@ -14,7 +14,7 @@
 <meta property="og:description" content="python中的axis究竟是如何定义的呢？他们究竟代表是DataFrame的行还是列？考虑以下代码：&amp;gt;&amp;gt;&amp;gt; import pandas as pd&amp;gt;&amp;gt;&amp;gt; df = pd.DataFrame([[1, 1, 1, 1], [2, 2, 2, 2], [3, 3, 3, 3]], \... columns=[&quot;col1&quot;, &quot;col2&quot;, &quot;col3&quot;, &quot;col">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://github.hzliang.io/2018/11/28/Python之NumPy（axis-0-与axis-1）区分/numpy_axis.jpg">
-<meta property="og:updated_time" content="2018-11-28T08:35:50.097Z">
+<meta property="og:updated_time" content="2018-11-28T08:52:21.893Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python之NumPy（axis=0 与axis=1）区分">
 <meta name="twitter:description" content="python中的axis究竟是如何定义的呢？他们究竟代表是DataFrame的行还是列？考虑以下代码：&amp;gt;&amp;gt;&amp;gt; import pandas as pd&amp;gt;&amp;gt;&amp;gt; df = pd.DataFrame([[1, 1, 1, 1], [2, 2, 2, 2], [3, 3, 3, 3]], \... columns=[&quot;col1&quot;, &quot;col2&quot;, &quot;col3&quot;, &quot;col">
@@ -50,7 +50,8 @@
     
 </head>
 
-<body class="max-width mx-auto px3 ltr">    
+<body class="max-width mx-auto px3 ltr">
+    
       <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="header-post">
   <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
   <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
@@ -151,6 +152,7 @@
 <p>轴用来为超过一维的数组定义的属性，二维数据拥有两个轴：第0轴沿着行的垂直往下，第1轴沿着列的方向水平延伸。</p>
 <p>注意看，官方对于0和1的解释是轴，也就是坐标轴。而坐标轴是有方向的，所以千万不要用行和列的思维去想axis，因为行和列是没有方向的，这样想会在遇到不同的例子时感到困惑。</p>
 <p>所以问题当中第一个列子df.mean(axis=1)代表沿着列水平方向计算均值，而第二个列子df.drop(name, axis=1) 代表将name对应的列标签沿着水平的方向依次删掉。</p>
+<p><strong>总之，axis=1可以认为是按行从左至右遍历进行对应操作，axis=0按列从上往下遍历进行操作</strong></p>
 <p>参考：</p>
 <p><a href="https://www.cnblogs.com/rrttp/p/8028421.html" target="_blank" rel="noopener">https://www.cnblogs.com/rrttp/p/8028421.html</a><br><a href="http://blog.csdn.net/wangying19911991/article/details/73928172" target="_blank" rel="noopener">http://blog.csdn.net/wangying19911991/article/details/73928172</a><br><a href="https://www.zhihu.com/question/58993137" target="_blank" rel="noopener">https://www.zhihu.com/question/58993137</a></p>
 
@@ -239,9 +241,7 @@
   </div>
 </footer>
 
-    </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
 <!-- styles -->

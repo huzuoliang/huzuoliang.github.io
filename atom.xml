@@ -173,9 +173,9 @@
       <category term="python" scheme="http://github.hzliang.io/categories/python/"/>
     
     
-      <category term="pandas" scheme="http://github.hzliang.io/tags/pandas/"/>
-    
       <category term="numpy" scheme="http://github.hzliang.io/tags/numpy/"/>
+    
+      <category term="pandas" scheme="http://github.hzliang.io/tags/pandas/"/>
     
   </entry>
   

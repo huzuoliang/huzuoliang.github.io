@@ -5,9 +5,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="https://github.hzliang.io/"/>
+  <link href="https://huzuoliang.github.io/"/>
   <updated>2018-12-27T07:40:51.950Z</updated>
-  <id>https://github.hzliang.io/</id>
+  <id>https://huzuoliang.github.io/</id>
   
   <author>
     <name>HuZuoliang</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>SMO</title>
-    <link href="https://github.hzliang.io/2018/12/27/SMO/"/>
-    <id>https://github.hzliang.io/2018/12/27/SMO/</id>
+    <link href="https://huzuoliang.github.io/2018/12/27/SMO/"/>
+    <id>https://huzuoliang.github.io/2018/12/27/SMO/</id>
     <published>2018-12-27T07:40:51.000Z</published>
     <updated>2018-12-27T07:40:51.950Z</updated>
     
@@ -32,8 +32,8 @@
   
   <entry>
     <title>SVM</title>
-    <link href="https://github.hzliang.io/2018/12/27/SVM/"/>
-    <id>https://github.hzliang.io/2018/12/27/SVM/</id>
+    <link href="https://huzuoliang.github.io/2018/12/27/SVM/"/>
+    <id>https://huzuoliang.github.io/2018/12/27/SVM/</id>
     <published>2018-12-27T07:40:14.000Z</published>
     <updated>2018-12-30T10:41:52.564Z</updated>
     
@@ -46,17 +46,17 @@
     
     </summary>
     
-      <category term="ml" scheme="https://github.hzliang.io/categories/ml/"/>
+      <category term="ml" scheme="https://huzuoliang.github.io/categories/ml/"/>
     
     
-      <category term="svm" scheme="https://github.hzliang.io/tags/svm/"/>
+      <category term="svm" scheme="https://huzuoliang.github.io/tags/svm/"/>
     
   </entry>
   
   <entry>
     <title>KKT</title>
-    <link href="https://github.hzliang.io/2018/12/27/KKT/"/>
-    <id>https://github.hzliang.io/2018/12/27/KKT/</id>
+    <link href="https://huzuoliang.github.io/2018/12/27/KKT/"/>
+    <id>https://huzuoliang.github.io/2018/12/27/KKT/</id>
     <published>2018-12-27T07:40:02.000Z</published>
     <updated>2018-12-27T07:40:02.572Z</updated>
     
@@ -69,8 +69,8 @@
   
   <entry>
     <title>SMO 算法</title>
-    <link href="https://github.hzliang.io/2018/12/27/SMO-%E7%AE%97%E6%B3%95/"/>
-    <id>https://github.hzliang.io/2018/12/27/SMO-算法/</id>
+    <link href="https://huzuoliang.github.io/2018/12/27/SMO-%E7%AE%97%E6%B3%95/"/>
+    <id>https://huzuoliang.github.io/2018/12/27/SMO-算法/</id>
     <published>2018-12-27T07:39:47.000Z</published>
     <updated>2018-12-27T07:39:47.703Z</updated>
     
@@ -83,8 +83,8 @@
   
   <entry>
     <title>DL之Xavier</title>
-    <link href="https://github.hzliang.io/2018/12/15/DL%E4%B9%8BXavier/"/>
-    <id>https://github.hzliang.io/2018/12/15/DL之Xavier/</id>
+    <link href="https://huzuoliang.github.io/2018/12/15/DL%E4%B9%8BXavier/"/>
+    <id>https://huzuoliang.github.io/2018/12/15/DL之Xavier/</id>
     <published>2018-12-15T03:41:29.000Z</published>
     <updated>2018-12-15T03:41:29.503Z</updated>
     
@@ -97,8 +97,8 @@
   
   <entry>
     <title>Tensorflow之y=xW+b而不是y=Wx+b?</title>
-    <link href="https://github.hzliang.io/2018/12/15/Tensorflow%E4%B9%8By-xW-b%E8%80%8C%E4%B8%8D%E6%98%AFy-Wx-b/"/>
-    <id>https://github.hzliang.io/2018/12/15/Tensorflow之y-xW-b而不是y-Wx-b/</id>
+    <link href="https://huzuoliang.github.io/2018/12/15/Tensorflow%E4%B9%8By-xW-b%E8%80%8C%E4%B8%8D%E6%98%AFy-Wx-b/"/>
+    <id>https://huzuoliang.github.io/2018/12/15/Tensorflow之y-xW-b而不是y-Wx-b/</id>
     <published>2018-12-15T03:40:29.000Z</published>
     <updated>2018-12-15T03:40:29.281Z</updated>
     
@@ -111,8 +111,8 @@
   
   <entry>
     <title>DL之Batch Normalization</title>
-    <link href="https://github.hzliang.io/2018/12/15/DL%E4%B9%8BBatch-Normalization/"/>
-    <id>https://github.hzliang.io/2018/12/15/DL之Batch-Normalization/</id>
+    <link href="https://huzuoliang.github.io/2018/12/15/DL%E4%B9%8BBatch-Normalization/"/>
+    <id>https://huzuoliang.github.io/2018/12/15/DL之Batch-Normalization/</id>
     <published>2018-12-15T03:25:37.000Z</published>
     <updated>2018-12-15T03:25:37.290Z</updated>
     
@@ -125,8 +125,8 @@
   
   <entry>
     <title>Python之Numpy.reshape</title>
-    <link href="https://github.hzliang.io/2018/11/29/Python%E4%B9%8BNumpy-reshape/"/>
-    <id>https://github.hzliang.io/2018/11/29/Python之Numpy-reshape/</id>
+    <link href="https://huzuoliang.github.io/2018/11/29/Python%E4%B9%8BNumpy-reshape/"/>
+    <id>https://huzuoliang.github.io/2018/11/29/Python之Numpy-reshape/</id>
     <published>2018-11-29T08:12:41.000Z</published>
     <updated>2018-11-29T08:55:56.818Z</updated>
     
@@ -145,17 +145,17 @@
     
     </summary>
     
-      <category term="python" scheme="https://github.hzliang.io/categories/python/"/>
+      <category term="python" scheme="https://huzuoliang.github.io/categories/python/"/>
     
     
-      <category term="numpy" scheme="https://github.hzliang.io/tags/numpy/"/>
+      <category term="numpy" scheme="https://huzuoliang.github.io/tags/numpy/"/>
     
   </entry>
   
   <entry>
     <title>Python之Numpy（axis=0 与axis=1）区分</title>
-    <link href="https://github.hzliang.io/2018/11/28/Python%E4%B9%8BNumPy%EF%BC%88axis-0-%E4%B8%8Eaxis-1%EF%BC%89%E5%8C%BA%E5%88%86/"/>
-    <id>https://github.hzliang.io/2018/11/28/Python之NumPy（axis-0-与axis-1）区分/</id>
+    <link href="https://huzuoliang.github.io/2018/11/28/Python%E4%B9%8BNumPy%EF%BC%88axis-0-%E4%B8%8Eaxis-1%EF%BC%89%E5%8C%BA%E5%88%86/"/>
+    <id>https://huzuoliang.github.io/2018/11/28/Python之NumPy（axis-0-与axis-1）区分/</id>
     <published>2018-11-28T07:41:07.000Z</published>
     <updated>2018-11-29T08:11:42.751Z</updated>
     
@@ -170,19 +170,19 @@
     
     </summary>
     
-      <category term="python" scheme="https://github.hzliang.io/categories/python/"/>
+      <category term="python" scheme="https://huzuoliang.github.io/categories/python/"/>
     
     
-      <category term="pandas" scheme="https://github.hzliang.io/tags/pandas/"/>
+      <category term="pandas" scheme="https://huzuoliang.github.io/tags/pandas/"/>
     
-      <category term="numpy" scheme="https://github.hzliang.io/tags/numpy/"/>
+      <category term="numpy" scheme="https://huzuoliang.github.io/tags/numpy/"/>
     
   </entry>
   
   <entry>
     <title>hexo-renderer-kramed</title>
-    <link href="https://github.hzliang.io/2018/11/26/hexo-renderer-kramed/"/>
-    <id>https://github.hzliang.io/2018/11/26/hexo-renderer-kramed/</id>
+    <link href="https://huzuoliang.github.io/2018/11/26/hexo-renderer-kramed/"/>
+    <id>https://huzuoliang.github.io/2018/11/26/hexo-renderer-kramed/</id>
     <published>2018-11-26T06:41:02.437Z</published>
     <updated>2018-12-30T08:52:50.146Z</updated>
     

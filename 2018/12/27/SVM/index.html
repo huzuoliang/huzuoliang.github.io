@@ -6,14 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta property="og:type" content="article">
+    <meta name="description" content="给定$m$个数据点的训练集 $D=\left{ \left( \mathbf { x }  { 1 } , y  { 1 } \right) , \left( \mathbf { x }  { 2 } , y  { 2 } \right) , \ldots , \left( \mathbf { x }  { m } , y{ m } \right) \right}$，其中 $\mathbf { x">
+<meta name="keywords" content="svm">
+<meta property="og:type" content="article">
 <meta property="og:title" content="SVM">
 <meta property="og:url" content="http://github.hzliang.io/2018/12/27/SVM/index.html">
 <meta property="og:site_name" content="HuZuoliang">
+<meta property="og:description" content="给定$m$个数据点的训练集 $D=\left{ \left( \mathbf { x }  { 1 } , y  { 1 } \right) , \left( \mathbf { x }  { 2 } , y  { 2 } \right) , \ldots , \left( \mathbf { x }  { m } , y{ m } \right) \right}$，其中 $\mathbf { x">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-27T07:40:14.161Z">
+<meta property="og:image" content="http://github.hzliang.io/2018/12/27/SVM/SVM/svm.jpg">
+<meta property="og:updated_time" content="2018-12-30T08:40:52.337Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SVM">
+<meta name="twitter:description" content="给定$m$个数据点的训练集 $D=\left{ \left( \mathbf { x }  { 1 } , y  { 1 } \right) , \left( \mathbf { x }  { 2 } , y  { 2 } \right) , \ldots , \left( \mathbf { x }  { m } , y{ m } \right) \right}$，其中 $\mathbf { x">
+<meta name="twitter:image" content="http://github.hzliang.io/2018/12/27/SVM/SVM/svm.jpg">
     
     
         
@@ -100,7 +106,7 @@
 
     </div>
     <div id="toc">
-      
+      <ol class="toc"><li class="toc-item toc-level-6"><a class="toc-link" href="#求解"><span class="toc-number">1.</span> <span class="toc-text">求解</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -128,15 +134,69 @@
 
 
       
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/ml/">ml</a>
+    </div>
+
 
       
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/svm/">svm</a>
+    </div>
+
 
     </div>
   </header>
   
 
   <div class="content" itemprop="articleBody">
-    
+    <p>给定$m$个数据点的训练集 $D=\left{ \left( \mathbf { x } <em> { 1 } , y </em> { 1 } \right) , \left( \mathbf { x } <em> { 2 } , y </em> { 2 } \right) , \ldots , \left( \mathbf { x } <em> { m } , y</em>{ m } \right) \right}$，其中 $\mathbf { x } <em> { i } \in \mathcal { R } ^ { n }$，$y </em> { i } \in { \pm 1 }$，一个线性分类器的学习目标是要在 $n$ 维的数据空间中找到一个超平面将数据分开，这个超平面的方程可以表达为：</p>
+<script type="math/tex; mode=display">\mathbf {w}^T\mathbf { x }+b=0</script><p>我们使用$f ( x ) = w ^ { T } x + b$表示这个超平面，当$f(x)=0$时，$x$为位于超平面上的点，$f(x) \geq 0$的点对应$y=+1$的数据点，$f(x) \leq 0$的点对应$y=-1$的数据点，也即$y_i f ( x_i ) \geq 0$时分类正确，如图1所示：</p>
+<p><img src="/2018/12/27/SVM/./SVM/svm.jpg" alt="图1：支持向量示例"></p>
+<p>在超平面 $\mathbf {w}^T\mathbf { x }+b=0$确定的情况下，$\left| w ^ { T } x + b \right|$ 能够表示点$x$到距离超平面的远近(相对距离)，并且可以通过$y_i f ( x_i )$ 的正负性来判定或表示分类的正确性，于是，定义函数间隔 $\hat { \gamma }$ 为：</p>
+<script type="math/tex; mode=display">\hat { \gamma } = y \left( w ^ { T } x + b \right) = y f ( x )</script><p>超平面 $\left(w,b \right)$ 关于 $D$ 中所有样本点 $\left(x_i,y_i \right)$ 的函数间隔最小值为超平面关于训练集 $D$ 的函数间隔：</p>
+<script type="math/tex; mode=display">\hat { \gamma } = \min \hat { \gamma } _ { i } , \quad ( i = 1 , \ldots , n )</script><p>但是函数距离会随着参数的放缩而放缩，比如将$w$,$b$成比例放大2倍，超平面不会改变，但函数间隔却变成原来的2倍，但点到线的距离却不会改变，即几何距离：</p>
+<script type="math/tex; mode=display">\gamma = \frac { w ^ { T } x + b } { \| w \| } = \frac { f ( x ) } { \| w \| }</script><p>从而可以得出函数距离 $\hat \gamma$ 和几何距离 $\gamma$ 之间的关系：</p>
+<script type="math/tex; mode=display">\tilde { \gamma } = y \gamma = \frac { \hat { \gamma } } { \| w \| }</script><p>即几何间隔是函数间隔除以 $| w |$，而函数间隔$y(w^T+b)=yf(x)$ 实际上就是 $f(x)$，只是人为定义的一个间隔度量，而几何间隔<br>$\frac{| f(x)|}{| w |}$ 才是直观上的点到超平面的距离。</p>
+<p>对一个数据点分类，数据点与超平面的间隔越大，则分类的确信度越大，所以为了使得分类的确信度尽量高，需要让所选择的超平面能够最大化这个间隔值，由于函数间隔随着参数的缩放而缩放，而几何间隔不会改变，因此我们可以将几何间隔当做我们的目标函数。于是最大间隔分类器的目标函数可以定义为：</p>
+<script type="math/tex; mode=display">\max \tilde { \gamma }</script><p>同时：</p>
+<script type="math/tex; mode=display">y _ { i } \left( w ^ { T } x _ { i } + b \right) = \hat { \gamma } _ { i } \geq \hat { \gamma } , \quad i = 1 , \dots , n</script><p>而 $\tilde { \gamma } = y \gamma = \frac { \hat { \gamma } } { | w | }$，可以通过放缩参数，使得函数间隔 $\hat { \gamma }=1$ 最终目标函数转化为：</p>
+<script type="math/tex; mode=display">
+\max \frac { 1 } { \| w \| } , \quad \text { s.t. } \quad y _ { i } \left( w ^ { T } x _ { i } + b \right) \geq 1 , i = 1 , \dots , n</script><p>如图1所示，中间的实现便是寻找到的最优超平面，其到两条虚线的距离相等，这个距离便是几何间隔 $\tilde { \gamma }$，两条虚线之间的距离等于 $2 \tilde { \gamma }$，而虚线上的点则是支持向量。由于这些支持向量刚好在边界上，所有它们满足 $y \left( w ^ { T } x + b \right) = 1$，而非支持向量，则有 $y \left( w ^ { T } x + b \right) &gt; 1$。</p>
+<h6 id="求解"><a href="#求解" class="headerlink" title="求解"></a>求解</h6><p>考虑到目标函数：</p>
+<script type="math/tex; mode=display">
+\max \frac{1}{\|w\|}, \quad \text { s.t. } \quad y_i\left(w^Tx_i+b \right)\geq 1</script><p>等价于</p>
+<script type="math/tex; mode=display">
+\min \frac { 1 } { 2 } \| w \| ^ { 2 } , \quad s . t . \quad y _ { i } \left( w ^ { T } x _ { i } + b \right) \geq 1 , i = 1 , \dots , n</script><p>鉴于该问题的特殊结构，通过拉格朗日对偶性变换到对偶变量的优化问题，即通过求解与原问题等价的对偶问题得到原始问题的求解，一方面对偶问题往往更容易求解，另一方面可以自然的引入<strong>核函数</strong>，进而推广到非线性问题。<br>定义拉格朗日函数：</p>
+<script type="math/tex; mode=display">
+\mathcal { L } ( w , b , \alpha ) = \frac { 1 } { 2 } \| w \| ^ { 2 } - \sum _ { i = 1 } ^ { n } \alpha _ { i } \left( y _ { i } \left( w ^ { T } x _ { i } + b \right) - 1 \right)</script><p>令：</p>
+<script type="math/tex; mode=display">
+\mathcal { g } ( w ) = \max _ { \alpha _ { i } \geq 0 } \mathcal { L } ( w , b , \alpha )</script><p>则目标函数变成（原始问题）：</p>
+<script type="math/tex; mode=display">
+\min _ { w , b } \mathcal { g } ( w ) = \min _ { w , b } \max _ { \alpha _ { i } \geq 0 } \mathcal { L } ( w , b , \alpha ) = p ^ { * }</script><p>通过KKT条件得到原始问题的对偶问题：</p>
+<script type="math/tex; mode=display">
+\min _ { w , b } \theta ( w ) = \max _ { \alpha _ { i } \geq 0 }\min _ { w , b }  \mathcal { L } ( w , b , \alpha ) = d ^ { * }</script><p>求解：<br>(1) 首先固定 $\alpha$，要让 $\mathcal { L }$ 关于 $w$ 和 $b$最小化，对 $w$ 和 $b$求偏导，即令 $\partial \mathcal { L } / \partial w=0$ 和 $\partial \mathcal { L } / \partial b=0$：</p>
+<script type="math/tex; mode=display">\frac { \partial L } { \partial w } = 0 \Rightarrow w = \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } x _ { i }</script><script type="math/tex; mode=display">\frac { \partial L } { \partial b }  = 0 \Rightarrow \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } = 0</script><p>将以上结果带入之前的 $\mathcal { L }$：</p>
+<script type="math/tex; mode=display">
+\mathcal { L } ( w , b , \alpha ) = \frac { 1 } { 2 } \| w \| ^ { 2 } - \sum _ { i = 1 } ^ { n } \alpha _ { i } \left( y _ { i } \left( w ^ { T } x _ { i } + b \right) - 1 \right)</script><p>从而有：</p>
+<script type="math/tex; mode=display">\mathcal { L } ( w , b , \alpha ) = \frac { 1 } { 2 } \sum _ { i , j = 1 } ^ { n } \alpha _ { i } \alpha _ { j } y _ { i } y _ { j } x _ { i } ^ { T } x _ { j } - \sum _ { i , j = 1 } ^ { n } \alpha _ { i } \alpha _ { j } y _ { i } y _ { j } x _ { i } ^ { T } x _ { j } - b \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } + \sum _ { i = 1 } ^ { n } \alpha _ { i } \\  = \sum _ { i = 1 } ^ { n } \alpha _ { i } - \frac { 1 } { 2 } \sum _ { i , j = 1 } ^ { n } \alpha _ { i } \alpha _ { j } y _ { i } y _ { j } x _ { i } ^ { T } x _ { j }</script><p>(2) 经过对 $w$ 和 $b$的求解，对偶问题只是关于 $\alpha$：</p>
+<script type="math/tex; mode=display">
+\max _ { \alpha }  \sum _ { i = 1 } ^ { n } \alpha _ { i } - \frac { 1 } { 2 } \sum _ { i , j = 1 } ^ { n } \alpha _ { i } \alpha _ { j } y _ { i } y _ { j } x _ { i } ^ { T } x _ { j } \\ \text {s.t.}  \quad  \alpha _ { i } \geq 0 , i = 1 , \dots , n \\ \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } = 0</script><p>通过SMO算法，求解得到 $\alpha$：</p>
+<script type="math/tex; mode=display">
+w ^ { * }  = \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } x _ { i } \\ b ^ { * }  = - \frac { \max _ { i : y _ { i } = - 1 } w ^ { * T } x _ { i } + \min _ { i : y _ { i } = 1 } w ^ { * T } x _ { i } } { 2 }</script><p>(3) 预测，通过前面的求解我们知道：</p>
+<script type="math/tex; mode=display">
+w ^ { * } = \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } x _ { i }</script><p>于是最终分类函数为：</p>
+<script type="math/tex; mode=display">
+f ( x )  = \left( \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } x _ { i } \right) ^ { T } x + b \\  = \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } \left\langle x _ { i } , x \right\rangle + b</script><p>目前的超平面能够处理特征空间可以线性可分的，这种SVM的分类能力还比较弱，通过核函数我们可以将分割面推往非线性的情况。<br>计算两个向量在隐式映射过后的空间中的内积的函数叫做核函数 (Kernel Function)，通过使用恰当的核函数来替代内积，可以隐式得将非线性的训练数据映射到高维 空间，而不增加可调参数的个数。<br>测试点可以通过核函数表示：</p>
+<script type="math/tex; mode=display">f ( x ) = \sum _ { i = 1 } ^ { l } \alpha _ { i } y _ { i } \left\langle \phi \left( x _ { i } \right) , \phi ( x ) \right\rangle + b</script><p>唯一的区别就在于 $\alpha$的求解：</p>
+<script type="math/tex; mode=display">\max _ { \alpha }  \sum _ { i = 1 } ^ { n } \alpha _ { i } - \frac { 1 } { 2 } \sum _ { i , j = 1 } ^ { n } \alpha _ { i } \alpha _ { j } y _ { i } y _ { j } \left\langle \phi \left( x _ { i } \right) , \phi \left( x _ { j } \right) \right\rangle \\ \text {s.t.}  \alpha _ { i } \geq 0 , i = 1 , \dots , n \\  \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } = 0</script><p>可能并不是因为数据本身是非线性结构的，而只是因为数据有噪声。对于这种 偏离正常位置很远的数据点，我们称之为 outlier ，在我们原来的 SVM 模型里，outlier 的存在有可能造成很大的影响，因为超平面本身就是只有少数几个 support vector 组成 的，如果这些 support vector 里又存在 outlier 的话，其影响就很大了。为了处理这种情况，SVM 允许数据点在一定程度上偏离一下超平面。<br>约束条件：</p>
+<script type="math/tex; mode=display">y _ { i } \left( w ^ { T } x _ { i } + b \right) \geq 1 - \xi _ { i } , \quad i = 1 , \ldots , n</script><p>目标函数：</p>
+<script type="math/tex; mode=display">\min \frac { 1 } { 2 } \| w \| ^ { 2 } + C \sum _ { i = 1 } ^ { n } \xi _ { i }</script><p>完整：<br>\begin{array} { c } { \min \frac { 1 } { 2 } | w | ^ { 2 } + C \sum <em> { i = 1 } ^ { n } \xi </em> { i } } \ { \text {s.t.} \quad y <em> { i } \left( w ^ { T } x </em> { i } + b \right) \geq 1 - \xi <em> { i } , i = 1 , \dots , n } \ { \xi </em> { i } \geq 0 , i = 1 , \dots , n } \end{array}<br>得到新的拉格朗日函数：</p>
+<script type="math/tex; mode=display">\mathcal { L } ( w , b , \xi , \alpha , r ) = \frac { 1 } { 2 } \| w \| ^ { 2 } + C \sum _ { i = 1 } ^ { n } \xi _ { i } - \sum _ { i = 1 } ^ { n } \alpha _ { i } \left( y _ { i } \left( w ^ { T } x _ { i } + b \right) - 1 + \xi _ { i } \right) - \sum _ { i = 1 } ^ { n } r _ { i } \xi _ { i }</script><p>求解：<br>\begin{aligned} \frac { \partial L } { \partial w } &amp; = 0 \Rightarrow w = \sum <em> { i = 1 } ^ { n } \alpha </em> { i } y <em> { i } x </em> { i } \ \frac { \partial L } { \partial b } &amp; = 0 \Rightarrow \sum <em> { i = 1 } ^ { n } \alpha </em> { i } y <em> { i } = 0 \ \frac { \partial L } { \partial \xi </em> { i } } &amp; = 0 \Rightarrow C - \alpha <em> { i } - r </em> { i } = 0 , \quad i = 1 , \ldots , n \end{aligned}<br>将 w 带回 L 并化简，得到和原来一样的目标函数：</p>
+<script type="math/tex; mode=display">\max _ { \alpha } \sum _ { i = 1 } ^ { n } \alpha _ { i } - \frac { 1 } { 2 } \sum _ { i , j = 1 } ^ { n } \alpha _ { i } \alpha _ { j } y _ { i } y _ { j } x _ { i } ^ { T } x _ { j }</script><p>\begin{array} { c l } { \max <em> { \alpha } } &amp; { \sum </em> { i = 1 } ^ { n } \alpha <em> { i } - \frac { 1 } { 2 } \sum </em> { i , j = 1 } ^ { n } \alpha <em> { i } \alpha </em> { j } y <em> { i } y </em> { j } x <em> { i } ^ { T } x </em> { j } } \ { \text {s.t.} } &amp; { 0 \leq \alpha <em> { i } \leq C , i = 1 , \ldots , n } \ { } &amp; { \sum </em> { i = 1 } ^ { n } \alpha <em> { i } y </em> { i } = 0 } \end{array}</p>
+
   </div>
 </article>
 
@@ -169,7 +229,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      
+      <ol class="toc"><li class="toc-item toc-level-6"><a class="toc-link" href="#求解"><span class="toc-number">1.</span> <span class="toc-text">求解</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">

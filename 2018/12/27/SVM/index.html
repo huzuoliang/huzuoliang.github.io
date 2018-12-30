@@ -1,170 +1,73 @@
 <!DOCTYPE html>
 <html>
 <head><meta name="generator" content="Hexo 3.8.0">
-    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- so meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="给定$m$个数据点的训练集 $D=\left{ \left( \mathbf { x }  { 1 } , y  { 1 } \right) , \left( \mathbf { x }  { 2 } , y  { 2 } \right) , \ldots , \left( \mathbf { x }  { m } , y{ m } \right) \right}$，其中 $\mathbf { x">
-<meta name="keywords" content="svm">
-<meta property="og:type" content="article">
-<meta property="og:title" content="SVM">
-<meta property="og:url" content="http://github.hzliang.io/2018/12/27/SVM/index.html">
-<meta property="og:site_name" content="HuZuoliang">
-<meta property="og:description" content="给定$m$个数据点的训练集 $D=\left{ \left( \mathbf { x }  { 1 } , y  { 1 } \right) , \left( \mathbf { x }  { 2 } , y  { 2 } \right) , \ldots , \left( \mathbf { x }  { m } , y{ m } \right) \right}$，其中 $\mathbf { x">
-<meta property="og:locale" content="default">
-<meta property="og:image" content="http://github.hzliang.io/2018/12/27/SVM/SVM/svm.jpg">
-<meta property="og:updated_time" content="2018-12-30T08:40:52.337Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SVM">
-<meta name="twitter:description" content="给定$m$个数据点的训练集 $D=\left{ \left( \mathbf { x }  { 1 } , y  { 1 } \right) , \left( \mathbf { x }  { 2 } , y  { 2 } \right) , \ldots , \left( \mathbf { x }  { m } , y{ m } \right) \right}$，其中 $\mathbf { x">
-<meta name="twitter:image" content="http://github.hzliang.io/2018/12/27/SVM/SVM/svm.jpg">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    SVM |
     
-    
-        
-          
-              <link rel="shortcut icon" href="/images/favicon.ico">
-          
-        
-        
-          
-            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
-          
-        
-        
-          
-            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-          
-        
-    
-    <!-- title -->
-    <title>SVM</title>
-    <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
-    <!-- persian styles -->
-    
-      <link rel="stylesheet" href="/css/rtl.css">
-    
-    <!-- rss --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-    
-    
+    HuZuoliang</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+  
+  <script src="/js/pace.min.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
+</html>
+<body>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><main class="content">
+  <section class="outer">
+  <article id="post-SVM" class="article article-type-post" itemscope="" itemprop="blogPost">
 
-<body class="max-width mx-auto px3 ltr">    
-      <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="header-post">
-  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-         
-          <li><a href="/">Home</a></li>
-         
-          <li><a href="/about/">About</a></li>
-         
-          <li><a href="/archives/">Writing</a></li>
-         
-          <li><a href="http://github.com/huzuoliang">Projects</a></li>
-         
-          <li><a href="/search/">Search</a></li>
-        
-      </ul>
-    </span>
-    <br>
-    <span id="actions">
-      <ul>
-        
-        <li><a class="icon" href="/2018/12/27/SMO/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
-        
-        
-        <li><a class="icon" href="/2018/12/27/KKT/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
-        
-        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
-        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">Previous post</span>
-      <span id="i-next" class="info" style="display:none;">Next post</span>
-      <span id="i-top" class="info" style="display:none;">Back to top</span>
-      <span id="i-share" class="info" style="display:none;">Share post</span>
-    </span>
-    <br>
-    <div id="share" style="display: none">
-      <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://github.hzliang.io/2018/12/27/SVM/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://github.hzliang.io/2018/12/27/SVM/&text=SVM"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://github.hzliang.io/2018/12/27/SVM/&title=SVM"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://github.hzliang.io/2018/12/27/SVM/&is_video=false&description=SVM"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=SVM&body=Check out this article: http://github.hzliang.io/2018/12/27/SVM/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://github.hzliang.io/2018/12/27/SVM/&title=SVM"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://github.hzliang.io/2018/12/27/SVM/&title=SVM"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://github.hzliang.io/2018/12/27/SVM/&title=SVM"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://github.hzliang.io/2018/12/27/SVM/&title=SVM"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://github.hzliang.io/2018/12/27/SVM/&name=SVM&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-    <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-6"><a class="toc-link" href="#求解"><span class="toc-number">1.</span> <span class="toc-text">求解</span></a></li></ol>
-    </div>
-  </span>
-</div>
-
+  <div class="article-inner">
     
-    <div class="content index py4">
+      <header class="article-header">
         
-        <article class="post" itemscope="" itemtype="http://schema.org/BlogPosting">
-  <header>
-    
-    <h1 class="posttitle" itemprop="name headline">
-        SVM
+  
+    <h1 class="article-title" itemprop="name">
+      SVM
     </h1>
-
-
-
-    <div class="meta">
-      <span class="author" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-        <span itemprop="name">HuZuoliang</span>
-      </span>
-      
-    <div class="postdate">
-        <time datetime="2018-12-27T07:40:14.000Z" itemprop="datePublished">2018-12-27</time>
-    </div>
-
-
-      
-    <div class="article-category">
-        <i class="fas fa-archive"></i>
-        <a class="category-link" href="/categories/ml/">ml</a>
-    </div>
-
-
-      
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/svm/">svm</a>
-    </div>
-
-
-    </div>
-  </header>
   
 
-  <div class="content" itemprop="articleBody">
-    <p>给定$m$个数据点的训练集 $D=\left{ \left( \mathbf { x } <em> { 1 } , y </em> { 1 } \right) , \left( \mathbf { x } <em> { 2 } , y </em> { 2 } \right) , \ldots , \left( \mathbf { x } <em> { m } , y</em>{ m } \right) \right}$，其中 $\mathbf { x } <em> { i } \in \mathcal { R } ^ { n }$，$y </em> { i } \in { \pm 1 }$，一个线性分类器的学习目标是要在 $n$ 维的数据空间中找到一个超平面将数据分开，这个超平面的方程可以表达为：</p>
-<script type="math/tex; mode=display">\mathbf {w}^T\mathbf { x }+b=0</script><p>我们使用$f ( x ) = w ^ { T } x + b$表示这个超平面，当$f(x)=0$时，$x$为位于超平面上的点，$f(x) \geq 0$的点对应$y=+1$的数据点，$f(x) \leq 0$的点对应$y=-1$的数据点，也即$y_i f ( x_i ) \geq 0$时分类正确，如图1所示：</p>
-<p><img src="/2018/12/27/SVM/./SVM/svm.jpg" alt="图1：支持向量示例"></p>
-<p>在超平面 $\mathbf {w}^T\mathbf { x }+b=0$确定的情况下，$\left| w ^ { T } x + b \right|$ 能够表示点$x$到距离超平面的远近(相对距离)，并且可以通过$y_i f ( x_i )$ 的正负性来判定或表示分类的正确性，于是，定义函数间隔 $\hat { \gamma }$ 为：</p>
-<script type="math/tex; mode=display">\hat { \gamma } = y \left( w ^ { T } x + b \right) = y f ( x )</script><p>超平面 $\left(w,b \right)$ 关于 $D$ 中所有样本点 $\left(x_i,y_i \right)$ 的函数间隔最小值为超平面关于训练集 $D$ 的函数间隔：</p>
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2018/12/27/SVM/" class="article-date">
+  <time datetime="2018-12-27T07:40:14.000Z" itemprop="datePublished">2018-12-27</time>
+</a>
+        
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ml/">ml</a>
+  </div>
+
+      </div>
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <p>给定<script type="math/tex">m</script>个数据点的数据集<script type="math/tex">T=\left\{ \left( \mathbf { x } _ { 1 } , y _ { 1 } \right) , \left( \mathbf { x } _ { 2 } , y _ { 2 } \right) , \ldots , \left( \mathbf { x } _ { m } , y_{ m } \right) \right\}</script>，其中<script type="math/tex">\mathbf { x } _ { i } \in \mathcal { R } ^ { n }</script>，<script type="math/tex">y _ { i } \in \{ \pm 1 \}</script>，一个线性分类器的学习目标是要在<script type="math/tex">n</script>维的数据空间中找到一个超平面将数据集<script type="math/tex">D</script>分开，超平面的方程可以表达为：</p>
+<script type="math/tex; mode=display">\mathbf {w}^T\mathbf { x }+b=0</script><a id="more"></a>
+<p>令<script type="math/tex">f ( x ) = w ^ { T } x + b</script>，则当<script type="math/tex">f(x)=0</script>时，<script type="math/tex">x</script>为位于超平面上的点，<script type="math/tex">f(x) \geq 0</script>的点对应<script type="math/tex">y=+1</script>的数据点，<script type="math/tex">f(x) \leq 0</script>的点对应<script type="math/tex">y=-1</script>的数据点，如图1所示：</p>
+<p><div align="center"><img src="/2018/12/27/SVM/xianxingfeilei.png" width="260">图1：线性分类示例</div><br>在超平面$\mathbf {w}^T\mathbf { x }+b=0$确定的情况下，$\left| w ^ { T } x + b \right|$ 能够表示点$x$到距离超平面的远近(相对距离)，并且可以通过$y_i f ( x_i )$ 的正负性来判定或表示分类的正确性，于是，定义函数间隔$\hat { \gamma }$ 为：</p>
+<script type="math/tex; mode=display">\hat { \gamma } = y \left( w ^ { T } x + b \right) = y f ( x )</script><p>超平面$\left(w,b \right)$ 关于$D$ 中所有样本点$\left(x_i,y_i \right)$ 的函数间隔最小值为超平面关于训练集$D$ 的函数间隔：</p>
 <script type="math/tex; mode=display">\hat { \gamma } = \min \hat { \gamma } _ { i } , \quad ( i = 1 , \ldots , n )</script><p>但是函数距离会随着参数的放缩而放缩，比如将$w$,$b$成比例放大2倍，超平面不会改变，但函数间隔却变成原来的2倍，但点到线的距离却不会改变，即几何距离：</p>
-<script type="math/tex; mode=display">\gamma = \frac { w ^ { T } x + b } { \| w \| } = \frac { f ( x ) } { \| w \| }</script><p>从而可以得出函数距离 $\hat \gamma$ 和几何距离 $\gamma$ 之间的关系：</p>
-<script type="math/tex; mode=display">\tilde { \gamma } = y \gamma = \frac { \hat { \gamma } } { \| w \| }</script><p>即几何间隔是函数间隔除以 $| w |$，而函数间隔$y(w^T+b)=yf(x)$ 实际上就是 $f(x)$，只是人为定义的一个间隔度量，而几何间隔<br>$\frac{| f(x)|}{| w |}$ 才是直观上的点到超平面的距离。</p>
+<script type="math/tex; mode=display">\gamma = \frac { w ^ { T } x + b } { \| w \| } = \frac { f ( x ) } { \| w \| }</script><p>从而可以得出函数距离$\hat \gamma$ 和几何距离$\gamma$ 之间的关系：</p>
+<script type="math/tex; mode=display">\tilde { \gamma } = y \gamma = \frac { \hat { \gamma } } { \| w \| }</script><p>即几何间隔是函数间隔除以$| w |$，而函数间隔$y(w^T+b)=yf(x)$ 实际上就是$f(x)$，只是人为定义的一个间隔度量，而几何间隔<br>$\frac{| f(x)|}{| w |}$ 才是直观上的点到超平面的距离。</p>
 <p>对一个数据点分类，数据点与超平面的间隔越大，则分类的确信度越大，所以为了使得分类的确信度尽量高，需要让所选择的超平面能够最大化这个间隔值，由于函数间隔随着参数的缩放而缩放，而几何间隔不会改变，因此我们可以将几何间隔当做我们的目标函数。于是最大间隔分类器的目标函数可以定义为：</p>
 <script type="math/tex; mode=display">\max \tilde { \gamma }</script><p>同时：</p>
-<script type="math/tex; mode=display">y _ { i } \left( w ^ { T } x _ { i } + b \right) = \hat { \gamma } _ { i } \geq \hat { \gamma } , \quad i = 1 , \dots , n</script><p>而 $\tilde { \gamma } = y \gamma = \frac { \hat { \gamma } } { | w | }$，可以通过放缩参数，使得函数间隔 $\hat { \gamma }=1$ 最终目标函数转化为：</p>
+<script type="math/tex; mode=display">y _ { i } \left( w ^ { T } x _ { i } + b \right) = \hat { \gamma } _ { i } \geq \hat { \gamma } , \quad i = 1 , \dots , n</script><p>而$\tilde { \gamma } = y \gamma = \frac { \hat { \gamma } } { | w | }$，可以通过放缩参数，使得函数间隔$\hat { \gamma }=1$ 最终目标函数转化为：</p>
 <script type="math/tex; mode=display">
-\max \frac { 1 } { \| w \| } , \quad \text { s.t. } \quad y _ { i } \left( w ^ { T } x _ { i } + b \right) \geq 1 , i = 1 , \dots , n</script><p>如图1所示，中间的实现便是寻找到的最优超平面，其到两条虚线的距离相等，这个距离便是几何间隔 $\tilde { \gamma }$，两条虚线之间的距离等于 $2 \tilde { \gamma }$，而虚线上的点则是支持向量。由于这些支持向量刚好在边界上，所有它们满足 $y \left( w ^ { T } x + b \right) = 1$，而非支持向量，则有 $y \left( w ^ { T } x + b \right) &gt; 1$。</p>
+\max \frac { 1 } { \| w \| } , \quad \text { s.t. } \quad y _ { i } \left( w ^ { T } x _ { i } + b \right) \geq 1 , i = 1 , \dots , n</script><p>如图1所示，中间的实现便是寻找到的最优超平面，其到两条虚线的距离相等，这个距离便是几何间隔$\tilde { \gamma }$，两条虚线之间的距离等于$2 \tilde { \gamma }$，而虚线上的点则是支持向量。由于这些支持向量刚好在边界上，所有它们满足$y \left( w ^ { T } x + b \right) = 1$，而非支持向量，则有 $y \left( w ^ { T } x + b \right) &gt; 1$。</p>
 <h6 id="求解"><a href="#求解" class="headerlink" title="求解"></a>求解</h6><p>考虑到目标函数：</p>
 <script type="math/tex; mode=display">
 \max \frac{1}{\|w\|}, \quad \text { s.t. } \quad y_i\left(w^Tx_i+b \right)\geq 1</script><p>等价于</p>
@@ -177,161 +80,172 @@
 <script type="math/tex; mode=display">
 \min _ { w , b } \mathcal { g } ( w ) = \min _ { w , b } \max _ { \alpha _ { i } \geq 0 } \mathcal { L } ( w , b , \alpha ) = p ^ { * }</script><p>通过KKT条件得到原始问题的对偶问题：</p>
 <script type="math/tex; mode=display">
-\min _ { w , b } \theta ( w ) = \max _ { \alpha _ { i } \geq 0 }\min _ { w , b }  \mathcal { L } ( w , b , \alpha ) = d ^ { * }</script><p>求解：<br>(1) 首先固定 $\alpha$，要让 $\mathcal { L }$ 关于 $w$ 和 $b$最小化，对 $w$ 和 $b$求偏导，即令 $\partial \mathcal { L } / \partial w=0$ 和 $\partial \mathcal { L } / \partial b=0$：</p>
-<script type="math/tex; mode=display">\frac { \partial L } { \partial w } = 0 \Rightarrow w = \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } x _ { i }</script><script type="math/tex; mode=display">\frac { \partial L } { \partial b }  = 0 \Rightarrow \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } = 0</script><p>将以上结果带入之前的 $\mathcal { L }$：</p>
+\min _ { w , b } \theta ( w ) = \max _ { \alpha _ { i } \geq 0 }\min _ { w , b }  \mathcal { L } ( w , b , \alpha ) = d ^ { * }</script><p>求解：<br>(1) 首先固定$\alpha$，要让$\mathcal { L }$ 关于$w$ 和$b$最小化，对$w$ 和$b$求偏导，即令$\partial \mathcal { L } / \partial w=0$ 和$\partial \mathcal { L } / \partial b=0$：</p>
+<script type="math/tex; mode=display">\frac { \partial L } { \partial w } = 0 \Rightarrow w = \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } x _ { i }</script><script type="math/tex; mode=display">\frac { \partial L } { \partial b }  = 0 \Rightarrow \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } = 0</script><p>将以上结果带入之前的$\mathcal { L }$：</p>
 <script type="math/tex; mode=display">
 \mathcal { L } ( w , b , \alpha ) = \frac { 1 } { 2 } \| w \| ^ { 2 } - \sum _ { i = 1 } ^ { n } \alpha _ { i } \left( y _ { i } \left( w ^ { T } x _ { i } + b \right) - 1 \right)</script><p>从而有：</p>
-<script type="math/tex; mode=display">\mathcal { L } ( w , b , \alpha ) = \frac { 1 } { 2 } \sum _ { i , j = 1 } ^ { n } \alpha _ { i } \alpha _ { j } y _ { i } y _ { j } x _ { i } ^ { T } x _ { j } - \sum _ { i , j = 1 } ^ { n } \alpha _ { i } \alpha _ { j } y _ { i } y _ { j } x _ { i } ^ { T } x _ { j } - b \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } + \sum _ { i = 1 } ^ { n } \alpha _ { i } \\  = \sum _ { i = 1 } ^ { n } \alpha _ { i } - \frac { 1 } { 2 } \sum _ { i , j = 1 } ^ { n } \alpha _ { i } \alpha _ { j } y _ { i } y _ { j } x _ { i } ^ { T } x _ { j }</script><p>(2) 经过对 $w$ 和 $b$的求解，对偶问题只是关于 $\alpha$：</p>
+<script type="math/tex; mode=display">\mathcal { L } ( w , b , \alpha ) = \frac { 1 } { 2 } \sum _ { i , j = 1 } ^ { n } \alpha _ { i } \alpha _ { j } y _ { i } y _ { j } x _ { i } ^ { T } x _ { j } - \sum _ { i , j = 1 } ^ { n } \alpha _ { i } \alpha _ { j } y _ { i } y _ { j } x _ { i } ^ { T } x _ { j } - b \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } + \sum _ { i = 1 } ^ { n } \alpha _ { i } \\  = \sum _ { i = 1 } ^ { n } \alpha _ { i } - \frac { 1 } { 2 } \sum _ { i , j = 1 } ^ { n } \alpha _ { i } \alpha _ { j } y _ { i } y _ { j } x _ { i } ^ { T } x _ { j }</script><p>(2) 经过对$w$ 和$b$的求解，对偶问题只是关于$\alpha$：</p>
 <script type="math/tex; mode=display">
-\max _ { \alpha }  \sum _ { i = 1 } ^ { n } \alpha _ { i } - \frac { 1 } { 2 } \sum _ { i , j = 1 } ^ { n } \alpha _ { i } \alpha _ { j } y _ { i } y _ { j } x _ { i } ^ { T } x _ { j } \\ \text {s.t.}  \quad  \alpha _ { i } \geq 0 , i = 1 , \dots , n \\ \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } = 0</script><p>通过SMO算法，求解得到 $\alpha$：</p>
+\max _ { \alpha }  \sum _ { i = 1 } ^ { n } \alpha _ { i } - \frac { 1 } { 2 } \sum _ { i , j = 1 } ^ { n } \alpha _ { i } \alpha _ { j } y _ { i } y _ { j } x _ { i } ^ { T } x _ { j } \\ \text {s.t.}  \quad  \alpha _ { i } \geq 0 , i = 1 , \dots , n \\ \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } = 0</script><p>通过SMO算法，求解得到$\alpha$：</p>
 <script type="math/tex; mode=display">
 w ^ { * }  = \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } x _ { i } \\ b ^ { * }  = - \frac { \max _ { i : y _ { i } = - 1 } w ^ { * T } x _ { i } + \min _ { i : y _ { i } = 1 } w ^ { * T } x _ { i } } { 2 }</script><p>(3) 预测，通过前面的求解我们知道：</p>
 <script type="math/tex; mode=display">
 w ^ { * } = \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } x _ { i }</script><p>于是最终分类函数为：</p>
 <script type="math/tex; mode=display">
 f ( x )  = \left( \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } x _ { i } \right) ^ { T } x + b \\  = \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } \left\langle x _ { i } , x \right\rangle + b</script><p>目前的超平面能够处理特征空间可以线性可分的，这种SVM的分类能力还比较弱，通过核函数我们可以将分割面推往非线性的情况。<br>计算两个向量在隐式映射过后的空间中的内积的函数叫做核函数 (Kernel Function)，通过使用恰当的核函数来替代内积，可以隐式得将非线性的训练数据映射到高维 空间，而不增加可调参数的个数。<br>测试点可以通过核函数表示：</p>
-<script type="math/tex; mode=display">f ( x ) = \sum _ { i = 1 } ^ { l } \alpha _ { i } y _ { i } \left\langle \phi \left( x _ { i } \right) , \phi ( x ) \right\rangle + b</script><p>唯一的区别就在于 $\alpha$的求解：</p>
+<script type="math/tex; mode=display">f ( x ) = \sum _ { i = 1 } ^ { l } \alpha _ { i } y _ { i } \left\langle \phi \left( x _ { i } \right) , \phi ( x ) \right\rangle + b</script><p>唯一的区别就在于$\alpha$的求解：</p>
 <script type="math/tex; mode=display">\max _ { \alpha }  \sum _ { i = 1 } ^ { n } \alpha _ { i } - \frac { 1 } { 2 } \sum _ { i , j = 1 } ^ { n } \alpha _ { i } \alpha _ { j } y _ { i } y _ { j } \left\langle \phi \left( x _ { i } \right) , \phi \left( x _ { j } \right) \right\rangle \\ \text {s.t.}  \alpha _ { i } \geq 0 , i = 1 , \dots , n \\  \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } = 0</script><p>可能并不是因为数据本身是非线性结构的，而只是因为数据有噪声。对于这种 偏离正常位置很远的数据点，我们称之为 outlier ，在我们原来的 SVM 模型里，outlier 的存在有可能造成很大的影响，因为超平面本身就是只有少数几个 support vector 组成 的，如果这些 support vector 里又存在 outlier 的话，其影响就很大了。为了处理这种情况，SVM 允许数据点在一定程度上偏离一下超平面。<br>约束条件：</p>
 <script type="math/tex; mode=display">y _ { i } \left( w ^ { T } x _ { i } + b \right) \geq 1 - \xi _ { i } , \quad i = 1 , \ldots , n</script><p>目标函数：</p>
 <script type="math/tex; mode=display">\min \frac { 1 } { 2 } \| w \| ^ { 2 } + C \sum _ { i = 1 } ^ { n } \xi _ { i }</script><p>完整：<br>\begin{array} { c } { \min \frac { 1 } { 2 } | w | ^ { 2 } + C \sum <em> { i = 1 } ^ { n } \xi </em> { i } } \ { \text {s.t.} \quad y <em> { i } \left( w ^ { T } x </em> { i } + b \right) \geq 1 - \xi <em> { i } , i = 1 , \dots , n } \ { \xi </em> { i } \geq 0 , i = 1 , \dots , n } \end{array}<br>得到新的拉格朗日函数：</p>
 <script type="math/tex; mode=display">\mathcal { L } ( w , b , \xi , \alpha , r ) = \frac { 1 } { 2 } \| w \| ^ { 2 } + C \sum _ { i = 1 } ^ { n } \xi _ { i } - \sum _ { i = 1 } ^ { n } \alpha _ { i } \left( y _ { i } \left( w ^ { T } x _ { i } + b \right) - 1 + \xi _ { i } \right) - \sum _ { i = 1 } ^ { n } r _ { i } \xi _ { i }</script><p>求解：<br>\begin{aligned} \frac { \partial L } { \partial w } &amp; = 0 \Rightarrow w = \sum <em> { i = 1 } ^ { n } \alpha </em> { i } y <em> { i } x </em> { i } \ \frac { \partial L } { \partial b } &amp; = 0 \Rightarrow \sum <em> { i = 1 } ^ { n } \alpha </em> { i } y <em> { i } = 0 \ \frac { \partial L } { \partial \xi </em> { i } } &amp; = 0 \Rightarrow C - \alpha <em> { i } - r </em> { i } = 0 , \quad i = 1 , \ldots , n \end{aligned}<br>将 w 带回 L 并化简，得到和原来一样的目标函数：</p>
 <script type="math/tex; mode=display">\max _ { \alpha } \sum _ { i = 1 } ^ { n } \alpha _ { i } - \frac { 1 } { 2 } \sum _ { i , j = 1 } ^ { n } \alpha _ { i } \alpha _ { j } y _ { i } y _ { j } x _ { i } ^ { T } x _ { j }</script><p>\begin{array} { c l } { \max <em> { \alpha } } &amp; { \sum </em> { i = 1 } ^ { n } \alpha <em> { i } - \frac { 1 } { 2 } \sum </em> { i , j = 1 } ^ { n } \alpha <em> { i } \alpha </em> { j } y <em> { i } y </em> { j } x <em> { i } ^ { T } x </em> { j } } \ { \text {s.t.} } &amp; { 0 \leq \alpha <em> { i } \leq C , i = 1 , \ldots , n } \ { } &amp; { \sum </em> { i = 1 } ^ { n } \alpha <em> { i } y </em> { i } = 0 } \end{array}</p>
 
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://github.hzliang.io/2018/12/27/SVM/" data-id="cjqas8k0v000al0vogp0m2lxa" class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/svm/">svm</a></li></ul>
+
+    </footer>
+
   </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2018/12/27/SMO/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            SMO
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2018/12/27/KKT/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">KKT</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  <div class="gitalk" id="gitalk-container"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+  <script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '5f7424dde2a403826700',
+        clientSecret: '54776d7c144363c72e5830d0d227a27443979712',
+        repo: 'blog',
+        owner: 'huzuoliang',
+        admin: ['huzuoliang'],
+        // id: location.pathname,      // Ensure uniqueness and length less than 50
+        id: md5(location.pathname),
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+  gitalk.render('gitalk-container')
+  </script>
+
+  
+
 </article>
 
-    <div class="blog-post-comments">
-        <div id="disqus_thread">
-            <noscript>Please enable JavaScript to view the comments.</noscript>
-        </div>
-    </div>
 
 
-
-        
-          <div id="footer-post-container">
-  <div id="footer-post">
-
-    <div id="nav-footer" style="display: none">
-      <ul>
-         
-          <li><a href="/">Home</a></li>
-         
-          <li><a href="/about/">About</a></li>
-         
-          <li><a href="/archives/">Writing</a></li>
-         
-          <li><a href="http://github.com/huzuoliang">Projects</a></li>
-         
-          <li><a href="/search/">Search</a></li>
-        
-      </ul>
-    </div>
-
-    <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-6"><a class="toc-link" href="#求解"><span class="toc-number">1.</span> <span class="toc-text">求解</span></a></li></ol>
-    </div>
-
-    <div id="share-footer" style="display: none">
-      <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://github.hzliang.io/2018/12/27/SVM/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://github.hzliang.io/2018/12/27/SVM/&text=SVM"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://github.hzliang.io/2018/12/27/SVM/&title=SVM"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://github.hzliang.io/2018/12/27/SVM/&is_video=false&description=SVM"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=SVM&body=Check out this article: http://github.hzliang.io/2018/12/27/SVM/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://github.hzliang.io/2018/12/27/SVM/&title=SVM"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://github.hzliang.io/2018/12/27/SVM/&title=SVM"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://github.hzliang.io/2018/12/27/SVM/&title=SVM"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://github.hzliang.io/2018/12/27/SVM/&title=SVM"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://github.hzliang.io/2018/12/27/SVM/&name=SVM&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-
-    <div id="actions-footer">
-        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
-        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
-        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
-        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
-    </div>
-
-  </div>
-</div>
-
-        
-        <footer id="footer">
-  <div class="footer-left">
-    Copyright &copy; 2018 HuZuoliang
-  </div>
-  <div class="footer-right">
-    <nav>
-      <ul>
-         
-          <li><a href="/">Home</a></li>
-         
-          <li><a href="/about/">About</a></li>
-         
-          <li><a href="/archives/">Writing</a></li>
-         
-          <li><a href="http://github.com/huzuoliang">Projects</a></li>
-         
-          <li><a href="/search/">Search</a></li>
-        
-      </ul>
-    </nav>
+</section>
+  <footer class="footer">
+  
+  <div class="outer">
+    <ul class="list-inline">
+      <li>&copy; 2018 HuZuoliang</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a href="https://zhwangart.github.io">zhwangart</a></li>
+      <!--
+      <li><a href="/">HuZuoliang</a></li>
+      -->
+    </ul>
   </div>
 </footer>
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
 
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="HuZuoliang"></a>
     </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+  <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/lazyload.min.js"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+  <script src="/js/search.js"></script>
+
+
+<script src="/js/ocean.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 </body>
 </html>
-<!-- styles -->
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
-
-<!-- jquery -->
-<script src="/lib/jquery/jquery.min.js"></script>
-<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
-<script src="/js/main.js"></script>
-<!-- search -->
-
-<!-- Google Analytics -->
-
-    <script type="text/javascript">
-        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-        ga('create', 'UA-86660611-1', 'auto');
-        ga('send', 'pageview');
-    </script>
-
-<!-- Baidu Analytics -->
-
-    <script type="text/javascript">
-        var _hmt = _hmt || [];
-        (function() {
-            var hm = document.createElement("script");
-            hm.src = "https://hm.baidu.com/hm.js?2e6da3c375c8a87f5b664cea6d4cb29c";
-            var s = document.getElementsByTagName("script")[0];
-            s.parentNode.insertBefore(hm, s);
-        })();
-    </script>
-
-<!-- Disqus Comments -->
-
-    <script type="text/javascript">
-        var disqus_shortname = 'huzuoliang';
-
-        (function(){
-            var dsq = document.createElement('script');
-            dsq.type = 'text/javascript';
-            dsq.async = true;
-            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        }());
-    </script>
-
-

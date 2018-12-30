@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>HuZuoliang</title>
+  
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://github.hzliang.io/"/>
+  <updated>2018-12-27T07:40:51.950Z</updated>
+  <id>http://github.hzliang.io/</id>
+  
+  <author>
+    <name>HuZuoliang</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>SMO</title>
+    <link href="http://github.hzliang.io/2018/12/27/SMO/"/>
+    <id>http://github.hzliang.io/2018/12/27/SMO/</id>
+    <published>2018-12-27T07:40:51.000Z</published>
+    <updated>2018-12-27T07:40:51.950Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>SVM</title>
+    <link href="http://github.hzliang.io/2018/12/27/SVM/"/>
+    <id>http://github.hzliang.io/2018/12/27/SVM/</id>
+    <published>2018-12-27T07:40:14.000Z</published>
+    <updated>2018-12-30T10:41:52.564Z</updated>
+    
+    <content type="html"><![CDATA[<p>给定<script type="math/tex">m</script>个数据点的数据集<script type="math/tex">T=\left\{ \left( \mathbf { x } _ { 1 } , y _ { 1 } \right) , \left( \mathbf { x } _ { 2 } , y _ { 2 } \right) , \ldots , \left( \mathbf { x } _ { m } , y_{ m } \right) \right\}</script>，其中<script type="math/tex">\mathbf { x } _ { i } \in \mathcal { R } ^ { n }</script>，<script type="math/tex">y _ { i } \in \{ \pm 1 \}</script>，一个线性分类器的学习目标是要在<script type="math/tex">n</script>维的数据空间中找到一个超平面将数据集<script type="math/tex">D</script>分开，超平面的方程可以表达为：</p><script type="math/tex; mode=display">\mathbf {w}^T\mathbf { x }+b=0</script><a id="more"></a><p>令<script type="math/tex">f ( x ) = w ^ { T } x + b</script>，则当<script type="math/tex">f(x)=0</script>时，<script type="math/tex">x</script>为位于超平面上的点，<script type="math/tex">f(x) \geq 0</script>的点对应<script type="math/tex">y=+1</script>的数据点，<script type="math/tex">f(x) \leq 0</script>的点对应<script type="math/tex">y=-1</script>的数据点，如图1所示：</p><p><div align="center"><img src="/2018/12/27/SVM/xianxingfeilei.png" width="260">图1：线性分类示例</div><br>在超平面$\mathbf {w}^T\mathbf { x }+b=0$确定的情况下，$\left| w ^ { T } x + b \right|$ 能够表示点$x$到距离超平面的远近(相对距离)，并且可以通过$y_i f ( x_i )$ 的正负性来判定或表示分类的正确性，于是，定义函数间隔$\hat { \gamma }$ 为：</p><script type="math/tex; mode=display">\hat { \gamma } = y \left( w ^ { T } x + b \right) = y f ( x )</script><p>超平面$\left(w,b \right)$ 关于$D$ 中所有样本点$\left(x_i,y_i \right)$ 的函数间隔最小值为超平面关于训练集$D$ 的函数间隔：</p><script type="math/tex; mode=display">\hat { \gamma } = \min \hat { \gamma } _ { i } , \quad ( i = 1 , \ldots , n )</script><p>但是函数距离会随着参数的放缩而放缩，比如将$w$,$b$成比例放大2倍，超平面不会改变，但函数间隔却变成原来的2倍，但点到线的距离却不会改变，即几何距离：</p><script type="math/tex; mode=display">\gamma = \frac { w ^ { T } x + b } { \| w \| } = \frac { f ( x ) } { \| w \| }</script><p>从而可以得出函数距离$\hat \gamma$ 和几何距离$\gamma$ 之间的关系：</p><script type="math/tex; mode=display">\tilde { \gamma } = y \gamma = \frac { \hat { \gamma } } { \| w \| }</script><p>即几何间隔是函数间隔除以$| w |$，而函数间隔$y(w^T+b)=yf(x)$ 实际上就是$f(x)$，只是人为定义的一个间隔度量，而几何间隔<br>$\frac{| f(x)|}{| w |}$ 才是直观上的点到超平面的距离。</p><p>对一个数据点分类，数据点与超平面的间隔越大，则分类的确信度越大，所以为了使得分类的确信度尽量高，需要让所选择的超平面能够最大化这个间隔值，由于函数间隔随着参数的缩放而缩放，而几何间隔不会改变，因此我们可以将几何间隔当做我们的目标函数。于是最大间隔分类器的目标函数可以定义为：</p><script type="math/tex; mode=display">\max \tilde { \gamma }</script><p>同时：</p><script type="math/tex; mode=display">y _ { i } \left( w ^ { T } x _ { i } + b \right) = \hat { \gamma } _ { i } \geq \hat { \gamma } , \quad i = 1 , \dots , n</script><p>而$\tilde { \gamma } = y \gamma = \frac { \hat { \gamma } } { | w | }$，可以通过放缩参数，使得函数间隔$\hat { \gamma }=1$ 最终目标函数转化为：</p><script type="math/tex; mode=display">\max \frac { 1 } { \| w \| } , \quad \text { s.t. } \quad y _ { i } \left( w ^ { T } x _ { i } + b \right) \geq 1 , i = 1 , \dots , n</script><p>如图1所示，中间的实现便是寻找到的最优超平面，其到两条虚线的距离相等，这个距离便是几何间隔$\tilde { \gamma }$，两条虚线之间的距离等于$2 \tilde { \gamma }$，而虚线上的点则是支持向量。由于这些支持向量刚好在边界上，所有它们满足$y \left( w ^ { T } x + b \right) = 1$，而非支持向量，则有 $y \left( w ^ { T } x + b \right) &gt; 1$。</p><h6 id="求解"><a href="#求解" class="headerlink" title="求解"></a>求解</h6><p>考虑到目标函数：</p><script type="math/tex; mode=display">\max \frac{1}{\|w\|}, \quad \text { s.t. } \quad y_i\left(w^Tx_i+b \right)\geq 1</script><p>等价于</p><script type="math/tex; mode=display">\min \frac { 1 } { 2 } \| w \| ^ { 2 } , \quad s . t . \quad y _ { i } \left( w ^ { T } x _ { i } + b \right) \geq 1 , i = 1 , \dots , n</script><p>鉴于该问题的特殊结构，通过拉格朗日对偶性变换到对偶变量的优化问题，即通过求解与原问题等价的对偶问题得到原始问题的求解，一方面对偶问题往往更容易求解，另一方面可以自然的引入<strong>核函数</strong>，进而推广到非线性问题。<br>定义拉格朗日函数：</p><script type="math/tex; mode=display">\mathcal { L } ( w , b , \alpha ) = \frac { 1 } { 2 } \| w \| ^ { 2 } - \sum _ { i = 1 } ^ { n } \alpha _ { i } \left( y _ { i } \left( w ^ { T } x _ { i } + b \right) - 1 \right)</script><p>令：</p><script type="math/tex; mode=display">\mathcal { g } ( w ) = \max _ { \alpha _ { i } \geq 0 } \mathcal { L } ( w , b , \alpha )</script><p>则目标函数变成（原始问题）：</p><script type="math/tex; mode=display">\min _ { w , b } \mathcal { g } ( w ) = \min _ { w , b } \max _ { \alpha _ { i } \geq 0 } \mathcal { L } ( w , b , \alpha ) = p ^ { * }</script><p>通过KKT条件得到原始问题的对偶问题：</p><script type="math/tex; mode=display">\min _ { w , b } \theta ( w ) = \max _ { \alpha _ { i } \geq 0 }\min _ { w , b }  \mathcal { L } ( w , b , \alpha ) = d ^ { * }</script><p>求解：<br>(1) 首先固定$\alpha$，要让$\mathcal { L }$ 关于$w$ 和$b$最小化，对$w$ 和$b$求偏导，即令$\partial \mathcal { L } / \partial w=0$ 和$\partial \mathcal { L } / \partial b=0$：</p><script type="math/tex; mode=display">\frac { \partial L } { \partial w } = 0 \Rightarrow w = \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } x _ { i }</script><script type="math/tex; mode=display">\frac { \partial L } { \partial b }  = 0 \Rightarrow \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } = 0</script><p>将以上结果带入之前的$\mathcal { L }$：</p><script type="math/tex; mode=display">\mathcal { L } ( w , b , \alpha ) = \frac { 1 } { 2 } \| w \| ^ { 2 } - \sum _ { i = 1 } ^ { n } \alpha _ { i } \left( y _ { i } \left( w ^ { T } x _ { i } + b \right) - 1 \right)</script><p>从而有：</p><script type="math/tex; mode=display">\mathcal { L } ( w , b , \alpha ) = \frac { 1 } { 2 } \sum _ { i , j = 1 } ^ { n } \alpha _ { i } \alpha _ { j } y _ { i } y _ { j } x _ { i } ^ { T } x _ { j } - \sum _ { i , j = 1 } ^ { n } \alpha _ { i } \alpha _ { j } y _ { i } y _ { j } x _ { i } ^ { T } x _ { j } - b \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } + \sum _ { i = 1 } ^ { n } \alpha _ { i } \\  = \sum _ { i = 1 } ^ { n } \alpha _ { i } - \frac { 1 } { 2 } \sum _ { i , j = 1 } ^ { n } \alpha _ { i } \alpha _ { j } y _ { i } y _ { j } x _ { i } ^ { T } x _ { j }</script><p>(2) 经过对$w$ 和$b$的求解，对偶问题只是关于$\alpha$：</p><script type="math/tex; mode=display">\max _ { \alpha }  \sum _ { i = 1 } ^ { n } \alpha _ { i } - \frac { 1 } { 2 } \sum _ { i , j = 1 } ^ { n } \alpha _ { i } \alpha _ { j } y _ { i } y _ { j } x _ { i } ^ { T } x _ { j } \\ \text {s.t.}  \quad  \alpha _ { i } \geq 0 , i = 1 , \dots , n \\ \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } = 0</script><p>通过SMO算法，求解得到$\alpha$：</p><script type="math/tex; mode=display">w ^ { * }  = \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } x _ { i } \\ b ^ { * }  = - \frac { \max _ { i : y _ { i } = - 1 } w ^ { * T } x _ { i } + \min _ { i : y _ { i } = 1 } w ^ { * T } x _ { i } } { 2 }</script><p>(3) 预测，通过前面的求解我们知道：</p><script type="math/tex; mode=display">w ^ { * } = \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } x _ { i }</script><p>于是最终分类函数为：</p><script type="math/tex; mode=display">f ( x )  = \left( \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } x _ { i } \right) ^ { T } x + b \\  = \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } \left\langle x _ { i } , x \right\rangle + b</script><p>目前的超平面能够处理特征空间可以线性可分的，这种SVM的分类能力还比较弱，通过核函数我们可以将分割面推往非线性的情况。<br>计算两个向量在隐式映射过后的空间中的内积的函数叫做核函数 (Kernel Function)，通过使用恰当的核函数来替代内积，可以隐式得将非线性的训练数据映射到高维 空间，而不增加可调参数的个数。<br>测试点可以通过核函数表示：</p><script type="math/tex; mode=display">f ( x ) = \sum _ { i = 1 } ^ { l } \alpha _ { i } y _ { i } \left\langle \phi \left( x _ { i } \right) , \phi ( x ) \right\rangle + b</script><p>唯一的区别就在于$\alpha$的求解：</p><script type="math/tex; mode=display">\max _ { \alpha }  \sum _ { i = 1 } ^ { n } \alpha _ { i } - \frac { 1 } { 2 } \sum _ { i , j = 1 } ^ { n } \alpha _ { i } \alpha _ { j } y _ { i } y _ { j } \left\langle \phi \left( x _ { i } \right) , \phi \left( x _ { j } \right) \right\rangle \\ \text {s.t.}  \alpha _ { i } \geq 0 , i = 1 , \dots , n \\  \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } = 0</script><p>可能并不是因为数据本身是非线性结构的，而只是因为数据有噪声。对于这种 偏离正常位置很远的数据点，我们称之为 outlier ，在我们原来的 SVM 模型里，outlier 的存在有可能造成很大的影响，因为超平面本身就是只有少数几个 support vector 组成 的，如果这些 support vector 里又存在 outlier 的话，其影响就很大了。为了处理这种情况，SVM 允许数据点在一定程度上偏离一下超平面。<br>约束条件：</p><script type="math/tex; mode=display">y _ { i } \left( w ^ { T } x _ { i } + b \right) \geq 1 - \xi _ { i } , \quad i = 1 , \ldots , n</script><p>目标函数：</p><script type="math/tex; mode=display">\min \frac { 1 } { 2 } \| w \| ^ { 2 } + C \sum _ { i = 1 } ^ { n } \xi _ { i }</script><p>完整：<br>\begin{array} { c } { \min \frac { 1 } { 2 } | w | ^ { 2 } + C \sum <em> { i = 1 } ^ { n } \xi </em> { i } } \ { \text {s.t.} \quad y <em> { i } \left( w ^ { T } x </em> { i } + b \right) \geq 1 - \xi <em> { i } , i = 1 , \dots , n } \ { \xi </em> { i } \geq 0 , i = 1 , \dots , n } \end{array}<br>得到新的拉格朗日函数：</p><script type="math/tex; mode=display">\mathcal { L } ( w , b , \xi , \alpha , r ) = \frac { 1 } { 2 } \| w \| ^ { 2 } + C \sum _ { i = 1 } ^ { n } \xi _ { i } - \sum _ { i = 1 } ^ { n } \alpha _ { i } \left( y _ { i } \left( w ^ { T } x _ { i } + b \right) - 1 + \xi _ { i } \right) - \sum _ { i = 1 } ^ { n } r _ { i } \xi _ { i }</script><p>求解：<br>\begin{aligned} \frac { \partial L } { \partial w } &amp; = 0 \Rightarrow w = \sum <em> { i = 1 } ^ { n } \alpha </em> { i } y <em> { i } x </em> { i } \ \frac { \partial L } { \partial b } &amp; = 0 \Rightarrow \sum <em> { i = 1 } ^ { n } \alpha </em> { i } y <em> { i } = 0 \ \frac { \partial L } { \partial \xi </em> { i } } &amp; = 0 \Rightarrow C - \alpha <em> { i } - r </em> { i } = 0 , \quad i = 1 , \ldots , n \end{aligned}<br>将 w 带回 L 并化简，得到和原来一样的目标函数：</p><script type="math/tex; mode=display">\max _ { \alpha } \sum _ { i = 1 } ^ { n } \alpha _ { i } - \frac { 1 } { 2 } \sum _ { i , j = 1 } ^ { n } \alpha _ { i } \alpha _ { j } y _ { i } y _ { j } x _ { i } ^ { T } x _ { j }</script><p>\begin{array} { c l } { \max <em> { \alpha } } &amp; { \sum </em> { i = 1 } ^ { n } \alpha <em> { i } - \frac { 1 } { 2 } \sum </em> { i , j = 1 } ^ { n } \alpha <em> { i } \alpha </em> { j } y <em> { i } y </em> { j } x <em> { i } ^ { T } x </em> { j } } \ { \text {s.t.} } &amp; { 0 \leq \alpha <em> { i } \leq C , i = 1 , \ldots , n } \ { } &amp; { \sum </em> { i = 1 } ^ { n } \alpha <em> { i } y </em> { i } = 0 } \end{array}</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;给定&lt;script type=&quot;math/tex&quot;&gt;m&lt;/script&gt;个数据点的数据集&lt;script type=&quot;math/tex&quot;&gt;T=\left\{ \left( \mathbf { x } _ { 1 } , y _ { 1 } \right) , \left( \mathbf { x } _ { 2 } , y _ { 2 } \right) , \ldots , \left( \mathbf { x } _ { m } , y_{ m } \right) \right\}&lt;/script&gt;，其中&lt;script type=&quot;math/tex&quot;&gt;\mathbf { x } _ { i } \in \mathcal { R } ^ { n }&lt;/script&gt;，&lt;script type=&quot;math/tex&quot;&gt;y _ { i } \in \{ \pm 1 \}&lt;/script&gt;，一个线性分类器的学习目标是要在&lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt;维的数据空间中找到一个超平面将数据集&lt;script type=&quot;math/tex&quot;&gt;D&lt;/script&gt;分开，超平面的方程可以表达为：&lt;/p&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\mathbf {w}^T\mathbf { x }+b=0&lt;/script&gt;
+    
+    </summary>
+    
+      <category term="ml" scheme="http://github.hzliang.io/categories/ml/"/>
+    
+    
+      <category term="svm" scheme="http://github.hzliang.io/tags/svm/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>KKT</title>
+    <link href="http://github.hzliang.io/2018/12/27/KKT/"/>
+    <id>http://github.hzliang.io/2018/12/27/KKT/</id>
+    <published>2018-12-27T07:40:02.000Z</published>
+    <updated>2018-12-27T07:40:02.572Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>SMO 算法</title>
+    <link href="http://github.hzliang.io/2018/12/27/SMO-%E7%AE%97%E6%B3%95/"/>
+    <id>http://github.hzliang.io/2018/12/27/SMO-算法/</id>
+    <published>2018-12-27T07:39:47.000Z</published>
+    <updated>2018-12-27T07:39:47.703Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>DL之Xavier</title>
+    <link href="http://github.hzliang.io/2018/12/15/DL%E4%B9%8BXavier/"/>
+    <id>http://github.hzliang.io/2018/12/15/DL之Xavier/</id>
+    <published>2018-12-15T03:41:29.000Z</published>
+    <updated>2018-12-15T03:41:29.503Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Tensorflow之y=xW+b而不是y=Wx+b?</title>
+    <link href="http://github.hzliang.io/2018/12/15/Tensorflow%E4%B9%8By-xW-b%E8%80%8C%E4%B8%8D%E6%98%AFy-Wx-b/"/>
+    <id>http://github.hzliang.io/2018/12/15/Tensorflow之y-xW-b而不是y-Wx-b/</id>
+    <published>2018-12-15T03:40:29.000Z</published>
+    <updated>2018-12-15T03:40:29.281Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>DL之Batch Normalization</title>
+    <link href="http://github.hzliang.io/2018/12/15/DL%E4%B9%8BBatch-Normalization/"/>
+    <id>http://github.hzliang.io/2018/12/15/DL之Batch-Normalization/</id>
+    <published>2018-12-15T03:25:37.000Z</published>
+    <updated>2018-12-15T03:25:37.290Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Python之Numpy.reshape</title>
+    <link href="http://github.hzliang.io/2018/11/29/Python%E4%B9%8BNumpy-reshape/"/>
+    <id>http://github.hzliang.io/2018/11/29/Python之Numpy-reshape/</id>
+    <published>2018-11-29T08:12:41.000Z</published>
+    <updated>2018-11-29T08:55:56.818Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>numpy.reshape(a, newshape, order=’C’)</strong></p><ul><li>a : array_like</li><li>newshape : int or tuple of ints</li><li>order : {‘C’, ‘F’, ‘A’}, optional</li></ul><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = np.arange(<span class="number">16</span>).reshape((<span class="number">4</span>,<span class="number">4</span>))</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a</span><br><span class="line">array([[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>],</span><br><span class="line">       [ <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>],</span><br><span class="line">       [ <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>],</span><br><span class="line">       [<span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>]])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>np.reshape(a,(<span class="number">2</span>,<span class="number">8</span>), order=<span class="string">'C'</span>)</span><br><span class="line">array([[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>,  <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>],</span><br><span class="line">       [ <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>]])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>np.reshape(a,(<span class="number">2</span>,<span class="number">8</span>), order=<span class="string">'F'</span>)</span><br><span class="line">array([[ <span class="number">0</span>,  <span class="number">8</span>,  <span class="number">1</span>,  <span class="number">9</span>,  <span class="number">2</span>, <span class="number">10</span>,  <span class="number">3</span>, <span class="number">11</span>],</span><br><span class="line">       [ <span class="number">4</span>, <span class="number">12</span>,  <span class="number">5</span>, <span class="number">13</span>,  <span class="number">6</span>, <span class="number">14</span>,  <span class="number">7</span>, <span class="number">15</span>]])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a.ravel(order=<span class="string">'F'</span>)</span><br><span class="line">array([ <span class="number">0</span>,  <span class="number">4</span>,  <span class="number">8</span>, <span class="number">12</span>,  <span class="number">1</span>,  <span class="number">5</span>,  <span class="number">9</span>, <span class="number">13</span>,  <span class="number">2</span>,  <span class="number">6</span>, <span class="number">10</span>, <span class="number">14</span>,  <span class="number">3</span>,  <span class="number">7</span>, <span class="number">11</span>, <span class="number">15</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a.ravel(order=<span class="string">'C'</span>)</span><br><span class="line">array([ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>,  <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>,  <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a.ravel(order=<span class="string">'C'</span>).reshape(<span class="number">2</span>,<span class="number">8</span>,order=<span class="string">'C'</span>)</span><br><span class="line">array([[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>,  <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>],</span><br><span class="line">       [ <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>]])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a.ravel(order=<span class="string">'C'</span>).reshape(<span class="number">2</span>,<span class="number">8</span>,order=<span class="string">'F'</span>)</span><br><span class="line">array([[ <span class="number">0</span>,  <span class="number">2</span>,  <span class="number">4</span>,  <span class="number">6</span>,  <span class="number">8</span>, <span class="number">10</span>, <span class="number">12</span>, <span class="number">14</span>],</span><br><span class="line">       [ <span class="number">1</span>,  <span class="number">3</span>,  <span class="number">5</span>,  <span class="number">7</span>,  <span class="number">9</span>, <span class="number">11</span>, <span class="number">13</span>, <span class="number">15</span>]])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a.ravel(order=<span class="string">'C'</span>).reshape(<span class="number">8</span>,<span class="number">2</span>,order=<span class="string">'F'</span>)</span><br><span class="line">array([[ <span class="number">0</span>,  <span class="number">8</span>],</span><br><span class="line">       [ <span class="number">1</span>,  <span class="number">9</span>],</span><br><span class="line">       [ <span class="number">2</span>, <span class="number">10</span>],</span><br><span class="line">       [ <span class="number">3</span>, <span class="number">11</span>],</span><br><span class="line">       [ <span class="number">4</span>, <span class="number">12</span>],</span><br><span class="line">       [ <span class="number">5</span>, <span class="number">13</span>],</span><br><span class="line">       [ <span class="number">6</span>, <span class="number">14</span>],</span><br><span class="line">       [ <span class="number">7</span>, <span class="number">15</span>]])</span><br></pre></td></tr></table></figure><p>numpy.reshape实际上先对数组ravel，转成一行，然后reshape：</p><ul><li>np.reshape(a,(2,8), order=’C’)等价于a.ravel(order=’C’)，将数组按行转成[0,1,2,3,4,5,6,…]，然后按行组织（先将行组织好）</li><li>np.reshape(a,(2,8), order=’F’)等价于a.ravel(order=’F’).reshape(2,8,order=’F’)，将数组按列转成[0,4,8,12,1,5,9,…]，然后按列组织（先将列组织好）</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;strong&gt;numpy.reshape(a, newshape, order=’C’)&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;a : array_like&lt;/li&gt;
+&lt;li&gt;newshape : int or tuple of ints&lt;/li&gt;
+&lt;li&gt;orde
+      
+    
+    </summary>
+    
+      <category term="python" scheme="http://github.hzliang.io/categories/python/"/>
+    
+    
+      <category term="numpy" scheme="http://github.hzliang.io/tags/numpy/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python之Numpy（axis=0 与axis=1）区分</title>
+    <link href="http://github.hzliang.io/2018/11/28/Python%E4%B9%8BNumPy%EF%BC%88axis-0-%E4%B8%8Eaxis-1%EF%BC%89%E5%8C%BA%E5%88%86/"/>
+    <id>http://github.hzliang.io/2018/11/28/Python之NumPy（axis-0-与axis-1）区分/</id>
+    <published>2018-11-28T07:41:07.000Z</published>
+    <updated>2018-11-29T08:11:42.751Z</updated>
+    
+    <content type="html"><![CDATA[<p>python中的axis究竟是如何定义的呢？他们究竟代表是DataFrame的行还是列？考虑以下代码：<br><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>df = pd.DataFrame([[<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>], [<span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>]], \</span><br><span class="line"><span class="meta">... </span>columns=[<span class="string">"col1"</span>, <span class="string">"col2"</span>, <span class="string">"col3"</span>, <span class="string">"col4"</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>df</span><br><span class="line">   col1  col2  col3  col4</span><br><span class="line"><span class="number">0</span>     <span class="number">1</span>     <span class="number">1</span>     <span class="number">1</span>     <span class="number">1</span></span><br><span class="line"><span class="number">1</span>     <span class="number">2</span>     <span class="number">2</span>     <span class="number">2</span>     <span class="number">2</span></span><br><span class="line"><span class="number">2</span>     <span class="number">3</span>     <span class="number">3</span>     <span class="number">3</span>     <span class="number">3</span></span><br></pre></td></tr></table></figure></p><p>如果我们调用df.mean(axis=1),我们将得到按行计算的均值<br><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>df.mean(<span class="number">1</span>)</span><br><span class="line"><span class="number">0</span>    <span class="number">1.0</span></span><br><span class="line"><span class="number">1</span>    <span class="number">2.0</span></span><br><span class="line"><span class="number">2</span>    <span class="number">3.0</span></span><br><span class="line">dtype: float64</span><br></pre></td></tr></table></figure></p><p>然而，如果我们调用 df.drop((name, axis=1),我们实际上删掉了一列，而不是一行：<br><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>df.drop(<span class="string">"col4"</span>, axis=<span class="number">1</span>)</span><br><span class="line">   col1  col2  col3</span><br><span class="line"><span class="number">0</span>     <span class="number">1</span>     <span class="number">1</span>     <span class="number">1</span></span><br><span class="line"><span class="number">1</span>     <span class="number">2</span>     <span class="number">2</span>     <span class="number">2</span></span><br><span class="line"><span class="number">2</span>     <span class="number">3</span>     <span class="number">3</span>     <span class="number">3</span></span><br></pre></td></tr></table></figure></p><p>Can someone help me understand what is meant by an “axis” in pandas/numpy/scipy?<br>有人能帮我理解一下，在pandas、numpy、scipy三都当中axis参数的真实含义吗？</p><p>投票最高的答案揭示了问题的本质：</p><p>其实问题理解axis有问题，df.mean其实是在每一行上取所有列的均值，而不是保留每一列的均值。也许简单的来记就是axis=0代表往 <strong>跨行</strong>（down)，而axis=1代表 <strong>跨列</strong>（across)。</p><p>下图代表在DataFrame当中axis为0和1时分别代表的含义:</p><p><img src="/2018/11/28/Python之NumPy（axis-0-与axis-1）区分/numpy_axis.jpg" alt="axis参数作用方向图示"></p><p>看一下官方帮助的解释：</p><p>轴用来为超过一维的数组定义的属性，二维数据拥有两个轴：第0轴沿着行的垂直往下，第1轴沿着列的方向水平延伸。</p><p>注意看，官方对于0和1的解释是轴，也就是坐标轴。而坐标轴是有方向的，所以千万不要用行和列的思维去想axis，因为行和列是没有方向的，这样想会在遇到不同的例子时感到困惑。</p><p>所以问题当中第一个列子df.mean(axis=1)代表沿着列水平方向计算均值，而第二个列子df.drop(name, axis=1) 代表将name对应的列标签沿着水平的方向依次删掉。</p><p><strong>总之，axis=1可以认为是按行从左至右遍历进行对应操作，axis=0按列从上往下遍历进行操作</strong></p><p>参考：</p><p><a href="https://www.cnblogs.com/rrttp/p/8028421.html" target="_blank" rel="noopener">https://www.cnblogs.com/rrttp/p/8028421.html</a><br><a href="http://blog.csdn.net/wangying19911991/article/details/73928172" target="_blank" rel="noopener">http://blog.csdn.net/wangying19911991/article/details/73928172</a><br><a href="https://www.zhihu.com/question/58993137" target="_blank" rel="noopener">https://www.zhihu.com/question/58993137</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;python中的axis究竟是如何定义的呢？他们究竟代表是DataFrame的行还是列？考虑以下代码：&lt;br&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;lin
+      
+    
+    </summary>
+    
+      <category term="python" scheme="http://github.hzliang.io/categories/python/"/>
+    
+    
+      <category term="pandas" scheme="http://github.hzliang.io/tags/pandas/"/>
+    
+      <category term="numpy" scheme="http://github.hzliang.io/tags/numpy/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>hexo-renderer-kramed</title>
+    <link href="http://github.hzliang.io/2018/11/26/hexo-renderer-kramed/"/>
+    <id>http://github.hzliang.io/2018/11/26/hexo-renderer-kramed/</id>
+    <published>2018-11-26T06:41:02.437Z</published>
+    <updated>2018-12-30T08:52:50.146Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://travis-ci.org/sun11/hexo-renderer-kramed" target="_blank" rel="noopener"><img src="https://travis-ci.org/sun11/hexo-renderer-kramed.svg?branch=master" alt="Build Status"></a>  <a href="http://badge.fury.io/js/hexo-renderer-kramed" target="_blank" rel="noopener"><img src="https://badge.fury.io/js/hexo-renderer-kramed.svg" alt="NPM version"></a></p><p>This plugin uses <a href="https://github.com/GitbookIO/kramed" target="_blank" rel="noopener">kramed</a> but not <a href="https://github.com/chjj/marked" target="_blank" rel="noopener">marked</a> as render engine, it is a fork of <a href="https://github.com/hexojs/hexo-renderer-marked" target="_blank" rel="noopener">hexo-renderer-marked</a>. You need to uninstall hexo-renderer-marked to avoid conflicts.</p><h2 id="Why-use-kramed"><a href="#Why-use-kramed" class="headerlink" title="Why use kramed?"></a>Why use kramed?</h2><p>Just for the support of mathjax. I’ve modified the inline math format, like this example below:</p><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">`$\sigma$`</span><br></pre></td></tr></table></figure><p>But this renderer will only wrap your inline tex and display tex with a <code>&lt;script&gt;</code> tag, to fully enable mathjax, you need to add some js code in your theme, what I did in my theme <a href="https://github.com/sun11/hexo-theme-paperbox" target="_blank" rel="noopener">hexo-theme-paperbox</a> is:</p><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/x-mathjax-config"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">  MathJax.Hub.Config(&#123;</span></span><br><span class="line"><span class="undefined">    menuSettings: &#123;</span></span><br><span class="line"><span class="undefined">      zoom: "None"</span></span><br><span class="line"><span class="undefined">    &#125;,</span></span><br><span class="line"><span class="undefined">    showMathMenu: false,</span></span><br><span class="line"><span class="undefined">    jax: ["input/TeX","output/CommonHTML"],</span></span><br><span class="line"><span class="undefined">    extensions: ["tex2jax.js"],</span></span><br><span class="line"><span class="undefined">    TeX: &#123;</span></span><br><span class="line"><span class="undefined">      extensions: ["AMSmath.js","AMSsymbols.js"],</span></span><br><span class="line"><span class="undefined">      equationNumbers: &#123;</span></span><br><span class="line"><span class="undefined">        autoNumber: "AMS"</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">    &#125;,</span></span><br><span class="line"><span class="undefined">    tex2jax: &#123;</span></span><br><span class="line"><span class="undefined">      inlineMath: [["\\(", "\\)"]],</span></span><br><span class="line"><span class="undefined">      displayMath: [["\\[", "\\]"]]</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure><h2 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h2><p>You can use the following formats for your equations:</p><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">inlineMath: `$\sigma$`</span><br><span class="line"></span><br><span class="line">displayMath: $$\sigma$$</span><br></pre></td></tr></table></figure><p>If you need to contain <code>$</code> in \<code\> tag:</code\></p><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">` $some code$ `</span><br></pre></td></tr></table></figure><p>If you need to contain $$$$ in your text:</p><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">\$\$</span><br></pre></td></tr></table></figure><h2 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm uninstall hexo-renderer-marked --save</span><br><span class="line">$ npm install hexo-renderer-kramed --save</span><br></pre></td></tr></table></figure><ul><li>Hexo 3: &gt;= 0.2</li><li>Hexo 2: 0.1.x</li></ul><h2 id="Options"><a href="#Options" class="headerlink" title="Options"></a>Options</h2><p>You can configure this plugin in <code>_config.yml</code>.</p><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">kramed:</span></span><br><span class="line"><span class="attr">  gfm:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">  pedantic:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">  sanitize:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">  tables:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">  breaks:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">  smartLists:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">  smartypants:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure><ul><li><strong>gfm</strong> - Enables <a href="https://help.github.com/articles/github-flavored-markdown" target="_blank" rel="noopener">GitHub flavored markdown</a></li><li><strong>pedantic</strong> - Conform to obscure parts of <code>markdown.pl</code> as much as possible. Don’t fix any of the original markdown bugs or poor behavior.</li><li><strong>sanitize</strong> - Sanitize the output. Ignore any HTML that has been input.</li><li><strong>tables</strong> - Enable GFM <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#wiki-tables" target="_blank" rel="noopener">tables</a>. This option requires the <code>gfm</code> option to be true.</li><li><strong>breaks</strong> - Enable GFM <a href="https://help.github.com/articles/github-flavored-markdown#newlines" target="_blank" rel="noopener">line breaks</a>. This option requires the <code>gfm</code> option to be true.</li><li><strong>smartLists</strong> - Use smarter list behavior than the original markdown.</li><li><strong>smartypants</strong> - Use “smart” typograhic punctuation for things like quotes and dashes.</li></ul><script type="math/tex; mode=display">\max _ { \alpha } \sum _ { i = 1 } ^ { n } \alpha _ { i } - \frac { 1 } { 2 } \sum _ { i , j = 1 } ^ { n } \alpha _ { i } \alpha _ { j } y _ { i } y _ { j } x _ { i } ^ { T } x _ { j }</script><p>\begin{array} { c l } { \max <em> { \alpha } } &amp; { \sum </em> { i = 1 } ^ { n } \alpha <em> { i } - \frac { 1 } { 2 } \sum </em> { i , j = 1 } ^ { n } \alpha <em> { i } \alpha </em> { j } y <em> { i } y </em> { j } x <em> { i } ^ { T } x </em> { j } } \ { \text {s.t.} } &amp; { 0 \leq \alpha <em> { i } \leq C , i = 1 , \ldots , n } \ { } &amp; { \sum </em> { i = 1 } ^ { n } \alpha <em> { i } y </em> { i } = 0 } \end{array}</p><script type="math/tex; mode=display">\begin{aligned} w ^ { * } & = \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } x _ { i } \\ b ^ { * } & = - \frac { \max _ { i : y _ { i } = - 1 } w ^ { * T } x _ { i } + \min _ { i : y _ { i } = 1 } w ^ { * T } x _ { i } } { 2 } \end{aligned}</script><script type="math/tex; mode=display">\begin{aligned} \mathcal { L } ( w , b , \alpha ) & = \frac { 1 } { 2 } \| w \| ^ { 2 } - \sum _ { i = 1 } ^ { n } \alpha _ { i } \left( y _ { i } \left( w ^ { T } x _ { i } + b \right) - 1 \right) \\ & = \frac { 1 } { 2 } w ^ { T } w - \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } w ^ { T } x _ { i } - \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } b + \sum _ { i = 1 } ^ { n } \alpha _ { i } \\ & = \frac { 1 } { 2 } w ^ { T } \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } x _ { i } - \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } w ^ { T } x _ { i } - \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } b + \sum _ { i = 1 } ^ { n } \alpha _ { i } \end{aligned}</script>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;a href=&quot;https://travis-ci.org/sun11/hexo-renderer-kramed&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;&lt;img src=&quot;https://travis-ci.org/sun11/hexo-rend
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+</feed>

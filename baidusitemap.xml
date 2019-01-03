@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://huzuoliang.github.io/2018/11/28/Python%E4%B9%8BNumPy%EF%BC%88axis-0-%E4%B8%8Eaxis-1%EF%BC%89%E5%8C%BA%E5%88%86/</loc>
+    <lastmod>2019-01-03T07:05:05.309Z</lastmod>
+  </url>  <url>
+    <loc>https://huzuoliang.github.io/2018/11/29/Python%E4%B9%8BNumpy-reshape/</loc>
+    <lastmod>2019-01-03T07:04:10.016Z</lastmod>
+  </url>  <url>
     <loc>https://huzuoliang.github.io/2018/12/27/SVM%E4%B9%8BKKT/</loc>
     <lastmod>2019-01-03T06:57:57.071Z</lastmod>
   </url>  <url>
@@ -18,11 +24,5 @@
   </url>  <url>
     <loc>https://huzuoliang.github.io/2018/12/15/DL%E4%B9%8BBatch-Normalization/</loc>
     <lastmod>2018-12-15T03:25:37.290Z</lastmod>
-  </url>  <url>
-    <loc>https://huzuoliang.github.io/2018/11/29/Python%E4%B9%8BNumpy-reshape/</loc>
-    <lastmod>2018-11-29T08:55:56.818Z</lastmod>
-  </url>  <url>
-    <loc>https://huzuoliang.github.io/2018/11/28/Python%E4%B9%8BNumPy%EF%BC%88axis-0-%E4%B8%8Eaxis-1%EF%BC%89%E5%8C%BA%E5%88%86/</loc>
-    <lastmod>2018-11-29T08:11:42.751Z</lastmod>
   </url>
 </urlset>

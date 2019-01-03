@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>
-    Python之Numpy（axis=0 与axis=1）区分 |
+    Python之Numpy(axis=0,1)区分 |
     
     HuZuoliang</title>
   
@@ -31,7 +31,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Python之Numpy（axis=0 与axis=1）区分
+      Python之Numpy(axis=0,1)区分
     </h1>
   
 
@@ -56,6 +56,7 @@
       
       
         <p>python中的axis究竟是如何定义的呢？他们究竟代表是DataFrame的行还是列？考虑以下代码：<br><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>df = pd.DataFrame([[<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>], [<span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>]], \</span><br><span class="line"><span class="meta">... </span>columns=[<span class="string">"col1"</span>, <span class="string">"col2"</span>, <span class="string">"col3"</span>, <span class="string">"col4"</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>df</span><br><span class="line">   col1  col2  col3  col4</span><br><span class="line"><span class="number">0</span>     <span class="number">1</span>     <span class="number">1</span>     <span class="number">1</span>     <span class="number">1</span></span><br><span class="line"><span class="number">1</span>     <span class="number">2</span>     <span class="number">2</span>     <span class="number">2</span>     <span class="number">2</span></span><br><span class="line"><span class="number">2</span>     <span class="number">3</span>     <span class="number">3</span>     <span class="number">3</span>     <span class="number">3</span></span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <p>如果我们调用df.mean(axis=1),我们将得到按行计算的均值<br><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>df.mean(<span class="number">1</span>)</span><br><span class="line"><span class="number">0</span>    <span class="number">1.0</span></span><br><span class="line"><span class="number">1</span>    <span class="number">2.0</span></span><br><span class="line"><span class="number">2</span>    <span class="number">3.0</span></span><br><span class="line">dtype: float64</span><br></pre></td></tr></table></figure></p>
 <p>然而，如果我们调用 df.drop((name, axis=1),我们实际上删掉了一列，而不是一行：<br><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>df.drop(<span class="string">"col4"</span>, axis=<span class="number">1</span>)</span><br><span class="line">   col1  col2  col3</span><br><span class="line"><span class="number">0</span>     <span class="number">1</span>     <span class="number">1</span>     <span class="number">1</span></span><br><span class="line"><span class="number">1</span>     <span class="number">2</span>     <span class="number">2</span>     <span class="number">2</span></span><br><span class="line"><span class="number">2</span>     <span class="number">3</span>     <span class="number">3</span>     <span class="number">3</span></span><br></pre></td></tr></table></figure></p>
 <p>Can someone help me understand what is meant by an “axis” in pandas/numpy/scipy?<br>有人能帮我理解一下，在pandas、numpy、scipy三都当中axis参数的真实含义吗？</p>
@@ -74,7 +75,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://huzuoliang.github.io/2018/11/28/Python之NumPy（axis-0-与axis-1）区分/" data-id="cjqg9eh800004oxvonqbrxf03" class="article-share-link">Share</a>
+      <a data-url="https://huzuoliang.github.io/2018/11/28/Python之NumPy（axis-0-与axis-1）区分/" data-id="cjqg9ndye0004x4voywujzcso" class="article-share-link">Share</a>
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/numpy/">numpy</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pandas/">pandas</a></li></ul>
 

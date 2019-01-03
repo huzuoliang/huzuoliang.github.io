@@ -106,12 +106,12 @@ w ^ { * } = \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } x _ { i }</script>
 <script type="math/tex; mode=display">
 \begin{aligned} \frac { \partial \mathcal {L} } { \partial w } & = 0 \Rightarrow w = \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } x _ { i } \\ \frac { \partial \mathcal {L} } { \partial b } & = 0 \Rightarrow \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } = 0 \\ \frac { \partial \mathcal {L} } { \partial \xi _ { i } } & = 0 \Rightarrow C - \alpha _ { i } - r _ { i } = 0 , \quad i = 1 , \ldots , n \end{aligned}</script><p>将<script type="math/tex">w</script>带回<script type="math/tex">\mathcal {L}</script> 并化简，得到和原来一样的目标函数：</p>
 <script type="math/tex; mode=display">
-\begin{array} { c l } { \max \limits_ { \alpha } } & { \sum _ { i = 1 } ^ { n } \alpha _ { i } - \frac { 1 } { 2 } \sum _ { i , j = 1 } ^ { n } \alpha _ { i } \alpha _ { j } y _ { i } y _ { j } x _ { i } ^ { T } x _ { j } } \\ { \text {s.t.} } & { 0 \leq \alpha _ { i } \leq C , i = 1 , \ldots , n } \\ { } & { \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } = 0 } \end{array}</script><p>求解方式类似非松弛<code>SVM</code>。</p>
+\begin{array} { c l } { \max \limits_ { \alpha } } & { \sum _ { i = 1 } ^ { n } \alpha _ { i } - \frac { 1 } { 2 } \sum _ { i , j = 1 } ^ { n } \alpha _ { i } \alpha _ { j } y _ { i } y _ { j } x _ { i } ^ { T } x _ { j } } \\ { \text {s.t.} } & { 0 \leq \alpha _ { i } \leq C , i = 1 , \ldots , n } \\ { } & { \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } = 0 } \end{array}</script><p>采用<code>SMO</code>求解。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://huzuoliang.github.io/2018/12/27/SVM/" data-id="cjqg43n50000aouvomhpdou6p" class="article-share-link">Share</a>
+      <a data-url="https://huzuoliang.github.io/2018/12/27/SVM/" data-id="cjqg46ghb0009wbvo9ojj44wg" class="article-share-link">Share</a>
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SVM/">SVM</a></li></ul>
 

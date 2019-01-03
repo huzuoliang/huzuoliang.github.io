@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://huzuoliang.github.io/2018/12/27/SVM%E4%B9%8BKKT/</loc>
+    <lastmod>2019-01-03T06:57:57.071Z</lastmod>
+  </url>  <url>
+    <loc>https://huzuoliang.github.io/2018/12/27/SVM%E4%B9%8BSMO/</loc>
+    <lastmod>2019-01-03T06:57:41.201Z</lastmod>
+  </url>  <url>
     <loc>https://huzuoliang.github.io/2018/12/27/SVM/</loc>
     <lastmod>2019-01-03T04:32:06.076Z</lastmod>
-  </url>  <url>
-    <loc>https://huzuoliang.github.io/2018/12/27/SMO%E6%B1%82%E8%A7%A3SVM/</loc>
-    <lastmod>2019-01-03T04:29:47.567Z</lastmod>
-  </url>  <url>
-    <loc>https://huzuoliang.github.io/2018/11/26/hexo-renderer-kramed/</loc>
-    <lastmod>2018-12-30T08:52:50.146Z</lastmod>
-  </url>  <url>
-    <loc>https://huzuoliang.github.io/2018/12/27/KKT/</loc>
-    <lastmod>2018-12-27T07:40:02.572Z</lastmod>
   </url>  <url>
     <loc>https://huzuoliang.github.io/2018/12/15/DL%E4%B9%8BXavier/</loc>
     <lastmod>2018-12-15T03:41:29.503Z</lastmod>

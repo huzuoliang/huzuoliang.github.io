@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    统计学之无偏估计 |
+    
+    HuZuoliang</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+  
+  <script src="/js/pace.min.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+</html>
+<body>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><main class="content">
+  <section class="outer">
+  <article id="post-统计学之无偏估计-均值与方差" class="article article-type-post" itemscope="" itemprop="blogPost">
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      统计学之无偏估计
+    </h1>
+  
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2019/01/04/统计学之无偏估计-均值与方差/" class="article-date">
+  <time datetime="2019-01-04T07:40:24.000Z" itemprop="datePublished">2019-01-04</time>
+</a>
+        
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ml/">ml</a>
+  </div>
+
+      </div>
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h2><p>估计量的数学期望等于被估计参数的真实值，则称此估计量为被估计参数的<strong>无偏估计</strong>，即具有无偏性，是一种用于评价被评估量优良性的准则。<strong>无偏估计的意义是：在多次重复采样下，它们的平均数接近所估计参数真值</strong>。<br><a id="more"></a></p>
+<h2 id="2-均值与方差"><a href="#2-均值与方差" class="headerlink" title="2. 均值与方差"></a>2. 均值与方差</h2><p>设随机变量<script type="math/tex">X</script>的期望为<script type="math/tex">\mu</script>，方差为<script type="math/tex">\sigma^2</script>，即：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}     \mu & = E ( X )  \\  \sigma ^ { 2 } & = E ( X - \mu ) ^ { 2  } \end{aligned}</script><p>现实应用中<script type="math/tex">X</script>的分布往往难以获知，但可以通过采样的方式估计，用<script type="math/tex">S ^ { 2 }</script>估计<script type="math/tex">\sigma^2</script>：</p>
+<script type="math/tex; mode=display">
+S ^ { 2 } = \frac { 1 } { n } \sum _ { i = 1 } ^ { n } \left( X _ { i } - \mu \right) ^ { 2 }</script><p>而现实中往往连<script type="math/tex">X</script>的期望<script type="math/tex">\mu</script>也未知，但通过采样可以得到样本的均值<script type="math/tex">\overline { X }</script>：</p>
+<script type="math/tex; mode=display">
+\overline { X } = \frac { 1 } { n } \sum _ { i = 1 } ^ { n } X _ { i }\</script><p>并且均值<script type="math/tex">\overline { X }</script>是<script type="math/tex">X</script>的无偏估计。<br>推导过程：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+E \overline { X } & = \frac { 1 } { n } \left( E X _ { 1 } + E X _ { 2 } + \cdots + E X _ { n } \right) = \frac { 1 } { n } ( \mu + \mu + \cdots + \mu ) =\mu \\
+\operatorname { Var } (\overline { X }) & = \frac { 1 } { n ^ { 2 } } \left( \operatorname { Var } \left( X _ { 1 } \right) + \operatorname { Var } \left( X _ { 2 } \right) + \cdots + \operatorname { Var } \left( X _ { n } \right) \right) = \frac { 1 } { n } \sigma^2
+\end{aligned}</script><p>则<script type="math/tex">S ^ { 2 }</script>为：</p>
+<script type="math/tex; mode=display">
+S ^ { 2 } = \frac { 1 } { n-1 } \sum _ { i = 1 } ^ { n } \left( X _ { i } - \overline{X} \right) ^ { 2 }</script><p>并且<script type="math/tex">S ^ { 2 }</script>是<script type="math/tex">\sigma^2</script>无偏估计。</p>
+<p>推导过程：</p>
+<script type="math/tex; mode=display">
+\begin{aligned} \mathrm { E } \left[ S ^ { 2 } \right] & = \mathrm { E } \left[ \frac { 1 } { n-1 } \sum _ { i = 1 } ^ { n } \left( X _ { i } - \overline { X } \right) ^ { 2 } \right] \\ & = \mathrm { E } \left[ \frac { 1 } { n-1 } \sum _ { i = 1 } ^ { n } \left( \left( X _ { i } - \mu \right) - ( \overline { X } - \mu ) \right) ^ { 2 } \right] \\ & = \mathrm { E } \left[ \frac { 1 } { n-1 } \sum _ { i = 1 } ^ { n } \left( \left( X _ { i } - \mu \right) ^ { 2 } - 2 ( \overline { X } - \mu ) \left( X _ { i } - \mu \right) + ( \overline { X } - \mu ) ^ { 2 } \right) \right] \\ & = \mathrm { E } \left[ \frac { 1 } { n-1 } \sum _ { i = 1 } ^ { n } \left( X _ { i } - \mu \right) ^ { 2 } - \frac { 2 } { n-1 } ( \overline { X } - \mu ) \sum _ { i = 1 } ^ { n } \left( X _ { i } - \mu \right) + \frac { 1 } { n-1 } ( \overline { X } - \mu ) ^ { 2 } \sum _ { i = 1 } ^ { n } 1 \right] \\ & = \mathrm { E } \left[ \frac { 1 } { n-1 } \sum _ { i = 1 } ^ { n } \left( X _ { i } - \mu \right) ^ { 2 } - \frac { 2 } { n-1 } ( \overline { X } - \mu ) \sum _ { i = 1 } ^ { n } \left( X _ { i } - \mu \right) + \frac { 1 } { n-1 } ( \overline { X } - \mu ) ^ { 2 } \cdot n \right] \\ & = \mathrm { E } \left[ \frac { 1 } { n-1 } \sum _ { i = 1 } ^ { n } \left( X _ { i } - \mu \right) ^ { 2 } - \frac { 2 } { n-1 } ( \overline { X } - \mu ) \sum _ { i = 1 } ^ { n } \left( X _ { i } - \mu \right) + \frac{n}{n-1}( \overline { X } - \mu ) ^ { 2 } \right]
+\end{aligned}</script><p>其中：</p>
+<script type="math/tex; mode=display">
+\overline { X } - \mu = \frac { 1 } { n } \sum _ { i = 1 } ^ { n } X _ { i } - \mu = \frac { 1 } { n } \sum _ { i = 1 } ^ { n } X _ { i } - \frac { 1 } { n } \sum _ { i = 1 } ^ { n } \mu = \frac { 1 } { n } \sum _ { i = 1 } ^ { n } \left( X _ { i } - \mu \right)</script><p>于是：</p>
+<script type="math/tex; mode=display">
+\begin{aligned} \mathrm { E } \left[ S ^ { 2 } \right] & = \mathrm { E } \left[ \frac { 1 } { n-1 } \sum _ { i = 1 } ^ { n } \left( X _ { i } - \mu \right) ^ { 2 } - \frac { 2 } { n-1 } ( \overline { X } - \mu ) \sum _ { i = 1 } ^ { n } \left( X _ { i } - \mu \right) + \frac{n}{n-1}( \overline { X } - \mu ) ^ { 2 } \right] \\ & = \mathrm { E } \left[ \frac { 1 } { n-1 } \sum _ { i = 1 } ^ { n } \left( X _ { i } - \mu \right) ^ { 2 } - \frac { 2 } { n-1 } ( \overline { X } - \mu ) \cdot n \cdot ( \overline { X } - \mu ) + \frac{n}{n-1}( \overline { X } - \mu ) ^ { 2 } \right] \\ & = \mathrm { E } \left[ \frac { 1 } { n-1 } \sum _ { i = 1 } ^ { n } \left( X _ { i } - \mu \right) ^ { 2 } - \frac{n}{n-1} ( \overline { X } - \mu ) ^ { 2 }  \right] \\ & = \mathrm { E } \left[ \frac { 1 } { n-1 } \sum _ { i = 1 } ^ { n } \left( X _ { i } - \mu \right) ^ { 2 } \right] - \frac{n}{n-1}\mathrm { E } \left[ ( \overline { X } - \mu ) ^ { 2 } \right] \\ & = \frac{n}{n-1}\sigma ^ { 2 } - \mathrm { E } \left[ ( \overline { X } - \mu ) ^ { 2 } \right] \end{aligned}</script><p>又：</p>
+<script type="math/tex; mode=display">
+\mathrm { E } \left[ ( \overline { X } - \mu ) ^ { 2 } \right] =\operatorname { Var } (\overline { X })= \frac { 1 } { n } \sigma ^ { 2 }</script><p>得到：</p>
+<script type="math/tex; mode=display">
+\mathrm { E } \left[ S ^ { 2 } \right] = \frac{n}{n-1}\sigma ^ { 2 } - \frac { 1 } { n } \sigma ^ { 2 }= \sigma ^ { 2 }</script><p>能通过实验验证吗？<strong>高斯分布</strong><br>参考：<a href="https://www.matongxue.com/madocs/607.html" target="_blank" rel="noopener">https://www.matongxue.com/madocs/607.html</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://huzuoliang.github.io/2019/01/04/统计学之无偏估计-均值与方差/" data-id="cjqhzgxqd000m2pvo8u61thew" class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/均值-方差/">均值,方差</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+    
+      <a href="/2018/12/27/SVM之SMO/" class="article-nav-link">
+        <strong class="article-nav-caption">Older posts</strong>
+        <div class="article-nav-title">SVM之SMO求解优化问题</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  <div class="gitalk" id="gitalk-container"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+  <script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '4ce5dacf29e6266050dc',
+        clientSecret: '8b85beecdcf2a398a718306bc792389f8b25aa10',
+        repo: 'huzuoliang.github.io',
+        owner: 'huzuoliang',
+        admin: ['huzuoliang'],
+        // id: location.pathname,      // Ensure uniqueness and length less than 50
+        id: md5(location.pathname),
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+  gitalk.render('gitalk-container')
+  </script>
+
+
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  
+  <div class="outer">
+    <ul class="list-inline">
+      <li>&copy; 2019 HuZuoliang</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <!-- <li>Theme  <a href="https://zhwangart.github.io">zhwangart</a></li> -->
+      <!--
+      <li><a href="/">HuZuoliang</a></li>
+      -->
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="HuZuoliang"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+  <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/lazyload.min.js"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+  <script src="/js/search.js"></script>
+
+
+<script src="/js/ocean.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>

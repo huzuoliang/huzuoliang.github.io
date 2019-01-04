@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://huzuoliang.github.io/2018/12/15/DL%E4%B9%8BBatch-Normalization/</loc>
+    <lastmod>2019-01-04T13:13:56.290Z</lastmod>
+  </url>  <url>
     <loc>https://huzuoliang.github.io/2019/01/04/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%8B%E6%97%A0%E5%81%8F%E4%BC%B0%E8%AE%A1-%E5%9D%87%E5%80%BC%E4%B8%8E%E6%96%B9%E5%B7%AE/</loc>
     <lastmod>2019-01-04T11:54:58.221Z</lastmod>
   </url>  <url>
@@ -24,8 +27,5 @@
   </url>  <url>
     <loc>https://huzuoliang.github.io/2018/12/15/Tensorflow%E4%B9%8By-xW-b%E8%80%8C%E4%B8%8D%E6%98%AFy-Wx-b/</loc>
     <lastmod>2018-12-15T03:40:29.281Z</lastmod>
-  </url>  <url>
-    <loc>https://huzuoliang.github.io/2018/12/15/DL%E4%B9%8BBatch-Normalization/</loc>
-    <lastmod>2018-12-15T03:25:37.290Z</lastmod>
   </url>
 </urlset>

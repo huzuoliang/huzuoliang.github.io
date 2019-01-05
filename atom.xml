@@ -183,9 +183,9 @@
       <category term="python" scheme="https://huzuoliang.github.io/categories/python/"/>
     
     
-      <category term="numpy" scheme="https://huzuoliang.github.io/tags/numpy/"/>
-    
       <category term="pandas" scheme="https://huzuoliang.github.io/tags/pandas/"/>
+    
+      <category term="numpy" scheme="https://huzuoliang.github.io/tags/numpy/"/>
     
   </entry>
   

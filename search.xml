@@ -155,9 +155,9 @@
       
         <tags>
             
-            <tag> numpy </tag>
-            
             <tag> pandas </tag>
+            
+            <tag> numpy </tag>
             
         </tags>
       

@@ -45,7 +45,7 @@
 </a>
         
   <div class="article-category">
-    <a class="article-category-link" href="/categories/ml-DL/">ml,DL</a>
+    <a class="article-category-link" href="/categories/dl/">dl</a>
   </div>
 
       </div>
@@ -55,11 +55,34 @@
       
       
       
-        
+        <h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h2><p><em><code>Internal Covariate Shift</code>：在网络训练过程中，前一层的参数不断发生改变，导致下一层的输入分布不断改变</em>。每个隐层需要不断的适应<code>Internal Covariate Shift</code>，随着网络的加深，这种变化影响会越来越大，导致网络难以训练，通过对每一层的输入进行<code>Batch Normalization</code>，固定输入的分布（<script type="math/tex">\mu=0</script>，<script type="math/tex">\sigma=1</script>），使得<strong>激活输入值</strong>落在非线性函数对输入比较敏感的区域，这样输入的小变化就会导致损失函数较大的变化，避免梯度消失问题产生，并且梯度变大意味着学习收敛速度快，能大大加快训练速度。<br><a id="more"></a></p>
+<h2 id="2-训练过程中Batch-Normalization算法"><a href="#2-训练过程中Batch-Normalization算法" class="headerlink" title="2. 训练过程中Batch Normalization算法"></a>2. 训练过程中<code>Batch Normalization</code>算法</h2><p>假设<code>mini-batch</code>梯度下降中，有<code>m</code>个数据点<script type="math/tex">\mathcal { B } = \left\{ x _ { 1 \ldots m } \right\}</script>，则<code>Batch Normalization</code>算法如下：</p>
+<script type="math/tex; mode=display">
+\begin{aligned} \mu _ { \mathcal { B } } & \leftarrow \frac { 1 } { m } \sum _ { i = 1 } ^ { m } x _ { i } \\ \sigma _ { \mathcal { B } } ^ { 2 } & \leftarrow \frac { 1 } { m } \sum _ { i = 1 } ^ { m } \left( x _ { i } - \mu _ { \mathcal { B } } \right) ^ { 2 } \\ \widehat { x } _ { i } & \leftarrow \frac { x _ { i } - \mu _ { \mathcal { B } } } { \sqrt { \sigma _ { \mathcal { B } } ^ { 2 } + \epsilon } } \\ y _ { i } & \leftarrow \gamma \widehat { x } _ { i } + \beta \equiv \mathrm { B } \mathrm { N } _ { \gamma , \beta } \left( x _ { i } \right) \end{aligned}</script><p>当前隐层输入进行标准化后，相当于将非线性函数的输出压缩到函数的线性区域，丢失了当前层的一部分表达能力，对每个输入<script type="math/tex">x</script>增加<script type="math/tex">\gamma , \beta</script>是期望能弥补这一部分丢失的表达能力。令<script type="math/tex">\gamma^{(k)}=\sqrt{ Var[x^{(k)}]},\beta^{(k)}=E[x^{(k)}]</script>相当于不做<code>Batch Normalization</code>。</p>
+<p><div align="center"><img src="/2018/12/15/DL之Batch-Normalization/bn.png" width="360"></div>　<br><strong>要注意，这里某个神经元的<script type="math/tex">x_i</script>不是指上一层的原始输入，而是当前层该神经元的输入<script type="math/tex">x=WU+B</script>，<script type="math/tex">U</script>才是上一层层神经元的输出。</strong><br>反向传播的梯度更新公式：</p>
+<script type="math/tex; mode=display">
+\begin{aligned} \frac { \partial \ell } { \partial \hat { x } _ { i } } & = \frac { \partial \ell } { \partial y _ { i } } \cdot \gamma \\ \frac { \partial \ell } { \partial \sigma _ { B } ^ { 2 } } & = \sum _ { i = 1 } ^ { m } \frac { \partial \ell } { \partial \hat { x } _ { i } } \cdot \left( x _ { i } - \mu _ { \mathcal { B } } \right) \cdot \frac { - 1 } { 2 } \left( \sigma _ { \mathcal { B } } ^ { 2 } + \epsilon \right) ^ { - 3 / 2 }
+\\ \frac { \partial \ell } { \partial \mu _ { \mathcal { B } } } & = \sum _ { i = 1 } ^ { m } \frac { \partial \ell } { \partial \hat { x } _ { i } } \cdot \frac { - 1 } { \sqrt { \sigma _ { \mathcal { B } } ^ { 2 } + \epsilon } } \\ \frac { \partial \ell } { \partial x _ { i } } & = \frac { \partial \ell } { \partial \hat { x } _ { i } } \cdot \frac { 1 } { \sqrt { \sigma _ { \mathcal { B } } ^ { 2 } + \epsilon } } + \frac { \partial \ell } { \partial \sigma _ { \mathcal { B } } ^ { 2 } } \cdot \frac { 2 \left( x _ { i } - \mu _ { \mathcal { B } } \right) } { m } + \frac { \partial \ell } { \partial \mu _ { \mathcal { B } } } \cdot \frac { 1 } { m }
+\\ \frac { \partial \ell } { \partial \gamma } & = \sum _ { i = 1 } ^ { m } \frac { \partial \ell } { \partial y _ { i } } \cdot \widehat { x } _ { i } \\ \frac { \partial \ell } { \partial \beta } & = \sum _ { i = 1 } ^ { m } \frac { \partial \ell } { \partial y _ { i } }
+
+
+\end{aligned}</script><h2 id="3-预测过程中Batch-Normalization算法"><a href="#3-预测过程中Batch-Normalization算法" class="headerlink" title="3. 预测过程中Batch Normalization算法"></a>3. 预测过程中<code>Batch Normalization</code>算法</h2><p>因为预测时有可能只有一个数据点，不太可能直接计算各层的分布，而且我们更倾向于使用训练集的分布来<code>Batch Normalization</code>预测集的各个隐层，于是采用训练数据各个<code>mini-batch</code>在各层的分布来估计输入数据在各层的分布，即：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+ \mathrm { E } [ x ] & = \mathrm { E } _ { \mathcal { B } } \left[ \mu _ { \mathcal { B } } \right]  \\  {\operatorname { Var } [ x ]} & = \frac { m } { m - 1 } \mathrm { E } _ { \mathcal { B } } \left[ \sigma _ { \mathcal { B } } ^ { 2 } \right]  \\ y & = \frac { \gamma } { \sqrt { \operatorname { Var } [ x ] + \epsilon } } \cdot x + \left( \beta - \frac { \gamma \mathrm { E } [ x ] } { \sqrt { \operatorname { Var } [ x ] + \epsilon } } \right)
+\end{aligned}</script><p>其中<script type="math/tex">\mathrm { Var } \left[ x \right],E[x]</script>是无偏估计。</p>
+<h2 id="4-卷积网络Batch-Normalization算法"><a href="#4-卷积网络Batch-Normalization算法" class="headerlink" title="4. 卷积网络Batch Normalization算法"></a>4. 卷积网络<code>Batch Normalization</code>算法</h2><p>卷积网络的变换为：</p>
+<script type="math/tex; mode=display">\mathbf { z } = g ( W \mathbf { u } + \mathbf { b } )</script><p>其中<script type="math/tex">g</script>可以是<script type="math/tex">sigmod</script>或<script type="math/tex">relu</script>函数，只需对每个<script type="math/tex">x=WU+B</script>进行<code>Batch Normalization</code>，即：</p>
+<script type="math/tex; mode=display">\mathbf { z } = g ( \mathbf { B N } ( W \mathbf { u } ) )</script><p>对得到的每一个<code>feature map</code>使用<script type="math/tex">\gamma , \beta</script>。</p>
+<h2 id="4-Batch-Normalization优点"><a href="#4-Batch-Normalization优点" class="headerlink" title="4. Batch Normalization优点"></a>4. <code>Batch Normalization</code>优点</h2><p>权重伸缩不变性（<code>weight scale invariance</code>）：当权重<script type="math/tex">W</script>按照常量<script type="math/tex">a</script>进行伸缩时，得到的规范化后的值保持不变，即：</p>
+<script type="math/tex; mode=display">
+\mathbf { B N } ( W \mathbf { u } ) = \mathbf { B } \mathbf { N } ( ( a W ) \mathbf { u } )</script><p>所以<script type="math/tex">\frac { \partial \mathrm { BN } ( ( a W ) \mathrm { u } ) } { \partial \mathrm { u } } = \frac { \partial \mathrm { BN } ( W \mathrm { u } ) } { \partial \mathrm { u } }</script>，即参数的放缩不会影响梯度的反向传播，避免了反向传播时因为<strong>权重过大或过小导致的梯度消失或梯度爆炸问题</strong>，从而加速了神经网络的训练；并且<script type="math/tex">\frac { \partial \mathrm { BN } ( ( a W ) \mathrm { u } ) } { \partial ( a W ) } = \frac { 1 } { a } \cdot \frac { \partial \mathrm { BN } ( W \mathrm { u } ) } { \partial W }</script>，因此，下层的权重值越大，其梯度就越小，参数的变化就越稳定，相当于实现了参数正则化的效果，避免参数的大幅震荡，提高网络的泛化性能。权重伸缩不变性也使得模型不易受参数初始化的影响，并且可以尝试更大的学习率以加快训练速度。</p>
+<p><strong>总结起来就是<script type="math/tex">BN</script>解决了反向传播过程中的梯度问题（梯度消失和爆炸），同时使得不同<code>scale</code>的<script type="math/tex">W</script>整体更新步调更一致</strong>。</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://huzuoliang.github.io/2018/12/15/DL之Batch-Normalization/" data-id="cjqi29i9d0000vsvoh3yzgkam" class="article-share-link">Share</a>
+      <a data-url="https://huzuoliang.github.io/2018/12/15/DL之Batch-Normalization/" data-id="cjqjh12so00016wvowomq4fj2" class="article-share-link">Share</a>
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Batch-Normalization/">Batch Normalization</a></li></ul>
 

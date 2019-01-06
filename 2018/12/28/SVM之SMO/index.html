@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>
-    SVM之KKT转换对偶条件 |
+    SVM之SMO求解优化问题 |
     
     HuZuoliang</title>
   
@@ -23,7 +23,7 @@
 <body>
 <!-- hexo-inject:begin --><!-- hexo-inject:end --><main class="content">
   <section class="outer">
-  <article id="post-SVM之KKT" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <article id="post-SVM之SMO" class="article article-type-post" itemscope="" itemprop="blogPost">
 
   <div class="article-inner">
     
@@ -31,7 +31,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      SVM之KKT转换对偶条件
+      SVM之SMO求解优化问题
     </h1>
   
 
@@ -40,10 +40,14 @@
 
     
       <div class="article-meta">
-        <a href="/2018/12/27/SVM之KKT/" class="article-date">
-  <time datetime="2018-12-27T07:40:02.000Z" itemprop="datePublished">2018-12-27</time>
+        <a href="/2018/12/28/SVM之SMO/" class="article-date">
+  <time datetime="2018-12-28T07:40:51.000Z" itemprop="datePublished">2018-12-28</time>
 </a>
         
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ml/">ml</a>
+  </div>
+
       </div>
     
 
@@ -51,12 +55,19 @@
       
       
       
-        
+        <p>我们知道，软间隔<code>SVM</code>的优化目标为：</p>
+<script type="math/tex; mode=display">
+\begin{array} { c l } { \max \limits_ { \alpha } } & { \sum _ { i = 1 } ^ { n } \alpha _ { i } - \frac { 1 } { 2 } \sum _ { i , j = 1 } ^ { n } \alpha _ { i } \alpha _ { j } y _ { i } y _ { j } x _ { i } ^ { T } x _ { j } } \\ { \text {s.t.} } & { 0 \leq \alpha _ { i } \leq C , i = 1 , \ldots , n } \\ { } & { \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } = 0 } \end{array}</script><p>为了求解该问题，我们采用<code>SMO</code>算法，为了保证<script type="math/tex">\sum _ { i = 1 } ^ { n } y _ { i } \alpha _ { i } = 0</script>成立，我们每次选择两个<script type="math/tex">\alpha_i</script>进行优化，比如<script type="math/tex">\alpha_1,\alpha_2</script>，原始的<script type="math/tex">\alpha_1^{old},\alpha_2^{old},\alpha_3,\cdots,\alpha_n</script>当做常量处理，于是：</p>
+<script type="math/tex; mode=display">
+y_1\alpha_1+y_2\alpha_2=y_1\alpha_1^{old}+y_2\alpha_2^{old}=Const</script><a id="more"></a>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://huzuoliang.github.io/2018/12/27/SVM之KKT/" data-id="cjqjhbq71000dqnvo1fsds9zh" class="article-share-link">Share</a>
+      <a data-url="https://huzuoliang.github.io/2018/12/28/SVM之SMO/" data-id="cjql150qe000dk5vo86yix9pa" class="article-share-link">Share</a>
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SVM/">SVM</a></li></ul>
+
     </footer>
 
   </div>
@@ -65,19 +76,19 @@
     
   <nav class="article-nav">
     
-      <a href="/2018/12/27/SVM/" class="article-nav-link">
+      <a href="/2019/01/04/统计学之无偏估计-均值与方差/" class="article-nav-link">
         <strong class="article-nav-caption">Newer posts</strong>
         <div class="article-nav-title">
           
-            SVM
+            统计学之无偏估计
           
         </div>
       </a>
     
     
-      <a href="/2018/12/15/DL之Xavier/" class="article-nav-link">
+      <a href="/2018/12/28/SVM之KKT/" class="article-nav-link">
         <strong class="article-nav-caption">Older posts</strong>
-        <div class="article-nav-title">DL之Xavier</div>
+        <div class="article-nav-title">SVM之KKT对偶问题</div>
       </a>
     
   </nav>

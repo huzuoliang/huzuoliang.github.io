@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    SVM之KKT对偶问题 |
+    
+    HuZuoliang</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+  
+  <script src="/js/pace.min.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+</html>
+<body>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><main class="content">
+  <section class="outer">
+  <article id="post-SVM之KKT" class="article article-type-post" itemscope="" itemprop="blogPost">
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      SVM之KKT对偶问题
+    </h1>
+  
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2018/12/28/SVM之KKT/" class="article-date">
+  <time datetime="2018-12-28T07:40:02.000Z" itemprop="datePublished">2018-12-28</time>
+</a>
+        
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ml/">ml</a>
+  </div>
+
+      </div>
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h2><p><code>SVM</code>模型在求解过程中，为了使求解的结果更易推广到非线性及处理低维数据线性不可分，将原问题的最优化求解转换到对偶问题的求解。<br><a id="more"></a></p>
+<h2 id="2-原问题与对偶问题"><a href="#2-原问题与对偶问题" class="headerlink" title="2. 原问题与对偶问题"></a>2. 原问题与对偶问题</h2><p>定义原始问题：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\min _ { w , b } \theta _ { p } ( w , b ) & = \min _ { w , b } \max _ { \alpha \geq 0 } L ( w , b , \alpha )
+\\ \theta _ { p } ( w , b ) & = \max _ { \alpha \geq 0 } L ( w , b , \alpha )
+\end{aligned}</script><p>将原始问题的<script type="math/tex">\min _ { w , b }</script>和<script type="math/tex">\max _ { \alpha \geq 0 }</script>顺序交换，得到对偶问题：</p>
+<script type="math/tex; mode=display">
+\begin{aligned} \max _ { \alpha \geq 0 } \theta _ { D } ( \alpha ) & = \max _ { \alpha \geq 0 } \min _ { w , b } L ( w , b , \alpha ) \\ \theta _ { D } ( \alpha ) & = \min _ { w , b } L ( w , b , \alpha ) \end{aligned}</script><h2 id="3-原问题转换成对偶问题"><a href="#3-原问题转换成对偶问题" class="headerlink" title="3. 原问题转换成对偶问题"></a>3. 原问题转换成对偶问题</h2><p>对于原始问题和对偶问题，如果它们都存在最优解，并分别表示为<script type="math/tex">p^{*}=\min_{w,b} \theta_p(w,b)</script>与<script type="math/tex">d^{*}=\max_{\alpha} \theta_D(\alpha)</script>，那么它们有如下关系：</p>
+<script type="math/tex; mode=display">
+d^{*} \leq p^{*}</script><p>这被称为弱对偶性。证明如下：</p>
+<script type="math/tex; mode=display">
+\theta _ { D } ( \alpha ) = \min _ { w , b } L ( w , b , \alpha ) \leq  L ( w , b , \alpha ) \leq \max _ { \alpha \geq 0 } L ( w , b , \alpha ) = \theta _ { p } ( w , b )</script><p>而它们都存在最优价，可知：</p>
+<script type="math/tex; mode=display">
+d^* = \max _ { \alpha \geq 0 } \theta _ { D } ( \alpha ) \leq \min _ { w , b } \theta _ { p } ( w , b )=p^*</script><p>对于一对原始问题与对偶问题，<script type="math/tex">w^∗,b^∗</script>是原始问题的解，<script type="math/tex">\alpha^*</script>是对偶问题的解，如果它们满足<code>KKT</code>条件，则有<script type="math/tex">d^{*} = p^{*}</script>，这被称为强对偶性，此时可以通过求解对偶问题得到原始问题的解。<br><code>KKT</code>条件如下：</p>
+<ol>
+<li>拉格朗日平稳(Stationarity)：<script type="math/tex; mode=display">
+\begin{array} { l l } { \nabla _ { w _ { i } } L \left( w ^ { * } , b ^ { * } , \alpha ^ { * } \right) } & { = 0 , \quad i = 1,2 , \cdots , n } \\ { \nabla _ { b _ { i } } L \left( w ^ { * } , b ^ { * } , \alpha ^ { * } \right) } & { = 0 , \quad i = 1,2 , \cdots , l } \end{array}</script></li>
+<li>互补松弛(Complementary slackness)：<script type="math/tex; mode=display">
+\alpha _ { i } ^ { * } g _ { i } \left( w ^ { * } \right) = 0 , \quad i = 1,2 , \cdots , k</script></li>
+<li>原始可行性(Primal feasibility)：<script type="math/tex; mode=display">
+g _ { i } \left( w ^ { * } \right) \leq 0 , \quad i = 1,2 , \cdots , k</script></li>
+<li>对偶可行性(Dual feasibility)：<script type="math/tex; mode=display">
+\alpha ^ { * } \geq 0 , \quad i = 1,2 , \cdots , k</script></li>
+</ol>
+<h2 id="3-SVM的KKT条件"><a href="#3-SVM的KKT条件" class="headerlink" title="3. SVM的KKT条件"></a>3. <code>SVM</code>的<code>KKT</code>条件</h2><p>我们知道，对软间隔<code>SVM</code>拉格朗日函数求导：</p>
+<script type="math/tex; mode=display">\mathcal { L } ( w , b , \xi , \alpha , r ) = \frac { 1 } { 2 } \| w \| ^ { 2 } + C \sum _ { i = 1 } ^ { n } \xi _ { i } - \sum _ { i = 1 } ^ { n } \alpha _ { i } \left( y _ { i } \left( w ^ { T } x _ { i } + b \right) - 1 + \xi _ { i } \right) - \sum _ { i = 1 } ^ { n } \mu _ { i } \xi _ { i }</script><p>即：</p>
+<script type="math/tex; mode=display">
+\begin{aligned} \frac { \partial \mathcal {L} } { \partial w } & = 0 \Rightarrow w = \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } x _ { i } \\ \frac { \partial \mathcal {L} } { \partial b } & = 0 \Rightarrow \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } = 0 \\ \frac { \partial \mathcal {L} } { \partial \xi _ { i } } & = 0 \Rightarrow C - \alpha _ { i } - \mu _ { i } = 0 , \quad i = 1 , \ldots , n \end{aligned}</script><p>得到目标函数：</p>
+<script type="math/tex; mode=display">
+\begin{array} { c l } { \max \limits_ { \alpha } } & { \sum _ { i = 1 } ^ { n } \alpha _ { i } - \frac { 1 } { 2 } \sum _ { i , j = 1 } ^ { n } \alpha _ { i } \alpha _ { j } y _ { i } y _ { j } x _ { i } ^ { T } x _ { j } } \\ { \text {s.t.} } & { 0 \leq \alpha _ { i } \leq C , i = 1 , \ldots , n } \\ { } & { \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } = 0 } \end{array}</script><p><code>KKT</code>互补松弛条件为：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+& \alpha _ i \left(y_i(w^Tx_i+b) + \xi_i -1 \right)  = 0 \\ & \mu_i \xi = 0
+\end{aligned}</script><p>根据<script type="math/tex">\alpha _ i</script>的取值范围，分三种情况讨论：</p>
+<ol>
+<li>当<script type="math/tex">\alpha _ i=0</script>时，<script type="math/tex">\mu_ i=C-\alpha_i=C>0</script>，于是<script type="math/tex">\xi_i=0</script>，可以推出：<script type="math/tex; mode=display">
+y_i\left(w^Tx_i+b \right)-1 \geq 0</script>点落在两个支持平面正确分类的两侧。</li>
+<li>当<script type="math/tex">0<\alpha _ i<C</script>时，则有：<script type="math/tex; mode=display">
+y_i\left(w^Tx_i+b \right)+\xi_i-1=0</script>同时由<script type="math/tex">\mu_ i=C-\alpha_i=C>0</script>可知，<script type="math/tex">\xi_i=0</script>，最终得到：<script type="math/tex; mode=display">
+y_i\left(w^Tx_i+b \right)-1=0</script>点落在两个支持平面上。</li>
+<li>当<script type="math/tex">\alpha _ i=C</script>时，则有：<script type="math/tex; mode=display">
+y_i\left(w^Tx_i+b \right)+\xi_i-1=0</script>同时由<script type="math/tex">\mu_ i=C-\alpha_i=0</script>可知，<script type="math/tex">\xi_i \geq 0</script>，最终得到：<script type="math/tex; mode=display">
+y_i\left(w^Tx_i+b \right)-1 \leq 0</script>点落在两个支持平面中间。<br>由<script type="math/tex; mode=display">
+R_i=y_i(w^Tx+b)-1=y_i(w^Tx+b)-y_i^2=y_i(w^Tx+b-y_i)=y_iE_i</script>其中<script type="math/tex">E_i=w^Tx_i+b-y_i</script>是预测误差。</li>
+</ol>
+<p>参考：<a href="https://blog.csdn.net/sinat_37965706/article/details/70666682" target="_blank" rel="noopener">https://blog.csdn.net/sinat_37965706/article/details/70666682</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://huzuoliang.github.io/2018/12/28/SVM之KKT/" data-id="cjql150qd000ck5vojlkab6hp" class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SVM/">SVM</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2018/12/28/SVM之SMO/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            SVM之SMO求解优化问题
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2018/12/27/SVM/" class="article-nav-link">
+        <strong class="article-nav-caption">Older posts</strong>
+        <div class="article-nav-title">SVM</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  <div class="gitalk" id="gitalk-container"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+  <script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '4ce5dacf29e6266050dc',
+        clientSecret: '8b85beecdcf2a398a718306bc792389f8b25aa10',
+        repo: 'huzuoliang.github.io',
+        owner: 'huzuoliang',
+        admin: ['huzuoliang'],
+        // id: location.pathname,      // Ensure uniqueness and length less than 50
+        id: md5(location.pathname),
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+  gitalk.render('gitalk-container')
+  </script>
+
+
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  
+  <div class="outer">
+    <ul class="list-inline">
+      <li>&copy; 2019 HuZuoliang</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <!-- <li>Theme  <a href="https://zhwangart.github.io">zhwangart</a></li> -->
+      <!--
+      <li><a href="/">HuZuoliang</a></li>
+      -->
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="HuZuoliang"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+  <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/lazyload.min.js"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+  <script src="/js/search.js"></script>
+
+
+<script src="/js/ocean.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>

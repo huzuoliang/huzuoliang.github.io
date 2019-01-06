@@ -37,11 +37,11 @@
       </video>
       <div class="video-overlay"></div>
     </div>
-    <div class="video-inner text-center text-white">
+    <!-- <div class="video-inner text-center text-white">
       <h1><a href="/">HuZuoliang</a></h1>
       <p></p>
       <div><img src="/images/hexo-inverted.svg" class="brand" alt="HuZuoliang"></div>
-    </div>
+    </div> -->
     <div class="video-learn-more">
       <a class="anchor" href="#landingpage"><i class="fe fe-mouse"></i></a>
     </div>
@@ -95,7 +95,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://huzuoliang.github.io/2019/01/04/统计学之无偏估计-均值与方差/" data-id="cjqjhbq79000jqnvo4kinu7tn" class="article-share-link">Share</a>
+      <a data-url="https://huzuoliang.github.io/2019/01/04/统计学之无偏估计-均值与方差/" data-id="cjql150qk000ik5voijrlluw0" class="article-share-link">Share</a>
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/均值-方差/">均值,方差</a></li></ul>
 
@@ -120,7 +120,7 @@
         
   
     <h2 itemprop="name">
-      <a class="article-title" href="/2018/12/27/SVM之SMO/">SVM之SMO求解优化问题</a>
+      <a class="article-title" href="/2018/12/28/SVM之SMO/">SVM之SMO求解优化问题</a>
     </h2>
   
 
@@ -129,10 +129,14 @@
 
     
       <div class="article-meta">
-        <a href="/2018/12/27/SVM之SMO/" class="article-date">
-  <time datetime="2018-12-27T07:40:51.000Z" itemprop="datePublished">2018-12-27</time>
+        <a href="/2018/12/28/SVM之SMO/" class="article-date">
+  <time datetime="2018-12-28T07:40:51.000Z" itemprop="datePublished">2018-12-28</time>
 </a>
         
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ml/">ml</a>
+  </div>
+
       </div>
     
 
@@ -140,12 +144,77 @@
       
       
       
+        <p>我们知道，软间隔<code>SVM</code>的优化目标为：</p>
+<script type="math/tex; mode=display">
+\begin{array} { c l } { \max \limits_ { \alpha } } & { \sum _ { i = 1 } ^ { n } \alpha _ { i } - \frac { 1 } { 2 } \sum _ { i , j = 1 } ^ { n } \alpha _ { i } \alpha _ { j } y _ { i } y _ { j } x _ { i } ^ { T } x _ { j } } \\ { \text {s.t.} } & { 0 \leq \alpha _ { i } \leq C , i = 1 , \ldots , n } \\ { } & { \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } = 0 } \end{array}</script><p>为了求解该问题，我们采用<code>SMO</code>算法，为了保证<script type="math/tex">\sum _ { i = 1 } ^ { n } y _ { i } \alpha _ { i } = 0</script>成立，我们每次选择两个<script type="math/tex">\alpha_i</script>进行优化，比如<script type="math/tex">\alpha_1,\alpha_2</script>，原始的<script type="math/tex">\alpha_1^{old},\alpha_2^{old},\alpha_3,\cdots,\alpha_n</script>当做常量处理，于是：</p>
+<script type="math/tex; mode=display">
+y_1\alpha_1+y_2\alpha_2=y_1\alpha_1^{old}+y_2\alpha_2^{old}=Const</script>
+        
+          <a class="article-more-link" href="/2018/12/28/SVM之SMO/">Read More...</a>
         
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://huzuoliang.github.io/2018/12/27/SVM之SMO/" data-id="cjqjhbq73000eqnvok1p6twms" class="article-share-link">Share</a>
+      <a data-url="https://huzuoliang.github.io/2018/12/28/SVM之SMO/" data-id="cjql150qe000dk5vo86yix9pa" class="article-share-link">Share</a>
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SVM/">SVM</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+
+
+
+      
+        <article id="post-SVM之KKT" class="article article-type-post" itemscope="" itemprop="blogPost">
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h2 itemprop="name">
+      <a class="article-title" href="/2018/12/28/SVM之KKT/">SVM之KKT对偶问题</a>
+    </h2>
+  
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2018/12/28/SVM之KKT/" class="article-date">
+  <time datetime="2018-12-28T07:40:02.000Z" itemprop="datePublished">2018-12-28</time>
+</a>
+        
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ml/">ml</a>
+  </div>
+
+      </div>
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h2><p><code>SVM</code>模型在求解过程中，为了使求解的结果更易推广到非线性及处理低维数据线性不可分，将原问题的最优化求解转换到对偶问题的求解。<br></p>
+        
+          <a class="article-more-link" href="/2018/12/28/SVM之KKT/">Read More...</a>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://huzuoliang.github.io/2018/12/28/SVM之KKT/" data-id="cjql150qd000ck5vojlkab6hp" class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SVM/">SVM</a></li></ul>
+
     </footer>
 
   </div>
@@ -199,57 +268,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://huzuoliang.github.io/2018/12/27/SVM/" data-id="cjqjhbq6z0009qnvo2ulndpbi" class="article-share-link">Share</a>
+      <a data-url="https://huzuoliang.github.io/2018/12/27/SVM/" data-id="cjql150qb0008k5vok374eae7" class="article-share-link">Share</a>
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SVM/">SVM</a></li></ul>
 
-    </footer>
-
-  </div>
-
-  
-
-  
-
-</article>
-
-
-
-      
-        <article id="post-SVM之KKT" class="article article-type-post" itemscope="" itemprop="blogPost">
-
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h2 itemprop="name">
-      <a class="article-title" href="/2018/12/27/SVM之KKT/">SVM之KKT转换对偶条件</a>
-    </h2>
-  
-
-      </header>
-    
-
-    
-      <div class="article-meta">
-        <a href="/2018/12/27/SVM之KKT/" class="article-date">
-  <time datetime="2018-12-27T07:40:02.000Z" itemprop="datePublished">2018-12-27</time>
-</a>
-        
-      </div>
-    
-
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://huzuoliang.github.io/2018/12/27/SVM之KKT/" data-id="cjqjhbq71000dqnvo1fsds9zh" class="article-share-link">Share</a>
-      
     </footer>
 
   </div>
@@ -295,7 +317,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://huzuoliang.github.io/2018/12/15/DL之Xavier/" data-id="cjqjhbq6q0002qnvomlmjiwty" class="article-share-link">Share</a>
+      <a data-url="https://huzuoliang.github.io/2018/12/15/DL之Xavier/" data-id="cjql150q30002k5vo4y3xpom0" class="article-share-link">Share</a>
       
     </footer>
 
@@ -342,7 +364,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://huzuoliang.github.io/2018/12/15/Tensorflow之y-xW-b而不是y-Wx-b/" data-id="cjqjhbq77000iqnvo5e6fm0xv" class="article-share-link">Share</a>
+      <a data-url="https://huzuoliang.github.io/2018/12/15/Tensorflow之y-xW-b而不是y-Wx-b/" data-id="cjql150qh000hk5vokgz5h5wo" class="article-share-link">Share</a>
       
     </footer>
 
@@ -396,7 +418,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://huzuoliang.github.io/2018/12/15/DL之Batch-Normalization/" data-id="cjqjhbq6l0000qnvoqvyzi2y0" class="article-share-link">Share</a>
+      <a data-url="https://huzuoliang.github.io/2018/12/15/DL之Batch-Normalization/" data-id="cjql150py0000k5voro324qw4" class="article-share-link">Share</a>
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Batch-Normalization/">Batch Normalization</a></li></ul>
 
@@ -456,7 +478,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://huzuoliang.github.io/2018/11/29/Python之Numpy-reshape/" data-id="cjqjhbq6y0008qnvon0dz4g41" class="article-share-link">Share</a>
+      <a data-url="https://huzuoliang.github.io/2018/11/29/Python之Numpy-reshape/" data-id="cjql150qa0007k5vo2z5ilv6j" class="article-share-link">Share</a>
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/numpy/">numpy</a></li></ul>
 
@@ -512,7 +534,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://huzuoliang.github.io/2018/11/28/Python之NumPy（axis-0-与axis-1）区分/" data-id="cjqjhbq6w0006qnvorwy7uov1" class="article-share-link">Share</a>
+      <a data-url="https://huzuoliang.github.io/2018/11/28/Python之NumPy（axis-0-与axis-1）区分/" data-id="cjql150q80006k5vorqahl06g" class="article-share-link">Share</a>
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/numpy/">numpy</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pandas/">pandas</a></li></ul>
 

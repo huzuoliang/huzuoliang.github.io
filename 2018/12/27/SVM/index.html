@@ -91,18 +91,18 @@
 <script type="math/tex; mode=display">
 \begin{array} { c l } { \max _ { \alpha } \sum _ { i = 1 } ^ { n } \alpha _ { i } - \frac { 1 } { 2 } \sum _ { i , j = 1 } ^ { n } \alpha _ { i } \alpha _ { j } y _ { i } y _ { j } x _ { i } ^ { T } x _ { j } } & { } \\ { \text { s.t. } } { \alpha _ { i } \geq 0 , i = 1 , \dots , n } \\ { }  { \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } = 0 } \end{array}</script><p>采用<code>SMO</code>算法，求解得到<script type="math/tex">\alpha_i , i = 1 , \dots , n</script>：</p>
 <script type="math/tex; mode=display">
-\begin{aligned} w ^ { * } & = \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } x _ { i } \\ b ^ { * } & = - \frac { \max _ { i : y _ { i } = - 1 } w ^ { * T } x _ { i } + \min _ { i \cdot y _ { i } = 1 } w ^ { * T } x _ { i } } { 2 } \end{aligned}</script><p>(3) 在(1)中我们我们知道：</p>
+\begin{aligned} w ^ { * } & = \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } x _ { i } \\ b ^ { * } & = - \frac { \max _ { i : y _ { i } = - 1 } w ^ { * T } x _ { i } + \min _ { i \cdot y _ { i } = 1 } w ^ { * T } x _ { i } } { 2 } \end{aligned}</script><p>其中，<script type="math/tex">b=-1-\max _ { i : y _ { i } = - 1 } w ^ { * T } x _ { i }</script>是落在超平面上<script type="math/tex">f(w,b)=-1</script>的一个支持点，<script type="math/tex">b=1-\min _ { i \cdot y _ { i } = 1 } w ^ { * T } x _ { i }</script>是<script type="math/tex">f(w,b)=+1</script>上的一个支持点。<br>(3) 在(1)中我们我们知道：</p>
 <script type="math/tex; mode=display">
 w ^ { * } = \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } x _ { i }</script><p>于是最终分类函数为：</p>
 <script type="math/tex; mode=display">
-\begin{aligned} f ( x ) & = \left( \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } x _ { i } \right) ^ { T } x + b \\ & = \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } \left\langle x _ { i } , x \right\rangle + b \end{aligned}</script><h2 id="5-松弛最大间隔"><a href="#5-松弛最大间隔" class="headerlink" title="5. 松弛最大间隔"></a>5. 松弛最大间隔</h2><p>目前的超平面能够处理线性可分的特征空间，这种<code>SVM</code>的分类能力比较弱，通过<strong>核函数</strong>我们可以将分割面推广到非线性的情况。<strong>计算两个向量在隐式映射过后的空间中的内积的函数叫做核函数 (Kernel Function)</strong>，通过使用恰当的核函数来替代内积，可以隐式得将非线性的训练数据映射到高维空间，而不增加可调参数的个数。<br>一个测试点<script type="math/tex">x</script>的预测结果可以通过核函数表示成：</p>
+\begin{aligned} f ( x ) & = \left( \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } x _ { i } \right) ^ { T } x + b \\ & = \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } \left\langle x _ { i } , x \right\rangle + b \end{aligned}</script><h2 id="5-软最大间隔"><a href="#5-软最大间隔" class="headerlink" title="5. 软最大间隔"></a>5. 软最大间隔</h2><p>目前的超平面能够处理线性可分的特征空间，这种<code>SVM</code>的分类能力比较弱，通过<strong>核函数</strong>我们可以将分割面推广到非线性的情况。<strong>计算两个向量在隐式映射过后的空间中的内积的函数叫做核函数 (Kernel Function)</strong>，通过使用恰当的核函数来替代内积，可以隐式得将非线性的训练数据映射到高维空间，而不增加可调参数的个数。<br>一个测试点<script type="math/tex">x</script>的预测结果可以通过核函数表示成：</p>
 <script type="math/tex; mode=display">f ( x ) = \sum _ { i = 1 } ^ { l } \alpha _ { i } y _ { i } \left\langle \phi \left( x _ { i } \right) , \phi ( x ) \right\rangle + b</script><p>对于目标函数，唯一的区别就在于<script type="math/tex">\alpha</script>的求解：</p>
 <script type="math/tex; mode=display">\max _ { \alpha } \sum _ { i = 1 } ^ { n } \alpha _ { i } - \frac { 1 } { 2 } \sum _ { i , j = 1 } ^ { n } \alpha _ { i } \alpha _ { j } y _ { i } y _ { j } \left\langle \phi \left( x _ { i } \right) , \phi \left( x _ { j } \right) \right\rangle \\ \text {s.t.} \quad \alpha _ { i } \geq 0 , i = 1 , \dots , n \\  \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } = 0</script><p><strong>有时候数据线性不可分可能并不是因为数据本身是非线性结构的，而只是因为数据有噪声</strong>。对于这种偏离正常位置很远的数据点，我们称之为<code>outlier</code>，在我们原来的 <code>SVM</code> 模型里，<code>outlier</code>的存在有可能造成很大的影响，因为超平面本身就是只有少数几个<code>support vector</code>组成的，如果这些<code>support vector</code>里又存在<code>outlier</code>的话，其影响就很大了。为了处理这种情况，<code>SVM</code>允许数据点在一定程度上偏离超平面。<br>于是定义目标函数：</p>
 <script type="math/tex; mode=display">\min \frac { 1 } { 2 } \| w \| ^ { 2 } + C \sum _ { i = 1 } ^ { n } \xi _ { i }</script><p>而约束条件为：</p>
 <script type="math/tex; mode=display">y _ { i } \left( w ^ { T } x _ { i } + b \right) \geq 1 - \xi _ { i } , \quad i = 1 , \ldots , n</script><p>即：</p>
 <script type="math/tex; mode=display">
 \begin{array} { c l } { \min } & { \frac { 1 } { 2 } \| w \| ^ { 2 } + C \sum _ { i = 1 } ^ { n } \xi _ { i } } \\ { \text {s.t.} } & { y _ { i } \left( w ^ { T } x _ { i } + b \right) \geq 1 - \xi _ { i } , i = 1 , \dots , n } \\ { } & { \xi _ { i } \geq 0 , i = 1 , \dots , n } \end{array}</script><p>得到新的拉格朗日函数：</p>
-<script type="math/tex; mode=display">\mathcal { L } ( w , b , \xi , \alpha , r ) = \frac { 1 } { 2 } \| w \| ^ { 2 } + C \sum _ { i = 1 } ^ { n } \xi _ { i } - \sum _ { i = 1 } ^ { n } \alpha _ { i } \left( y _ { i } \left( w ^ { T } x _ { i } + b \right) - 1 + \xi _ { i } \right) - \sum _ { i = 1 } ^ { n } r _ { i } \xi _ { i }</script><p>求解：</p>
+<script type="math/tex; mode=display">\mathcal { L } ( w , b , \xi , \alpha , r ) = \frac { 1 } { 2 } \| w \| ^ { 2 } + C \sum _ { i = 1 } ^ { n } \xi _ { i } - \sum _ { i = 1 } ^ { n } \alpha _ { i } \left( y _ { i } \left( w ^ { T } x _ { i } + b \right) - 1 + \xi _ { i } \right) - \sum _ { i = 1 } ^ { n } r _ { i } \xi _ { i }</script><p>得到对偶问题，求解：</p>
 <script type="math/tex; mode=display">
 \begin{aligned} \frac { \partial \mathcal {L} } { \partial w } & = 0 \Rightarrow w = \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } x _ { i } \\ \frac { \partial \mathcal {L} } { \partial b } & = 0 \Rightarrow \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } = 0 \\ \frac { \partial \mathcal {L} } { \partial \xi _ { i } } & = 0 \Rightarrow C - \alpha _ { i } - r _ { i } = 0 , \quad i = 1 , \ldots , n \end{aligned}</script><p>将<script type="math/tex">w</script>带回<script type="math/tex">\mathcal {L}</script> 并化简，得到和原来一样的目标函数：</p>
 <script type="math/tex; mode=display">
@@ -111,7 +111,7 @@ w ^ { * } = \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } x _ { i }</script>
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://huzuoliang.github.io/2018/12/27/SVM/" data-id="cjqjhbq6z0009qnvo2ulndpbi" class="article-share-link">Share</a>
+      <a data-url="https://huzuoliang.github.io/2018/12/27/SVM/" data-id="cjql150qb0008k5vok374eae7" class="article-share-link">Share</a>
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SVM/">SVM</a></li></ul>
 
@@ -123,19 +123,19 @@ w ^ { * } = \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } x _ { i }</script>
     
   <nav class="article-nav">
     
-      <a href="/2018/12/27/SVM之SMO/" class="article-nav-link">
+      <a href="/2018/12/28/SVM之KKT/" class="article-nav-link">
         <strong class="article-nav-caption">Newer posts</strong>
         <div class="article-nav-title">
           
-            SVM之SMO求解优化问题
+            SVM之KKT对偶问题
           
         </div>
       </a>
     
     
-      <a href="/2018/12/27/SVM之KKT/" class="article-nav-link">
+      <a href="/2018/12/15/DL之Xavier/" class="article-nav-link">
         <strong class="article-nav-caption">Older posts</strong>
-        <div class="article-nav-title">SVM之KKT转换对偶条件</div>
+        <div class="article-nav-title">DL之Xavier</div>
       </a>
     
   </nav>

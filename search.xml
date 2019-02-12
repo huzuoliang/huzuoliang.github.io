@@ -3,7 +3,30 @@
   
     
     <entry>
-      <title>统计学之无偏估计</title>
+      <title>TF feature_column</title>
+      <link href="/2019/01/14/TF%E4%B9%8Bfeature-column/"/>
+      <url>/2019/01/14/TF%E4%B9%8Bfeature-column/</url>
+      
+        <content type="html"><![CDATA[<p>通过<code>Estimator</code>的<code>feature_column</code>参数指定模型的输入。<strong>特征列作为输入数据（由 <code>input_fn</code> 返回）与模型之间的桥梁</strong>。</p><p><div align="center"><img src="/2019/01/14/TF之feature-column/inputs_to_model_bridge.jpg" width="860">图1：特征列作为原始数据与模型所需的数据之间的桥梁</div><br><a id="more"></a><br><code>feature_column</code>可以实现对<code>feature</code>的变换处理（如<code>embedding</code>，<code>cross</code>，<code>onehot</code>，<code>multi_hot</code>），它不是<code>tensor</code>，如果运用到模型中需要<code>tensor</code>，还需要通过<code>feature_column.input_layer</code>进行变换后才能进行使用。如果是将<code>feature_column</code>喂到<code>estimater</code>，就不用转为<code>Tensor</code>。</p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> tensorflow <span class="keyword">import</span> feature_column</span><br><span class="line">price = &#123;<span class="string">'price'</span>: [[<span class="number">1.</span>], [<span class="number">2.</span>], [<span class="number">3.</span>], [<span class="number">4.</span>]]&#125;</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">transform_fn</span><span class="params">(x)</span>:</span></span><br><span class="line">     <span class="keyword">return</span> x+<span class="number">2</span></span><br><span class="line">price_column = feature_column.numeric_column(<span class="string">'price'</span>, normalizer_fn=transform_fn)</span><br><span class="line">price_transformed_tensor = feature_column.input_layer(price, [price_column])</span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> session:</span><br><span class="line">     print(<span class="string">'use input_layer'</span> + <span class="string">'_'</span> * <span class="number">40</span>)</span><br><span class="line">     print(session.run([price_transformed_tensor]))</span><br></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">use input_layer________________________________________</span><br><span class="line">[array([[3.],</span><br><span class="line">       [4.],</span><br><span class="line">       [5.],</span><br><span class="line">       [6.]], dtype=float32)]</span><br></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> tensorflow <span class="keyword">import</span> feature_column</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.feature_column.feature_column <span class="keyword">import</span> _LazyBuilder</span><br><span class="line">price = &#123;<span class="string">'price'</span>: [[<span class="number">1.</span>], [<span class="number">2.</span>], [<span class="number">3.</span>], [<span class="number">4.</span>]]&#125;</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">transform_fn</span><span class="params">(x)</span>:</span></span><br><span class="line">     <span class="keyword">return</span> x+<span class="number">2</span></span><br><span class="line">builder = _LazyBuilder(price)</span><br><span class="line">price_transformed_tensor = price_column._get_dense_tensor(builder)</span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> session:</span><br><span class="line">     print(session.run([price_transformed_tensor]))</span><br></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[array([[3.],</span><br><span class="line">       [4.],</span><br><span class="line">       [5.],</span><br><span class="line">       [6.]], dtype=float32)]</span><br></pre></td></tr></table></figure><p><code>tf.feature_column.input_layer</code>的<code>trainable</code>只对原来就可以设置<code>trainable</code>的<code>feature column</code>起作用，例如<code>tf.feature_column.embedding_column</code>，只有2个都设置为<code>True</code>时候，在训练中才能<code>trainable</code>，任何一个设置为<code>trainable=False</code>，都将使得该<code>column</code>的值无法改变，也就是无法<code>trainable</code>。另外<code>tf.feature_column.input_layer</code>与其他<code>tensor</code>做<code>contact</code>，该<code>trainable</code>照样可以，不行的照样不行。</p><p><code>tf.feature_column.make_parse_example_spec</code>这个函数官方的解释是：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Creates parsing spec dictionary from input feature_columns.</span><br><span class="line">The returned dictionary can be used as arg &apos;features&apos; in tf.parse_example.</span><br></pre></td></tr></table></figure></p><p>和<code>tf.parse_example</code>联合使用，这样就可以得到一个字典，这个字典其实也可以手动写。</p><p>参考：</p><p><a href="https://zhuanlan.zhihu.com/p/34734066" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/34734066</a><br><a href="https://www.tensorflow.org/guide/feature_columns?hl=zh-cn" target="_blank" rel="noopener">https://www.tensorflow.org/guide/feature_columns?hl=zh-cn</a><br><a href="https://tensorflow.google.cn/versions/r1.8/api_docs/python/tf/feature_column/make_parse_example_spec" target="_blank" rel="noopener">https://tensorflow.google.cn/versions/r1.8/api_docs/python/tf/feature_column/make_parse_example_spec</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> dl </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> feature_column </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>无偏估计</title>
       <link href="/2019/01/04/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%8B%E6%97%A0%E5%81%8F%E4%BC%B0%E8%AE%A1-%E5%9D%87%E5%80%BC%E4%B8%8E%E6%96%B9%E5%B7%AE/"/>
       <url>/2019/01/04/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%8B%E6%97%A0%E5%81%8F%E4%BC%B0%E8%AE%A1-%E5%9D%87%E5%80%BC%E4%B8%8E%E6%96%B9%E5%B7%AE/</url>
       
@@ -26,7 +49,7 @@
     </entry>
     
     <entry>
-      <title>SVM之SMO求解优化问题</title>
+      <title>SVM SMO</title>
       <link href="/2018/12/28/SVM%E4%B9%8BSMO/"/>
       <url>/2018/12/28/SVM%E4%B9%8BSMO/</url>
       
@@ -49,7 +72,7 @@
     </entry>
     
     <entry>
-      <title>SVM之KKT对偶问题</title>
+      <title>SVM KKT</title>
       <link href="/2018/12/28/SVM%E4%B9%8BKKT/"/>
       <url>/2018/12/28/SVM%E4%B9%8BKKT/</url>
       
@@ -72,7 +95,7 @@
     </entry>
     
     <entry>
-      <title>SVM</title>
+      <title>ML SVM</title>
       <link href="/2018/12/27/SVM/"/>
       <url>/2018/12/27/SVM/</url>
       
@@ -95,7 +118,7 @@
     </entry>
     
     <entry>
-      <title>DL之Xavier</title>
+      <title>DL Xavier</title>
       <link href="/2018/12/15/DL%E4%B9%8BXavier/"/>
       <url>/2018/12/15/DL%E4%B9%8BXavier/</url>
       
@@ -106,7 +129,7 @@
     </entry>
     
     <entry>
-      <title>Tensorflow之y=xW+b而不是y=Wx+b?</title>
+      <title>TF 选择y=xW+b而不是y=Wx+b?</title>
       <link href="/2018/12/15/Tensorflow%E4%B9%8By-xW-b%E8%80%8C%E4%B8%8D%E6%98%AFy-Wx-b/"/>
       <url>/2018/12/15/Tensorflow%E4%B9%8By-xW-b%E8%80%8C%E4%B8%8D%E6%98%AFy-Wx-b/</url>
       
@@ -117,7 +140,7 @@
     </entry>
     
     <entry>
-      <title>DL之Batch Normalization</title>
+      <title>DL Batch Normalization</title>
       <link href="/2018/12/15/DL%E4%B9%8BBatch-Normalization/"/>
       <url>/2018/12/15/DL%E4%B9%8BBatch-Normalization/</url>
       
@@ -140,7 +163,7 @@
     </entry>
     
     <entry>
-      <title>Python之Numpy.reshape</title>
+      <title>Python Numpy.reshape</title>
       <link href="/2018/11/29/Python%E4%B9%8BNumpy-reshape/"/>
       <url>/2018/11/29/Python%E4%B9%8BNumpy-reshape/</url>
       
@@ -163,7 +186,7 @@
     </entry>
     
     <entry>
-      <title>Python之Numpy(axis=0,1)区分</title>
+      <title>Python Numpy(axis=0,1)区分</title>
       <link href="/2018/11/28/Python%E4%B9%8BNumPy%EF%BC%88axis-0-%E4%B8%8Eaxis-1%EF%BC%89%E5%8C%BA%E5%88%86/"/>
       <url>/2018/11/28/Python%E4%B9%8BNumPy%EF%BC%88axis-0-%E4%B8%8Eaxis-1%EF%BC%89%E5%8C%BA%E5%88%86/</url>
       

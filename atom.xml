@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://huzuoliang.github.io/"/>
-  <updated>2019-02-12T00:45:39.145Z</updated>
+  <updated>2019-02-14T06:00:47.645Z</updated>
   <id>https://huzuoliang.github.io/</id>
   
   <author>
@@ -15,6 +15,85 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ML树算法损失函数汇总</title>
+    <link href="https://huzuoliang.github.io/2019/02/14/ML%E6%A0%91%E7%AE%97%E6%B3%95%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E6%B1%87%E6%80%BB/"/>
+    <id>https://huzuoliang.github.io/2019/02/14/ML树算法损失函数汇总/</id>
+    <published>2019-02-14T06:00:47.000Z</published>
+    <updated>2019-02-14T06:00:47.645Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>TF get_variable和Variable</title>
+    <link href="https://huzuoliang.github.io/2019/02/14/TF-get-variable%E5%92%8CVariable/"/>
+    <id>https://huzuoliang.github.io/2019/02/14/TF-get-variable和Variable/</id>
+    <published>2019-02-14T06:00:00.000Z</published>
+    <updated>2019-02-14T06:12:22.909Z</updated>
+    
+    <content type="html"><![CDATA[<p>tf.get_variable和tf.Variable都可以用来创建变量，但是它们有什么区别呢？<br>tf.get_variable做主要用于参数复用，tf.get_variable需要和tf.variable_scope搭配起来使用</p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">w1 = tf.get_variable(<span class="string">"w1"</span>, shape=[<span class="number">1</span>])</span><br><span class="line">w2 = tf.get_variable(<span class="string">"w1"</span>, shape=[<span class="number">1</span>]) <span class="comment"># error</span></span><br></pre></td></tr></table></figure><p>tf.get_variable变量已存在，需要通过tf.variable_scope复用</p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.variable_scope(<span class="string">"scope1"</span>):</span><br><span class="line">    w1 = tf.get_variable(<span class="string">"w1"</span>, shape=[<span class="number">1</span>])</span><br><span class="line">    w2 = tf.Variable(<span class="number">0.0</span>, name=<span class="string">"w2"</span>)</span><br><span class="line"><span class="keyword">with</span> tf.variable_scope(<span class="string">"scope1"</span>, reuse=<span class="keyword">True</span>):</span><br><span class="line">    w1_p = tf.get_variable(<span class="string">"w1"</span>, shape=[<span class="number">1</span>])</span><br><span class="line">    w2_p = tf.Variable(<span class="number">1.0</span>, name=<span class="string">"w2"</span>)</span><br><span class="line"></span><br><span class="line">print(w1 <span class="keyword">is</span> w1_p, w2 <span class="keyword">is</span> w2_p) <span class="comment"># True False</span></span><br></pre></td></tr></table></figure><p>tf.get_variable复用了存在的变量，tf.Variable创建新变量</p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.variable_scope(<span class="string">"scope1"</span>):</span><br><span class="line">    w1 = tf.get_variable(<span class="string">"w1"</span>, shape=[<span class="number">1</span>])</span><br><span class="line">    w2 = tf.Variable(<span class="number">0.0</span>, name=<span class="string">"w2"</span>)</span><br><span class="line"><span class="keyword">with</span> tf.variable_scope(<span class="string">"scope1"</span>, reuse=<span class="keyword">False</span>):</span><br><span class="line">    w1_p = tf.get_variable(<span class="string">"w1"</span>, shape=[<span class="number">1</span>])</span><br><span class="line">    w2_p = tf.Variable(<span class="number">1.0</span>, name=<span class="string">"w2"</span>)</span><br><span class="line"></span><br><span class="line">print(w1 <span class="keyword">is</span> w1_p, w2 <span class="keyword">is</span> w2_p) <span class="comment"># Variable scope1/w1 already exists, disallowed.</span></span><br></pre></td></tr></table></figure><p>tf.get_variable变量存在后，再次创建报错，需将reuse=True复用，tf.Variable创建新变量</p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.variable_scope(<span class="string">"scope1"</span>):</span><br><span class="line">    w1 = tf.get_variable(<span class="string">"w1"</span>, shape=[<span class="number">1</span>])</span><br><span class="line">    w2 = tf.Variable(<span class="number">0.0</span>, name=<span class="string">"w2"</span>)</span><br><span class="line"><span class="keyword">with</span> tf.variable_scope(<span class="string">"scope2"</span>, reuse=<span class="keyword">False</span>):</span><br><span class="line">    w1_p = tf.get_variable(<span class="string">"w1"</span>, shape=[<span class="number">1</span>])</span><br><span class="line">    w2_p = tf.Variable(<span class="number">1.0</span>, name=<span class="string">"w2"</span>)</span><br><span class="line"></span><br><span class="line">print(w1 <span class="keyword">is</span> w1_p, w2 <span class="keyword">is</span> w2_p) <span class="comment"># False False</span></span><br></pre></td></tr></table></figure><p>作用域不一样，tf.get_variable和tf.Variable都创建新变量</p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.variable_scope(<span class="string">"scope1"</span>, reuse=tf.AUTO_REUSE):</span><br><span class="line">    w1 = tf.get_variable(<span class="string">"w1"</span>, shape=[<span class="number">1</span>])</span><br><span class="line">    w2 = tf.Variable(<span class="number">0.0</span>, name=<span class="string">"w2"</span>)</span><br><span class="line"></span><br><span class="line">w1_p = tf.get_variable(<span class="string">"w1"</span>, shape=[<span class="number">1</span>])</span><br><span class="line">w2_p = tf.Variable(<span class="number">1.0</span>, name=<span class="string">"w2"</span>)</span><br><span class="line"></span><br><span class="line">print(w1 <span class="keyword">is</span> w1_p, w2 <span class="keyword">is</span> w2_p) <span class="comment"># False False</span></span><br></pre></td></tr></table></figure><p>作用域不一样，tf.get_variable和tf.Variable都创建新变量</p><p>正确获取复用变量的用法：<br><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo</span><span class="params">()</span>:</span></span><br><span class="line">  <span class="keyword">with</span> tf.variable_scope(<span class="string">"foo"</span>, reuse=tf.AUTO_REUSE):</span><br><span class="line">    v = tf.get_variable(<span class="string">"v"</span>, [<span class="number">1</span>])</span><br><span class="line">  <span class="keyword">return</span> v</span><br><span class="line"></span><br><span class="line">v1 = foo()  <span class="comment"># Creates v.</span></span><br><span class="line">v2 = foo()  <span class="comment"># Gets the same, existing v.</span></span><br><span class="line"><span class="keyword">assert</span> v1 == v2</span><br></pre></td></tr></table></figure></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;tf.get_variable和tf.Variable都可以用来创建变量，但是它们有什么区别呢？&lt;br&gt;tf.get_variable做主要用于参数复用，tf.get_variable需要和tf.variable_scope搭配起来使用&lt;/p&gt;
+&lt;figure class=
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>TF sigmoid_cross_entropy_with_logits</title>
+    <link href="https://huzuoliang.github.io/2019/02/12/TF-Logloss/"/>
+    <id>https://huzuoliang.github.io/2019/02/12/TF-Logloss/</id>
+    <published>2019-02-12T09:20:56.000Z</published>
+    <updated>2019-02-12T09:33:18.185Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="logloss"><a href="#logloss" class="headerlink" title="logloss"></a>logloss</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">z * -log(sigmoid(x)) + (1 - z) * -log(1 - sigmoid(x))</span><br><span class="line">= z * -log(1 / (1 + exp(-x))) + (1 - z) * -log(exp(-x) / (1 + exp(-x)))</span><br><span class="line">= z * log(1 + exp(-x)) + (1 - z) * (-log(exp(-x)) + log(1 + exp(-x)))</span><br><span class="line">= z * log(1 + exp(-x)) + (1 - z) * (x + log(1 + exp(-x))</span><br><span class="line">= (1 - z) * x + log(1 + exp(-x))</span><br><span class="line">= x - x * z + log(1 + exp(-x))</span><br></pre></td></tr></table></figure><p>当x &lt; 0,为了避免exp(-x)溢出，变换：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">x - x * z + log(1 + exp(-x))</span><br><span class="line">= log(exp(x)) - x * z + log(1 + exp(-x))</span><br><span class="line">= log(exp(x)) - x * z - log(1/(1 + exp(-x)))</span><br><span class="line">= log(exp(x)) - x * z - log(exp(x)/(1 + exp(x)))</span><br><span class="line">= - x * z + log(1 + exp(x))</span><br></pre></td></tr></table></figure></p><p>最终：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">max(x, 0) - x * z + log(1 + exp(-abs(x)))</span><br></pre></td></tr></table></figure></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;logloss&quot;&gt;&lt;a href=&quot;#logloss&quot; class=&quot;headerlink&quot; title=&quot;logloss&quot;&gt;&lt;/a&gt;logloss&lt;/h3&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>TF fixed_unigram_candidate_sampler</title>
+    <link href="https://huzuoliang.github.io/2019/02/12/TF%E6%93%8D%E4%BD%9C/"/>
+    <id>https://huzuoliang.github.io/2019/02/12/TF操作/</id>
+    <published>2019-02-12T07:42:23.000Z</published>
+    <updated>2019-02-12T09:33:03.971Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="随机采样"><a href="#随机采样" class="headerlink" title="随机采样"></a>随机采样</h3><ul><li>true_classes: A Tensor of type int64 and shape [batch_size, num_true]. The target classes.</li><li>num_true: An int. The number of target classes per training example.</li><li>num_sampled: An int. The number of classes to randomly sample.随机采样的总数</li><li>unique: A bool. Determines whether all sampled classes in a batch are unique.</li><li>range_max: An int. The number of possible classes.</li><li>vocab_file: Each valid line in this file (which should have a CSV-like format) corresponds to a valid word ID. IDs are in sequential order, starting from num_reserved_ids. The last entry in each line is expected to be a value corresponding to the count or relative probability. Exactly one of vocab_file and unigrams needs to be passed to this operation.</li><li>distortion: The distortion is used to skew the unigram probability distribution. Each weight is first raised to the distortion’s power before adding to the internal unigram distribution. As a result, distortion = 1.0 gives regular unigram sampling (as defined by the vocab file), and distortion = 0.0 gives a uniform distribution.</li><li>num_reserved_ids: Optionally some reserved IDs can be added in the range [0, num_reserved_ids) by the users. One use case is that a special unknown word token is used as ID 0. These IDs will have a sampling probability of 0.</li><li>num_shards: A sampler can be used to sample from a subset of the original range in order to speed up the whole computation through parallelism. This parameter (together with shard) indicates the number of partitions that are being used in the overall computation.</li><li>shard: A sampler can be used to sample from a subset of the original range in order to speed up the whole computation through parallelism. This parameter (together with num_shards) indicates the particular partition number of the operation, when partitioning is being used.</li><li>unigrams: A list of unigram counts or probabilities, one per ID in sequential order. Exactly one of vocab_file and unigrams should be passed to this operation.</li><li>seed: An int. An operation-specific seed. Default is 0.</li><li>name: A name for the operation (optional).</li></ul><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> Counter, OrderedDict</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">batch_size = <span class="number">3</span></span><br><span class="line"></span><br><span class="line">labels_matrix = tf.reshape(tf.cast(np.array([<span class="number">0</span>, <span class="number">2</span>, <span class="number">3</span>]), dtype=tf.int64),</span><br><span class="line">                           [batch_size, <span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">sampled_ids, _, _ = tf.nn.fixed_unigram_candidate_sampler(</span><br><span class="line">    true_classes=labels_matrix,</span><br><span class="line">    num_true=<span class="number">1</span>,</span><br><span class="line">    num_sampled=<span class="number">3</span>,</span><br><span class="line">    unique=<span class="keyword">True</span>,</span><br><span class="line">    range_max=<span class="number">10</span>,</span><br><span class="line">    distortion=<span class="number">0.75</span>,</span><br><span class="line">    unigrams=list([<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>])) <span class="comment"># list(np.random.rand(10))</span></span><br><span class="line"></span><br><span class="line">init_op = tf.global_variables_initializer()</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    sess.run(init_op)</span><br><span class="line">    b = sess.run([sampled_ids])</span><br><span class="line">    print(b)</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;随机采样&quot;&gt;&lt;a href=&quot;#随机采样&quot; class=&quot;headerlink&quot; title=&quot;随机采样&quot;&gt;&lt;/a&gt;随机采样&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;true_classes: A Tensor of type int64 and shape [batch_si
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>TF feature_column</title>

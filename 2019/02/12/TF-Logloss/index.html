@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>
-    DL Xavier |
+    TF sigmoid_cross_entropy_with_logits |
     
     HuZuoliang</title>
   
@@ -23,7 +23,7 @@
 <body>
 <!-- hexo-inject:begin --><!-- hexo-inject:end --><main class="content">
   <section class="outer">
-  <article id="post-DL之Xavier" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <article id="post-TF-Logloss" class="article article-type-post" itemscope="" itemprop="blogPost">
 
   <div class="article-inner">
     
@@ -31,7 +31,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      DL Xavier
+      TF sigmoid_cross_entropy_with_logits
     </h1>
   
 
@@ -40,8 +40,8 @@
 
     
       <div class="article-meta">
-        <a href="/2018/12/15/DL之Xavier/" class="article-date">
-  <time datetime="2018-12-15T03:41:29.000Z" itemprop="datePublished">2018-12-15</time>
+        <a href="/2019/02/12/TF-Logloss/" class="article-date">
+  <time datetime="2019-02-12T09:20:56.000Z" itemprop="datePublished">2019-02-12</time>
 </a>
         
       </div>
@@ -51,11 +51,14 @@
       
       
       
-        
+        <h3 id="logloss"><a href="#logloss" class="headerlink" title="logloss"></a>logloss</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">z * -log(sigmoid(x)) + (1 - z) * -log(1 - sigmoid(x))</span><br><span class="line">= z * -log(1 / (1 + exp(-x))) + (1 - z) * -log(exp(-x) / (1 + exp(-x)))</span><br><span class="line">= z * log(1 + exp(-x)) + (1 - z) * (-log(exp(-x)) + log(1 + exp(-x)))</span><br><span class="line">= z * log(1 + exp(-x)) + (1 - z) * (x + log(1 + exp(-x))</span><br><span class="line">= (1 - z) * x + log(1 + exp(-x))</span><br><span class="line">= x - x * z + log(1 + exp(-x))</span><br></pre></td></tr></table></figure>
+<p>当x &lt; 0,为了避免exp(-x)溢出，变换：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">x - x * z + log(1 + exp(-x))</span><br><span class="line">= log(exp(x)) - x * z + log(1 + exp(-x))</span><br><span class="line">= log(exp(x)) - x * z - log(1/(1 + exp(-x)))</span><br><span class="line">= log(exp(x)) - x * z - log(exp(x)/(1 + exp(x)))</span><br><span class="line">= - x * z + log(1 + exp(x))</span><br></pre></td></tr></table></figure></p>
+<p>最终：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">max(x, 0) - x * z + log(1 + exp(-abs(x)))</span><br></pre></td></tr></table></figure></p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://huzuoliang.github.io/2018/12/15/DL之Xavier/" data-id="cjs489bkd0000i0vosl5k0le3" class="article-share-link">Share</a>
+      <a data-url="https://huzuoliang.github.io/2019/02/12/TF-Logloss/" data-id="cjs489bky000di0voyiaxt3dv" class="article-share-link">Share</a>
       
     </footer>
 
@@ -65,19 +68,19 @@
     
   <nav class="article-nav">
     
-      <a href="/2018/12/27/SVM/" class="article-nav-link">
+      <a href="/2019/02/14/TF-get-variable和Variable/" class="article-nav-link">
         <strong class="article-nav-caption">Newer posts</strong>
         <div class="article-nav-title">
           
-            ML SVM
+            TF get_variable和Variable
           
         </div>
       </a>
     
     
-      <a href="/2018/12/15/Tensorflow之y-xW-b而不是y-Wx-b/" class="article-nav-link">
+      <a href="/2019/02/12/TF操作/" class="article-nav-link">
         <strong class="article-nav-caption">Older posts</strong>
-        <div class="article-nav-title">TF 选择y=xW+b而不是y=Wx+b?</div>
+        <div class="article-nav-title">TF fixed_unigram_candidate_sampler</div>
       </a>
     
   </nav>

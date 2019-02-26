@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://huzuoliang.github.io/2019/02/14/TF-embedding%E5%8F%AF%E8%A7%86%E5%8C%96/</loc>
+    <lastmod>2019-02-14T08:22:27.045Z</lastmod>
+  </url>  <url>
+    <loc>https://huzuoliang.github.io/2019/02/12/TF%E6%93%8D%E4%BD%9C/</loc>
+    <lastmod>2019-02-14T07:27:58.728Z</lastmod>
+  </url>  <url>
+    <loc>https://huzuoliang.github.io/2019/02/12/TF-Logloss/</loc>
+    <lastmod>2019-02-14T07:27:44.896Z</lastmod>
+  </url>  <url>
     <loc>https://huzuoliang.github.io/2019/02/14/TF-get-variable%E5%92%8CVariable/</loc>
-    <lastmod>2019-02-14T06:12:22.909Z</lastmod>
+    <lastmod>2019-02-14T07:27:38.360Z</lastmod>
   </url>  <url>
     <loc>https://huzuoliang.github.io/2019/02/14/ML%E6%A0%91%E7%AE%97%E6%B3%95%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E6%B1%87%E6%80%BB/</loc>
     <lastmod>2019-02-14T06:00:47.645Z</lastmod>
-  </url>  <url>
-    <loc>https://huzuoliang.github.io/2019/02/12/TF-Logloss/</loc>
-    <lastmod>2019-02-12T09:33:18.185Z</lastmod>
-  </url>  <url>
-    <loc>https://huzuoliang.github.io/2019/02/12/TF%E6%93%8D%E4%BD%9C/</loc>
-    <lastmod>2019-02-12T09:33:03.971Z</lastmod>
   </url>  <url>
     <loc>https://huzuoliang.github.io/2019/01/04/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%8B%E6%97%A0%E5%81%8F%E4%BC%B0%E8%AE%A1-%E5%9D%87%E5%80%BC%E4%B8%8E%E6%96%B9%E5%B7%AE/</loc>
     <lastmod>2019-02-12T00:45:49.913Z</lastmod>

@@ -57,7 +57,7 @@
 <li>num_sampled: An int. The number of classes to randomly sample.随机采样的总数</li>
 <li>unique: A bool. Determines whether all sampled classes in a batch are unique.</li>
 <li>range_max: An int. The number of possible classes.</li>
-<li>vocab_file: Each valid line in this file (which should have a CSV-like format) corresponds to a valid word ID. IDs are in sequential order, starting from num_reserved_ids. The last entry in each line is expected to be a value corresponding to the count or relative probability. Exactly one of vocab_file and unigrams needs to be passed to this operation.</li>
+<li>vocab_file: Each valid line in this file (which should have a CSV-like format) corresponds to a valid word ID. IDs are in sequential order, starting from num_reserved_ids. The last entry in each line is expected to be a value corresponding to the count or relative probability. Exactly one of vocab_file and unigrams needs to be passed to this operation.<a id="more"></a></li>
 <li>distortion: The distortion is used to skew the unigram probability distribution. Each weight is first raised to the distortion’s power before adding to the internal unigram distribution. As a result, distortion = 1.0 gives regular unigram sampling (as defined by the vocab file), and distortion = 0.0 gives a uniform distribution.</li>
 <li>num_reserved_ids: Optionally some reserved IDs can be added in the range [0, num_reserved_ids) by the users. One use case is that a special unknown word token is used as ID 0. These IDs will have a sampling probability of 0.</li>
 <li>num_shards: A sampler can be used to sample from a subset of the original range in order to speed up the whole computation through parallelism. This parameter (together with shard) indicates the number of partitions that are being used in the overall computation.</li>
@@ -71,7 +71,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://huzuoliang.github.io/2019/02/12/TF操作/" data-id="cjs489bl6000pi0vo59aicba4" class="article-share-link">Share</a>
+      <a data-url="https://huzuoliang.github.io/2019/02/12/TF操作/" data-id="cjslwueeg000n8bvoeyueirfo" class="article-share-link">Share</a>
       
     </footer>
 

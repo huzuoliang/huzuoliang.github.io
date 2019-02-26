@@ -52,13 +52,14 @@
       
       
         <h3 id="logloss"><a href="#logloss" class="headerlink" title="logloss"></a>logloss</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">z * -log(sigmoid(x)) + (1 - z) * -log(1 - sigmoid(x))</span><br><span class="line">= z * -log(1 / (1 + exp(-x))) + (1 - z) * -log(exp(-x) / (1 + exp(-x)))</span><br><span class="line">= z * log(1 + exp(-x)) + (1 - z) * (-log(exp(-x)) + log(1 + exp(-x)))</span><br><span class="line">= z * log(1 + exp(-x)) + (1 - z) * (x + log(1 + exp(-x))</span><br><span class="line">= (1 - z) * x + log(1 + exp(-x))</span><br><span class="line">= x - x * z + log(1 + exp(-x))</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <p>当x &lt; 0,为了避免exp(-x)溢出，变换：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">x - x * z + log(1 + exp(-x))</span><br><span class="line">= log(exp(x)) - x * z + log(1 + exp(-x))</span><br><span class="line">= log(exp(x)) - x * z - log(1/(1 + exp(-x)))</span><br><span class="line">= log(exp(x)) - x * z - log(exp(x)/(1 + exp(x)))</span><br><span class="line">= - x * z + log(1 + exp(x))</span><br></pre></td></tr></table></figure></p>
 <p>最终：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">max(x, 0) - x * z + log(1 + exp(-abs(x)))</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://huzuoliang.github.io/2019/02/12/TF-Logloss/" data-id="cjs489bky000di0voyiaxt3dv" class="article-share-link">Share</a>
+      <a data-url="https://huzuoliang.github.io/2019/02/12/TF-Logloss/" data-id="cjslwuee4000a8bvonl83hjp0" class="article-share-link">Share</a>
       
     </footer>
 

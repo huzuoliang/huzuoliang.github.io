@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search> 
   
+  
+    
+    <entry>
+      <title>Word2Vec负采样及TF实现</title>
+      <link href="/2019/02/26/Word2Vec%E8%B4%9F%E9%87%87%E6%A0%B7%E5%8F%8ATF%E5%AE%9E%E7%8E%B0/"/>
+      <url>/2019/02/26/Word2Vec%E8%B4%9F%E9%87%87%E6%A0%B7%E5%8F%8ATF%E5%AE%9E%E7%8E%B0/</url>
+      
+        <content type="html"><![CDATA[<h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h2><p>Word2Vec是一种分布式表示方法，分为CBOW(Continuous Bag-of-Words)与Skip-Gram两种模型，由于计算的复杂性，有Hierarchical Softmax和Negative Sampling两种优化方法，今天我们主要介绍的是基于Negative Sampling的优化模型。<br><a id="more"></a></p><h2 id="2-基于Negative-Sampling的Skip-Gram模型的数学原理"><a href="#2-基于Negative-Sampling的Skip-Gram模型的数学原理" class="headerlink" title="2. 基于Negative Sampling的Skip-Gram模型的数学原理"></a>2. 基于Negative Sampling的Skip-Gram模型的数学原理</h2><p>CBOW通过上下文来预测当前词，而Skip-Gram模型则是通过当前次来预测上下文，Negative Sampling负采样的核心思想类似于二分类，我们将一个词的上下文作为正样本，采样其余词当负样本，每一个样本对当做二分类训练集的一个样本。<br>函数的优化目标可以写成：</p><script type="math/tex; mode=display">G = \prod _ { w \in \mathcal { C } } \prod _ { u \in \operatorname { Context } ( w ) } g ( u )</script><p>其中，<code>$\prod _ { w \in \mathcal { C } } \prod _ { u \in \operatorname { Context } ( w ) } g ( u )$</code>表示对于一个给定的样本<script type="math/tex">(w, \text { Context }(w))</script>，我们希望最大化的量，定义为：</p><script type="math/tex; mode=display">g(u)=\prod_{z \in\{u\} \cup N E G(u)} p(z | w)</script><p>其中NEG(u)表示处理词u时生成的负样本子集，条件概率：</p><script type="math/tex; mode=display">p(z | w)=\left\{\begin{array}{ll}{\sigma\left(\mathbf{v}(w)^{\top} \theta^{z}\right),} & {L^{u}(z)=1} \\ {1-\sigma\left(\mathbf{v}(w)^{\top} \theta^{z}\right),} & {L^{u}(z)=0}\end{array}\right.</script><p>且</p><script type="math/tex; mode=display">L^{u}(\widetilde{z})=\left\{\begin{array}{ll}{1,} & {\widetilde{w}=u} \\ {0,} & {\widetilde{w} \neq u}\end{array}\right.</script><p>则原示取对数可写成：</p><script type="math/tex; mode=display">\begin{aligned}\mathcal{L} & = \log G=\log \prod_{w \in \mathcal{C}} \prod_{u \in \operatorname{Context}(w)} g(u)=\sum_{w \in \mathcal{C}} \sum_{u \in C o n t e x(w)} \log g(u) \\ & =\sum_{w \in \mathcal{C}} \sum_{u \in \operatorname{Context}(w)} \log_{z \in\{u\} \cup NEG(u)} p(z | w) \\& =\sum_{w \in \mathcal{C}} \sum_{u \in \operatorname{Context}(w) z \in\{u\} \cup N E G(u)} \log p(z | w) \\& =\sum_{w \in \mathcal{C}} \sum_{u \in \operatorname{Context}(w) z \in\{u\} \cup N E G(u)} \log \left\{\left[\sigma\left(\mathbf{v}(w)^{\top} \theta^{z}\right)\right]^{L^{u}(z)} \cdot\left[1-\sigma\left(\mathbf{v}(w)^{\top} \theta^{z}\right)\right]^{1-L^{u}(z)}\right\} \\& = \sum_{w \in \mathcal{C}} \sum_{u \in \operatorname{Context}(w) z \in\{u\} \cup N E G(u)}\left\{L^{u}(z) \cdot \log \left[\sigma\left(\mathbf{v}(w)^{\top} \theta^{z}\right)\right]+\left[1-L^{u}(z)\right] \cdot \log \left[1-\sigma\left(\mathbf{v}(w)^{\top} \theta^{z}\right)\right]\right\}   \end{aligned}</script><h2 id="3-TensorFlow实现"><a href="#3-TensorFlow实现" class="headerlink" title="3. TensorFlow实现"></a>3. TensorFlow实现</h2><h1 id=""><a href="#" class="headerlink" title="#"></a>#</h1>]]></content>
+      
+      
+      <categories>
+          
+          <category> dl </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> word2vec </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
     
     <entry>
       <title>TF embedding可视化</title>
@@ -13,6 +39,8 @@
       
     </entry>
     
+    
+    
     <entry>
       <title>ML树算法损失函数汇总</title>
       <link href="/2019/02/14/ML%E6%A0%91%E7%AE%97%E6%B3%95%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E6%B1%87%E6%80%BB/"/>
@@ -23,6 +51,8 @@
       
       
     </entry>
+    
+    
     
     <entry>
       <title>TF get_variable和Variable</title>
@@ -35,6 +65,8 @@
       
     </entry>
     
+    
+    
     <entry>
       <title>TF sigmoid_cross_entropy_with_logits</title>
       <link href="/2019/02/12/TF-Logloss/"/>
@@ -46,6 +78,8 @@
       
     </entry>
     
+    
+    
     <entry>
       <title>TF fixed_unigram_candidate_sampler</title>
       <link href="/2019/02/12/TF%E6%93%8D%E4%BD%9C/"/>
@@ -56,6 +90,8 @@
       
       
     </entry>
+    
+    
     
     <entry>
       <title>TF feature_column</title>
@@ -80,6 +116,8 @@
       
     </entry>
     
+    
+    
     <entry>
       <title>无偏估计</title>
       <link href="/2019/01/04/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%8B%E6%97%A0%E5%81%8F%E4%BC%B0%E8%AE%A1-%E5%9D%87%E5%80%BC%E4%B8%8E%E6%96%B9%E5%B7%AE/"/>
@@ -102,6 +140,8 @@
         </tags>
       
     </entry>
+    
+    
     
     <entry>
       <title>SVM SMO</title>
@@ -126,6 +166,8 @@
       
     </entry>
     
+    
+    
     <entry>
       <title>SVM KKT</title>
       <link href="/2018/12/28/SVM%E4%B9%8BKKT/"/>
@@ -148,6 +190,8 @@
         </tags>
       
     </entry>
+    
+    
     
     <entry>
       <title>ML SVM</title>
@@ -172,6 +216,8 @@
       
     </entry>
     
+    
+    
     <entry>
       <title>DL Xavier</title>
       <link href="/2018/12/15/DL%E4%B9%8BXavier/"/>
@@ -183,6 +229,8 @@
       
     </entry>
     
+    
+    
     <entry>
       <title>TF 选择y=xW+b而不是y=Wx+b?</title>
       <link href="/2018/12/15/Tensorflow%E4%B9%8By-xW-b%E8%80%8C%E4%B8%8D%E6%98%AFy-Wx-b/"/>
@@ -193,6 +241,8 @@
       
       
     </entry>
+    
+    
     
     <entry>
       <title>DL Batch Normalization</title>
@@ -217,6 +267,8 @@
       
     </entry>
     
+    
+    
     <entry>
       <title>Python Numpy.reshape</title>
       <link href="/2018/11/29/Python%E4%B9%8BNumpy-reshape/"/>
@@ -239,6 +291,8 @@
         </tags>
       
     </entry>
+    
+    
     
     <entry>
       <title>Python Numpy(axis=0,1)区分</title>
@@ -264,6 +318,7 @@
         </tags>
       
     </entry>
+    
     
   
   

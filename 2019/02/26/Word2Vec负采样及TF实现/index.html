@@ -211,7 +211,7 @@ g(u)=\prod_{z \in\{u\} \cup N E G(u)} p(z | w)</script><p>其中NEG(u)表示处�
 <script type="math/tex; mode=display">
 p(z | w)=\left\{\begin{array}{ll}{\sigma\left(\mathbf{v}(w)^{\top} \theta^{z}\right),} & {L^{u}(z)=1} \\ {1-\sigma\left(\mathbf{v}(w)^{\top} \theta^{z}\right),} & {L^{u}(z)=0}\end{array}\right.</script><p>且</p>
 <script type="math/tex; mode=display">
-L^{u}(\widetilde{z})=\left\{\begin{array}{ll}{1,} & {\widetilde{w}=u} \\ {0,} & {\widetilde{w} \neq u}\end{array}\right.</script><p>则原示取对数得到<code>Logloss</code>为：</p>
+L^{u}(\widetilde{z})=\left\{\begin{array}{ll}{1,} & {\widetilde{w}=u} \\ {0,} & {\widetilde{w} \neq u}\end{array}\right.</script><p>则原式取对数得到<code>Logloss</code>为：</p>
 <script type="math/tex; mode=display">
 \begin{aligned}
 \mathcal{L} & = \log G=\log \prod_{w \in \mathcal{C}} \prod_{u \in \operatorname{Context}(w)} g(u)=\sum_{w \in \mathcal{C}} \sum_{u \in C o n t e x(w)} \log g(u) \\ & =\sum_{w \in \mathcal{C}} \sum_{u \in \operatorname{Context}(w)} \log_{z \in\{u\} \cup NEG(u)} p(z | w) \\
@@ -231,7 +231,7 @@ L^{u}(\widetilde{z})=\left\{\begin{array}{ll}{1,} & {\widetilde{w}=u} \\ {0,} & 
             <hr>
             <div class="new-meta-box">
               
-                <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-03-03T18:43:00+08:00">
+                <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-03-03T18:45:56+08:00">
                   <a class="notlink">
                     <i class="fas fa-pencil-alt" aria-hidden="true"></i>
                     2019-03-03
@@ -291,6 +291,25 @@ L^{u}(\widetilde{z})=\left\{\begin{array}{ll}{1,} & {\widetilde{w}=u} \\ {0,} & 
 
         
             <div class="prev-next">
+                
+                    <section class="prev">
+                        <span class="art-item-left">
+                            <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
+                            <h4>
+                                <a href="/2019/03/04/TF-采样函数/" rel="prev" title="TF-采样函数">
+                                  
+                                      TF-采样函数
+                                  
+                                </a>
+                            </h4>
+                            
+                                
+                                <h6 class="tags">
+                                    <a class="tag" href="/tags/tf-nn/"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>tf.nn</a>
+                                </h6>
+                            
+                        </span>
+                    </section>
                 
                 
                     <section class="next">
@@ -389,7 +408,7 @@ L^{u}(\widetilde{z})=\left\{\begin{array}{ll}{1,} & {\widetilde{w}=u} \\ {0,} & 
     <div class="content material">
       <ul class="entry">
         
-          <li><a class="flat-box" title="/categories/dl/" href="/categories/dl/"><div class="name">dl</div><div class="badge">(3)</div></a></li>
+          <li><a class="flat-box" title="/categories/dl/" href="/categories/dl/"><div class="name">dl</div><div class="badge">(4)</div></a></li>
         
           <li><a class="flat-box" title="/categories/ml/" href="/categories/ml/"><div class="name">ml</div><div class="badge">(4)</div></a></li>
         
@@ -415,7 +434,7 @@ L^{u}(\widetilde{z})=\left\{\begin{array}{ll}{1,} & {\widetilde{w}=u} \\ {0,} & 
 </header>
 
     <div class="content material">
-      <a href="/tags/Batch-Normalization/" style="font-size: 14px; color: #999">Batch Normalization</a> <a href="/tags/SVM/" style="font-size: 24px; color: #555">SVM</a> <a href="/tags/feature-column/" style="font-size: 14px; color: #999">feature_column</a> <a href="/tags/numpy/" style="font-size: 19px; color: #777">numpy</a> <a href="/tags/pandas/" style="font-size: 14px; color: #999">pandas</a> <a href="/tags/word2vec/" style="font-size: 14px; color: #999">word2vec</a> <a href="/tags/均值-方差/" style="font-size: 14px; color: #999">均值,方差</a>
+      <a href="/tags/Batch-Normalization/" style="font-size: 14px; color: #999">Batch Normalization</a> <a href="/tags/SVM/" style="font-size: 24px; color: #555">SVM</a> <a href="/tags/feature-column/" style="font-size: 14px; color: #999">feature_column</a> <a href="/tags/numpy/" style="font-size: 19px; color: #777">numpy</a> <a href="/tags/pandas/" style="font-size: 14px; color: #999">pandas</a> <a href="/tags/tf-nn/" style="font-size: 14px; color: #999">tf.nn</a> <a href="/tags/word2vec/" style="font-size: 14px; color: #999">word2vec</a> <a href="/tags/均值-方差/" style="font-size: 14px; color: #999">均值,方差</a>
     </div>
   </section>
 

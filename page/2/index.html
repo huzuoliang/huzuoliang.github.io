@@ -167,6 +167,87 @@
   <div class="meta" id="header-meta">
     
       <h2 class="title">
+          <a href="/2018/12/28/SVM之SMO/">
+              
+                  SVM SMO
+              
+          </a>
+      </h2>
+    
+
+    <div class="new-meta-box">
+      
+        <div class="new-meta-item author">
+          <a href="https://huzuoliang.github.io">
+            <i class="fas fa-user" aria-hidden="true"></i>
+            HuZuoliang
+          </a>
+        </div>
+      
+      
+        <div class="new-meta-item date">
+          <a class="notlink">
+            <i class="fas fa-clock" aria-hidden="true"></i>
+            2018-12-28
+          </a>
+        </div>
+      
+      
+        
+          
+          <div class="new-meta-item category">
+            <a href="/categories/ml/">
+              <i class="fas fa-folder-open" aria-hidden="true"></i>
+              ml
+            </a>
+          </div>
+        
+      
+      
+      
+    </div>
+    <hr>
+  </div>
+</section>
+
+    <section class="article typo">
+        <p>我们知道，软间隔<code>SVM</code>的优化目标为：</p>
+<script type="math/tex; mode=display">
+\begin{array} { c l } { \max \limits_ { \alpha } } & { \sum _ { i = 1 } ^ { n } \alpha _ { i } - \frac { 1 } { 2 } \sum _ { i , j = 1 } ^ { n } \alpha _ { i } \alpha _ { j } y _ { i } y _ { j } x _ { i } ^ { T } x _ { j } } \\ { \text {s.t.} } & { 0 \leq \alpha _ { i } \leq C , i = 1 , \ldots , n } \\ { } & { \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } = 0 } \end{array}</script><p>为了求解该问题，我们采用<code>SMO</code>算法，为了保证<script type="math/tex">\sum _ { i = 1 } ^ { n } y _ { i } \alpha _ { i } = 0</script>成立，我们每次选择两个<script type="math/tex">\alpha_i</script>进行优化，比如<script type="math/tex">\alpha_1,\alpha_2</script>，原始的<script type="math/tex">\alpha_1^{old},\alpha_2^{old},\alpha_3,\cdots,\alpha_n</script>当做常量处理，于是：</p>
+<script type="math/tex; mode=display">
+y_1\alpha_1+y_2\alpha_2=y_1\alpha_1^{old}+y_2\alpha_2^{old}=Const</script>
+        
+            <div class="readmore">
+                <a href="/2018/12/28/SVM之SMO/" class="flat-box">
+                    <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
+                    阅读全文
+                </a>
+            </div>
+        
+
+        
+            <div class="full-width auto-padding tags">
+                
+                    <a href="/tags/SVM/"><i class="fas fa-hashtag fa-fw"></i>SVM</a>
+                
+            </div>
+        
+    </section>
+</article>
+
+            </div>
+          
+        
+          
+            <div class="post-wrapper">
+              <article class="post reveal ">
+    
+<section class="meta">
+  
+  
+  <div class="meta" id="header-meta">
+    
+      <h2 class="title">
           <a href="/2018/12/28/SVM之KKT/">
               
                   SVM KKT
@@ -649,9 +730,9 @@
         
             <div class="full-width auto-padding tags">
                 
-                    <a href="/tags/numpy/"><i class="fas fa-hashtag fa-fw"></i>numpy</a>
-                
                     <a href="/tags/pandas/"><i class="fas fa-hashtag fa-fw"></i>pandas</a>
+                
+                    <a href="/tags/numpy/"><i class="fas fa-hashtag fa-fw"></i>numpy</a>
                 
             </div>
         
@@ -728,7 +809,7 @@
         
           <li><a class="flat-box" title="/categories/dl/" href="/categories/dl/"><div class="name">dl</div><div class="badge">(4)</div></a></li>
         
-          <li><a class="flat-box" title="/categories/ml/" href="/categories/ml/"><div class="name">ml</div><div class="badge">(4)</div></a></li>
+          <li><a class="flat-box" title="/categories/ml/" href="/categories/ml/"><div class="name">ml</div><div class="badge">(5)</div></a></li>
         
           <li><a class="flat-box" title="/categories/python/" href="/categories/python/"><div class="name">python</div><div class="badge">(2)</div></a></li>
         
@@ -752,7 +833,7 @@
 </header>
 
     <div class="content material">
-      <a href="/tags/Batch-Normalization/" style="font-size: 14px; color: #999">Batch Normalization</a> <a href="/tags/SVM/" style="font-size: 24px; color: #555">SVM</a> <a href="/tags/feature-column/" style="font-size: 14px; color: #999">feature_column</a> <a href="/tags/numpy/" style="font-size: 19px; color: #777">numpy</a> <a href="/tags/pandas/" style="font-size: 14px; color: #999">pandas</a> <a href="/tags/tf-nn/" style="font-size: 14px; color: #999">tf.nn</a> <a href="/tags/word2vec/" style="font-size: 14px; color: #999">word2vec</a> <a href="/tags/均值-方差/" style="font-size: 14px; color: #999">均值,方差</a>
+      <a href="/tags/Batch-Normalization/" style="font-size: 14px; color: #999">Batch Normalization</a> <a href="/tags/SVM/" style="font-size: 24px; color: #555">SVM</a> <a href="/tags/XGBOOST/" style="font-size: 14px; color: #999">XGBOOST</a> <a href="/tags/feature-column/" style="font-size: 14px; color: #999">feature_column</a> <a href="/tags/numpy/" style="font-size: 19px; color: #777">numpy</a> <a href="/tags/pandas/" style="font-size: 14px; color: #999">pandas</a> <a href="/tags/tf-nn/" style="font-size: 14px; color: #999">tf.nn</a> <a href="/tags/word2vec/" style="font-size: 14px; color: #999">word2vec</a> <a href="/tags/均值-方差/" style="font-size: 14px; color: #999">均值,方差</a>
     </div>
   </section>
 

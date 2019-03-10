@@ -4,7 +4,7 @@
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   
-  <title>Python Numpy(axis=0,1)区分 | HuZuoliang</title>
+  <title>ML XGBoost算法 | HuZuoliang</title>
   
   
 
@@ -150,7 +150,7 @@
   <div class="meta" id="header-meta">
     
       
-          <h1 class="title">Python Numpy(axis=0,1)区分</h1>
+          <h1 class="title">ML XGBoost算法</h1>
       
     
 
@@ -167,7 +167,7 @@
         <div class="new-meta-item date">
           <a class="notlink">
             <i class="fas fa-clock" aria-hidden="true"></i>
-            2018-11-28
+            2019-03-10
           </a>
         </div>
       
@@ -175,9 +175,9 @@
         
           
           <div class="new-meta-item category">
-            <a href="/categories/python/">
+            <a href="/categories/ml/">
               <i class="fas fa-folder-open" aria-hidden="true"></i>
-              python
+              ml
             </a>
           </div>
         
@@ -202,22 +202,30 @@
 
     <section class="article typo">
       <div class="article-entry" itemprop="articleBody">
-        <p>python中的axis究竟是如何定义的呢？他们究竟代表是DataFrame的行还是列？考虑以下代码：<br><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>df = pd.DataFrame([[<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>], [<span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>]], \</span><br><span class="line"><span class="meta">... </span>columns=[<span class="string">"col1"</span>, <span class="string">"col2"</span>, <span class="string">"col3"</span>, <span class="string">"col4"</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>df</span><br><span class="line">   col1  col2  col3  col4</span><br><span class="line"><span class="number">0</span>     <span class="number">1</span>     <span class="number">1</span>     <span class="number">1</span>     <span class="number">1</span></span><br><span class="line"><span class="number">1</span>     <span class="number">2</span>     <span class="number">2</span>     <span class="number">2</span>     <span class="number">2</span></span><br><span class="line"><span class="number">2</span>     <span class="number">3</span>     <span class="number">3</span>     <span class="number">3</span>     <span class="number">3</span></span><br></pre></td></tr></table></figure></p>
-<a id="more"></a>
-<p>如果我们调用df.mean(axis=1),我们将得到按行计算的均值<br><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>df.mean(<span class="number">1</span>)</span><br><span class="line"><span class="number">0</span>    <span class="number">1.0</span></span><br><span class="line"><span class="number">1</span>    <span class="number">2.0</span></span><br><span class="line"><span class="number">2</span>    <span class="number">3.0</span></span><br><span class="line">dtype: float64</span><br></pre></td></tr></table></figure></p>
-<p>然而，如果我们调用 df.drop((name, axis=1),我们实际上删掉了一列，而不是一行：<br><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>df.drop(<span class="string">"col4"</span>, axis=<span class="number">1</span>)</span><br><span class="line">   col1  col2  col3</span><br><span class="line"><span class="number">0</span>     <span class="number">1</span>     <span class="number">1</span>     <span class="number">1</span></span><br><span class="line"><span class="number">1</span>     <span class="number">2</span>     <span class="number">2</span>     <span class="number">2</span></span><br><span class="line"><span class="number">2</span>     <span class="number">3</span>     <span class="number">3</span>     <span class="number">3</span></span><br></pre></td></tr></table></figure></p>
-<p>Can someone help me understand what is meant by an “axis” in pandas/numpy/scipy?<br>有人能帮我理解一下，在pandas、numpy、scipy三都当中axis参数的真实含义吗？</p>
-<p>投票最高的答案揭示了问题的本质：</p>
-<p>其实问题理解axis有问题，df.mean其实是在每一行上取所有列的均值，而不是保留每一列的均值。也许简单的来记就是axis=0代表往 <strong>跨行</strong>（down)，而axis=1代表 <strong>跨列</strong>（across)。</p>
-<p>下图代表在DataFrame当中axis为0和1时分别代表的含义:</p>
-<p><img src="/2018/11/28/Python之NumPy（axis-0-与axis-1）区分/numpy_axis.jpg" alt="axis参数作用方向图示"></p>
-<p>看一下官方帮助的解释：</p>
-<p>轴用来为超过一维的数组定义的属性，二维数据拥有两个轴：第0轴沿着行的垂直往下，第1轴沿着列的方向水平延伸。</p>
-<p>注意看，官方对于0和1的解释是轴，也就是坐标轴。而坐标轴是有方向的，所以千万不要用行和列的思维去想axis，因为行和列是没有方向的，这样想会在遇到不同的例子时感到困惑。</p>
-<p>所以问题当中第一个列子df.mean(axis=1)代表沿着列水平方向计算均值，而第二个列子df.drop(name, axis=1) 代表将name对应的列标签沿着水平的方向依次删掉。</p>
-<p><strong>总之，axis=1可以认为是按行从左至右遍历进行对应操作，axis=0按列从上往下遍历进行操作</strong></p>
-<p>参考：</p>
-<p><a href="https://www.cnblogs.com/rrttp/p/8028421.html" target="_blank" rel="noopener">https://www.cnblogs.com/rrttp/p/8028421.html</a><br><a href="http://blog.csdn.net/wangying19911991/article/details/73928172" target="_blank" rel="noopener">http://blog.csdn.net/wangying19911991/article/details/73928172</a><br><a href="https://www.zhihu.com/question/58993137" target="_blank" rel="noopener">https://www.zhihu.com/question/58993137</a></p>
+        <h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h2><p><a href="https://github.com/dmlc/xgboost" target="_blank" rel="noopener">XGBOOST</a>是在实践中被证明了的一种效果好、可扩展、使用方便的分类与回归算法，在点击率预测、文本分类、销售预测、风险评估等场景都有广泛应用，是<code>gradient tree boosting</code>的一种实现，基学习器或弱学习器为分类与回归树（CART），即支持单机也支持分布式。<br><a id="more"></a></p>
+<h2 id="2-算法目标函数"><a href="#2-算法目标函数" class="headerlink" title="2. 算法目标函数"></a>2. 算法目标函数</h2><p>给定由<script type="math/tex">n</script>个<script type="math/tex">m</script>维样本组成的数据集<script type="math/tex">\mathcal{D}=\left\{\left(\mathbf{x}_{i}, y_{i}\right)\right\}\left(|\mathcal{D}|=n, \mathbf{x}_{i} \in \mathbb{R}^{m}, y_{i} \in \mathbb{R}\right)</script>，基于树的梯度提升算法输出由<script type="math/tex">K</script>颗树的预测结果相加得到，即：</p>
+<script type="math/tex; mode=display">
+\hat{y}_{i}=\phi\left(\mathbf{x}_{i}\right)=\sum_{k=1}^{K} f_{k}\left(\mathbf{x}_{i}\right), \quad f_{k} \in \mathcal{F}</script><p>其中<script type="math/tex">\mathcal{F}=\left\{f(\mathbf{x})=w_{q(\mathbf{x})}\right\}\left(q : \mathbb{R}^{m} \rightarrow T, w \in \mathbb{R}^{T}\right)</script>为树模型空间，<code>q</code>表示每个输入在树中映射的叶子节点索引，<code>T</code>是树中叶子节点的个数，每颗树由相互独立的树结构<code>q</code>以及叶子节点的权重<code>w</code>组成。每个样本的预测结果都是该样本在每颗树对应叶子节点的得分之和，为了学习到这<script type="math/tex">K</script>颗树的结构，我们最小化正则化目标函数：</p>
+<script type="math/tex; mode=display">
+\begin{array}{c}{\mathcal{L}(\phi)=\sum_{i} l\left(\hat{y}_{i}, y_{i}\right)+\sum_{k} \Omega\left(f_{k}\right)} \\ {\text { where } \Omega(f)=\gamma T+\frac{1}{2} \lambda\|w\|^{2}}\end{array}</script><p>其中<script type="math/tex">l</script>是可微的凸函数损失，表示真实输出<script type="math/tex">y_i</script>和预测输出<script type="math/tex">\hat y_i</script>的误差，<script type="math/tex">\Omega</script>为正则项，防止过拟合。</p>
+<h2 id="3-梯度提升树模型的求解"><a href="#3-梯度提升树模型的求解" class="headerlink" title="3. 梯度提升树模型的求解"></a>3. 梯度提升树模型的求解</h2><p>使用传统的模型求解方法难以求解梯度提升树模型，但这是一种加性的训练，我们可以使用<strong>贪心算法</strong>的思想一颗一颗的求解。假设<script type="math/tex">\hat{y}_{i}^{(t)}</script>是第<script type="math/tex">i</script>个样本第<script type="math/tex">t</script>次迭代的输出，现在我们需要增加一个模型<script type="math/tex">f_{t}</script>来最小化目标函数，如下：</p>
+<script type="math/tex; mode=display">
+\mathcal{L}^{(t)}=\sum_{i=1}^{n} l\left(y_{i}, \hat{y}_{i}^{(t-1)}+f_{t}\left(\mathbf{x}_{i}\right)\right)+\Omega\left(f_{t}\right)</script><p>使用二阶泰勒展开：</p>
+<script type="math/tex; mode=display">
+\mathcal{L}^{(t)} \simeq \sum_{i=1}^{n}\left[l\left(y_{i}, \hat{y}^{(t-1)}\right)+g_{i} f_{t}\left(\mathbf{x}_{i}\right)+\frac{1}{2} h_{i} f_{t}^{2}\left(\mathbf{x}_{i}\right)\right]+\Omega\left(f_{t}\right)</script><p>其中<script type="math/tex">g_{i}=\partial_{\hat{y}}(t-1) l\left(y_{i}, \hat{y}^{(t-1)}\right)</script>，<script type="math/tex">h_{i}=\partial_{\hat{y}}^{2}(t-1) l\left(y_{i}, \hat{y}^{(t-1)}\right)</script>分别为上一颗树输出的损失函数一阶二阶导数值，去除常数项得到：</p>
+<script type="math/tex; mode=display">
+\tilde{\mathcal{L}}^{(t)}=\sum_{i=1}^{n}\left[g_{i} f_{t}\left(\mathbf{x}_{i}\right)+\frac{1}{2} h_{i} f_{t}^{2}\left(\mathbf{x}_{i}\right)\right]+\Omega\left(f_{t}\right)</script><p>定义<script type="math/tex">I_{j}=\{i | q\left(\mathbf{x}_{i}\right)=j\}</script>为映射在第<script type="math/tex">j</script>个叶子节点的样本，则单样本的梯度乘以在当前树映射叶子节点的权重之和，与将所有映射在某个叶子节点的样本梯度之和乘以叶子节点权重是等价的，所以有：</p>
+<script type="math/tex; mode=display">
+\begin{aligned} \tilde{\mathcal{L}}^{(t)} &=\sum_{i=1}^{n}\left[g_{i} f_{t}\left(\mathbf{x}_{i}\right)+\frac{1}{2} h_{i} f_{t}^{2}\left(\mathbf{x}_{i}\right)\right]+\gamma T+\frac{1}{2} \lambda \sum_{j=1}^{T} w_{j}^{2} \\ &=\sum_{j=1}^{T}\left[\left(\sum_{i \in I_{j}} g_{i}\right) w_{j}+\frac{1}{2}\left(\sum_{i \in I_{j}} h_{i}+\lambda\right) w_{j}^{2}\right]+\gamma T \end{aligned}</script><p>对上式求导，并令导数为零，得到<script type="math/tex">w</script>的最优解：</p>
+<script type="math/tex; mode=display">
+w_{j}^{*}=-\frac{\sum_{i \in I_{j}} g_{i}}{\sum_{i \in I_{j}} h_{i}+\lambda}</script><p>目标函数为*：</p>
+<script type="math/tex; mode=display">
+\tilde{\mathcal{L}}^{(t)}(q)=-\frac{1}{2} \sum_{j=1}^{T} \frac{\left(\sum_{i \in I_{j}} g_{i}\right)^{2}}{\sum_{i \in I_{j}} h_{i}+\lambda}+\gamma T</script><p>模型求解过程中，每一颗树由根节点开始分裂直至结束，我们假设某次分裂后，左子树和右子树的损失分别为<script type="math/tex">I_{L}</script>和<script type="math/tex">I_{R}</script>，令<script type="math/tex">I=I_{L} \cup I_{R}</script>，则分裂后，损失减少为（多了一个叶子节点<script type="math/tex">L_{after}-L_{before}</script>）：</p>
+<script type="math/tex; mode=display">
+\mathcal{L}_{s p l i t}=\frac{1}{2}\left[\frac{\left(\sum_{i \in I_{L}} g_{i}\right)^{2}}{\sum_{i \in I_{L}} h_{i}+\lambda}+\frac{\left(\sum_{i \in I_{R}} g_{i}\right)^{2}}{\sum_{i \in I_{R}} h_{i}+\lambda}-\frac{\left(\sum_{i \in I} g_{i}\right)^{2}}{\sum_{i \in I} h_{i}+\lambda}\right]-\gamma</script><h2 id="4-叶子节点分裂细节"><a href="#4-叶子节点分裂细节" class="headerlink" title="4. 叶子节点分裂细节"></a>4. 叶子节点分裂细节</h2><h2 id="5-优化"><a href="#5-优化" class="headerlink" title="5. 优化"></a>5. 优化</h2><ul>
+<li>Shrinkage：如同梯度下降的学习率，每颗树输出的权重因子为<script type="math/tex">\eta</script></li>
+<li>Column Subsampling：类似随机森林，每棵树只优化部分列</li>
+</ul>
 
       </div>
         
@@ -225,16 +233,16 @@
             <hr>
             <div class="new-meta-box">
               
-                <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-02-12T08:44:59+08:00">
+                <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-03-10T19:07:18+08:00">
                   <a class="notlink">
                     <i class="fas fa-pencil-alt" aria-hidden="true"></i>
-                    2019-02-12
+                    2019-03-10
                   </a>
                 </div>
               
               
                 
-                <div class="new-meta-item meta-tags"><a class="tag" href="/tags/pandas/"><i class="fas fa-hashtag" aria-hidden="true"></i>&nbsp;pandas</a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/numpy/"><i class="fas fa-hashtag" aria-hidden="true"></i>&nbsp;numpy</a></div>
+                <div class="new-meta-item meta-tags"><a class="tag" href="/tags/XGBOOST/"><i class="fas fa-hashtag" aria-hidden="true"></i>&nbsp;XGBOOST</a></div>
               
               
                 
@@ -243,7 +251,7 @@
     <div class="-mob-share-list share-body">
       
         
-          <a 1="" 2="" 3="" 11="" 22="" class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer" href="http://connect.qq.com/widget/shareqq/index.html?url=https://huzuoliang.github.io/2018/11/28/Python之NumPy（axis-0-与axis-1）区分/&title=Python Numpy(axis=0,1)区分 | HuZuoliang&summary=python中的axis究竟是如何定义的呢？他们究竟代表是DataFrame的行还是列？考虑以下代码：&gt;&gt;&gt; import pandas as pd&gt;&gt;&gt; df = pd.DataFrame([[1, 1, 1, 1], [2, 2, 2, 2], [3, 3, 3, 3]], \... columns=[" col1",="" "col2",="" "col3",="" "col4"])&gt;&gt;&gt;="" df="" col1="" col2="" col3="" col40="" 3"="">
+          <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer" href="http://connect.qq.com/widget/shareqq/index.html?url=https://huzuoliang.github.io/2019/03/10/ML-XGBoost算法/&title=ML XGBoost算法 | HuZuoliang&summary=1. 简介XGBOOST是在实践中被证明了的一种效果好、可扩展、使用方便的分类与回归算法，在点击率预测、文本分类、销售预测、风险评估等场景都有广泛应用，是gradient tree boosting的一种实现，基学习器或弱学习器为分类与回归树（CART），即支持单机也支持分布式。">
             
               <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qq.png">
             
@@ -251,7 +259,7 @@
         
       
         
-          <a 1="" 2="" 3="" 11="" 22="" class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://huzuoliang.github.io/2018/11/28/Python之NumPy（axis-0-与axis-1）区分/&title=Python Numpy(axis=0,1)区分 | HuZuoliang&summary=python中的axis究竟是如何定义的呢？他们究竟代表是DataFrame的行还是列？考虑以下代码：&gt;&gt;&gt; import pandas as pd&gt;&gt;&gt; df = pd.DataFrame([[1, 1, 1, 1], [2, 2, 2, 2], [3, 3, 3, 3]], \... columns=[" col1",="" "col2",="" "col3",="" "col4"])&gt;&gt;&gt;="" df="" col1="" col2="" col3="" col40="" 3"="">
+          <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://huzuoliang.github.io/2019/03/10/ML-XGBoost算法/&title=ML XGBoost算法 | HuZuoliang&summary=1. 简介XGBOOST是在实践中被证明了的一种效果好、可扩展、使用方便的分类与回归算法，在点击率预测、文本分类、销售预测、风险评估等场景都有广泛应用，是gradient tree boosting的一种实现，基学习器或弱学习器为分类与回归树（CART），即支持单机也支持分布式。">
             
               <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qzone.png">
             
@@ -267,7 +275,7 @@
         
       
         
-          <a 1="" 2="" 3="" 11="" 22="" class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer" href="http://service.weibo.com/share/share.php?url=https://huzuoliang.github.io/2018/11/28/Python之NumPy（axis-0-与axis-1）区分/&title=Python Numpy(axis=0,1)区分 | HuZuoliang&summary=python中的axis究竟是如何定义的呢？他们究竟代表是DataFrame的行还是列？考虑以下代码：&gt;&gt;&gt; import pandas as pd&gt;&gt;&gt; df = pd.DataFrame([[1, 1, 1, 1], [2, 2, 2, 2], [3, 3, 3, 3]], \... columns=[" col1",="" "col2",="" "col3",="" "col4"])&gt;&gt;&gt;="" df="" col1="" col2="" col3="" col40="" 3"="">
+          <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer" href="http://service.weibo.com/share/share.php?url=https://huzuoliang.github.io/2019/03/10/ML-XGBoost算法/&title=ML XGBoost算法 | HuZuoliang&summary=1. 简介XGBOOST是在实践中被证明了的一种效果好、可扩展、使用方便的分类与回归算法，在点击率预测、文本分类、销售预测、风险评估等场景都有广泛应用，是gradient tree boosting的一种实现，基学习器或弱学习器为分类与回归树（CART），即支持单机也支持分布式。">
             
               <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/weibo.png">
             
@@ -286,25 +294,25 @@
         
             <div class="prev-next">
                 
-                    <section class="prev">
-                        <span class="art-item-left">
-                            <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
+                
+                    <section class="next">
+                        <span class="art-item-right" aria-hidden="true">
+                            <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
                             <h4>
-                                <a href="/2018/11/29/Python之Numpy-reshape/" rel="prev" title="Python Numpy.reshape">
-                                  
-                                      Python Numpy.reshape
-                                  
+                                <a href="/2019/03/04/TF-采样函数/" rel="prev" title="TF-采样函数">
+                                    
+                                        TF-采样函数
+                                    
                                 </a>
                             </h4>
                             
                                 
                                 <h6 class="tags">
-                                    <a class="tag" href="/tags/numpy/"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>numpy</a>
+                                    <a class="tag" href="/tags/tf-nn/"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>tf.nn</a>
                                 </h6>
                             
                         </span>
                     </section>
-                
                 
             </div>
         
@@ -341,7 +349,7 @@
 
 <script>
     window.subData = {
-        title: 'Python Numpy(axis=0,1)区分',
+        title: 'ML XGBoost算法',
         tools: true
     }
 </script>
@@ -356,6 +364,20 @@
       
       
         
+  <section class="toc-wrapper">
+    
+<header class="material">
+  <div><i class="fas fa-list fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;文章目录</div>
+  
+    <div class="wrapper"><a class="s-toc rightBtn" rel="external nofollow noopener noreferrer" href="javascript:void(0)"><i class="fas fa-thumbtack fa-fw"></i></a></div>
+  
+</header>
+
+    <div class="content material">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-简介"><span class="toc-text">1. 简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-算法目标函数"><span class="toc-text">2. 算法目标函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-梯度提升树模型的求解"><span class="toc-text">3. 梯度提升树模型的求解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-叶子节点分裂细节"><span class="toc-text">4. 叶子节点分裂细节</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-优化"><span class="toc-text">5. 优化</span></a></li></ol>
+    </div>
+  </section>
+
 
       
     

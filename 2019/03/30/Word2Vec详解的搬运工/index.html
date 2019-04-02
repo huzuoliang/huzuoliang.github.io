@@ -312,14 +312,14 @@ p\left(d_{j}^{u} | \mathbf{v}(w), \theta_{j-1}^{u}\right)=\left[\sigma\left(\mat
 \frac{\partial \mathcal{L}}{\partial \mathbf{v}(w)}=\sum_{u \in \operatorname{Contex} t(w)} \sum_{j=2}^{l^{u}}\left[1-d_{j}^{u}-\sigma\left(\mathbf{v}(w)^{\top} \theta_{j-1}^{u}\right)\right] \theta_{j-1}^{u}\tag{27}</script><p>Negative Sampling(NCE)是Word2Vec训练中最常用的一种模型，与Hierarchical Softmax相比，NCE不再使用复杂的Huffman树，而是利用随机负采样，从而大幅度提高性能。</p>
 <h3 id="3-3-基于Negative-Sampling的CBOW模型"><a href="#3-3-基于Negative-Sampling的CBOW模型" class="headerlink" title="3.3 基于Negative Sampling的CBOW模型"></a>3.3 基于Negative Sampling的CBOW模型</h3><p>在CBOW模型中，已知词w的上下文Context(w)，需要预测w，因此对于给定的Context(w)，词w就是一个正样本，其它词就是负样本。负样本的选择方式有多种，下文再介绍。<br>假设现在已经选好了一个关于w的负样本子集<script type="math/tex">NEG(w) \neq \emptyset</script>，且对<script type="math/tex">\forall \widetilde{w} \in \mathcal{D}</script>，定义</p>
 <script type="math/tex; mode=display">
-L^{w}(\widetilde{w})=\left\{\begin{array}{ll}{1,} & {\widetilde{w}=w} \\ {0,} & {\widetilde{w} \neq w}\end{array}\right\tag{28}</script><p>表示词<script type="math/tex">\widetilde{w}</script>的标签，即正样本的标签为1，负样本的标签为0.对于一个给的正样本(Context(w), w)，我们希望最大化</p>
+L^{w}(\widetilde{w})=\left\{\begin{array}{ll}{1,} & {\widetilde{w}=w} \\ {0,} & {\widetilde{w} \neq w}\end{array}\right.\tag{28}</script><p>表示词<script type="math/tex">\widetilde{w}</script>的标签，即正样本的标签为1，负样本的标签为0.对于一个给的正样本(Context(w), w)，我们希望最大化</p>
 <script type="math/tex; mode=display">
 \begin{array}{l}
 g(w) & =\prod\limits_{u \in\{w\} \cup N E G(w)} p(u | C \text { ontext }(w)) \\
  & =\sigma\left(\mathbf{x}_{w}^{\top} \theta^{w}\right) \prod\limits_{u \in N E G(w)}\left[1-\sigma\left(\mathbf{x}_{w}^{\top} \theta^{u}\right)\right]
 \end{array}\tag{29}</script><p>其中</p>
 <script type="math/tex; mode=display">
-p(u | Context(w))=\left\{\begin{array}{ll}{\sigma\left(\mathbf{x}_{w}^{\top} \theta^{u}\right),} & {L^{w}(u)=1} \\ {1-\sigma\left(\mathbf{x}_{w}^{\top} \theta^{u}\right),} & {L^{w}(u)=0}\end{array}\right\tag{30}</script><p>从形式上看，最大化g(w)相当于最大化<script type="math/tex">\sigma\left(\mathbf{x}_{w}^{\top} \theta^{w}\right)</script>，同时最小化所有的<script type="math/tex">\sigma\left(\mathbf{x}_{w}^{\top} \theta^{u}\right), u \in NEG(w)</script>，即<strong>增大正样本概率的同时降低负样本的概率</strong>。于是最终的目标函数为</p>
+p(u | Context(w))=\left\{\begin{array}{ll}{\sigma\left(\mathbf{x}_{w}^{\top} \theta^{u}\right),} & {L^{w}(u)=1} \\ {1-\sigma\left(\mathbf{x}_{w}^{\top} \theta^{u}\right),} & {L^{w}(u)=0}\end{array}\right.\tag{30}</script><p>从形式上看，最大化g(w)相当于最大化<script type="math/tex">\sigma\left(\mathbf{x}_{w}^{\top} \theta^{w}\right)</script>，同时最小化所有的<script type="math/tex">\sigma\left(\mathbf{x}_{w}^{\top} \theta^{u}\right), u \in NEG(w)</script>，即<strong>增大正样本概率的同时降低负样本的概率</strong>。于是最终的目标函数为</p>
 <script type="math/tex; mode=display">
 G=\prod_{w \in \mathcal{C}} g(w)\tag{31}</script><p>得到对数似然损失：</p>
 <script type="math/tex; mode=display">
@@ -343,7 +343,7 @@ G=\prod_{w \in \mathcal{C}} g(w) \longrightarrow \prod_{w \in \mathcal{C}} \prod
 g(u) & =\prod\limits_{z \in\{u\} \cup NEG(u)} p(z | w) \\ & = \left[\sigma\left(\mathbf{v}(w)^{\top} \theta^{z}\right)\right]^{L^{u}(z)} \cdot\left[1-\sigma\left(\mathbf{v}(w)^{\top} \theta^{z}\right)\right]^{1-L^{u}(z)}
 \end{array}\tag{38}</script><p>其中</p>
 <script type="math/tex; mode=display">
-p(z | w)=\left\{\begin{array}{ll}{\sigma\left(\mathbf{v}(w)^{\top} \theta^{z}\right),} & {L^{u}(z)=1} \\ {1-\sigma\left(\mathbf{v}(w)^{\top} \theta^{z}\right),} & {L^{u}(z)=0}\end{array}\right\tag{39}</script><p>得到最终的目标函数为</p>
+p(z | w)=\left\{\begin{array}{ll}{\sigma\left(\mathbf{v}(w)^{\top} \theta^{z}\right),} & {L^{u}(z)=1} \\ {1-\sigma\left(\mathbf{v}(w)^{\top} \theta^{z}\right),} & {L^{u}(z)=0}\end{array}\right. \tag{39}</script><p>得到最终的目标函数为</p>
 <script type="math/tex; mode=display">
 \begin{array}{l}
 \mathcal{L} & =\log G=\log \prod\limits_{w \in \mathcal{C}} \prod\limits_{u \in C o n t e x t(w)} g(u)=\sum\limits_{w \in \mathcal{C}} \sum\limits_{u \in \operatorname{Context}(w)} \log g(u) \\ & =\sum\limits_{w \in C} \sum\limits_{u \in C o n t e x t(w)} \log\limits_{z \in\{u\} \cup N E G(u)} p(z | w) \\ & =\sum_{w \in \mathcal{C}} \sum\limits_{u \in \operatorname{Context}(w) z \in\{u\} \cup N E G(u)} \log p(z | w) \\ & =\sum\limits\limits_{w \in \mathcal{C}} \sum\limits_{u \in \operatorname{Context}(w) z \in\{u\} \cup N E G(u)} \log \left\{\left[\sigma\left(\mathbf{v}(w)^{\top} \theta^{z}\right)\right]^{L^{u}(z)} \cdot\left[1-\sigma\left(\mathbf{v}(w)^{\top} \theta^{z}\right)\right]^{1-L^{u}(z)}\right\} \\ & = \sum\limits_{w \in C} \sum\limits_{u \in \operatorname{cntext}(w) z \in\{u\} \cup N E G(u)} \\ &\left\{L^{u}(z) \cdot \log \left[\sigma\left(\mathbf{v}(w)^{\top} \theta^{z}\right)\right]+\left[1-L^{u}(z)\right] \cdot \log \left[1-\sigma\left(\mathbf{v}(w)^{\top} \theta^{z}\right)\right]\right\}
@@ -351,7 +351,7 @@ p(z | w)=\left\{\begin{array}{ll}{\sigma\left(\mathbf{v}(w)^{\top} \theta^{z}\ri
 <script type="math/tex; mode=display">
 g(w)=\prod_{\widetilde{w} \in \operatorname{Context}(w)} \sum_{u \in\{w\} \cup NEG^{\widetilde{w}} (w)} p(u | \widetilde{w})\tag{41}</script><p>其中</p>
 <script type="math/tex; mode=display">
-p(u | \widetilde{w})=\left\{\begin{array}{ll}{\sigma\left(\mathbf{v}(\widetilde{w})^{\top} \theta^{u}\right),} & {L^{w}(u)=1} \\ {1-\sigma\left(\mathbf{v}(\widetilde{w})^{\top} \theta^{u}\right),} & {L^{w}(u)=0}\end{array}\right\tag{42}</script><p>则最终的目标函数为</p>
+p(u | \widetilde{w})=\left\{\begin{array}{ll}{\sigma\left(\mathbf{v}(\widetilde{w})^{\top} \theta^{u}\right),} & {L^{w}(u)=1} \\ {1-\sigma\left(\mathbf{v}(\widetilde{w})^{\top} \theta^{u}\right),} & {L^{w}(u)=0}\end{array}\right.\tag{42}</script><p>则最终的目标函数为</p>
 <script type="math/tex; mode=display">
 \begin{array}{l}
 \mathcal{L} & =\log G=\log \prod_{w \in \mathcal{C}} g(w)=\sum_{w \in \mathcal{C}} \log g(w) \\ & =\sum_{w \in \mathcal{C}} \log \prod_{\widetilde{w} \in \operatorname{Context}(w)} \prod_{u \in\{w\} \cup N E G(w)}\left\{\left[\sigma\left(\mathbf{v}(\widetilde{w})^{\top} \theta^{u}\right)\right]^{L^{w}(u)} \cdot\left[1-\sigma\left(\mathbf{v}(\widetilde{w})^{\top} \theta^{u}\right)\right]^{1-L^{w}(u)}\right\} \\ & = \sum_{w \in C} \sum_{\widetilde{w} \in \operatorname{Cntext}(w)} \sum_{u \in\{w\} \cup N E G \tilde{w}(w)} \\ &\left\{L^{w}(u) \cdot \log \left[\sigma\left(\mathbf{v}(\widetilde{w})^{\top} \theta^{u}\right)\right]+\left[1-L^{w}(u)\right] \cdot \log \left[1-\sigma\left(\mathbf{v}(\widetilde{w})^{\top} \theta^{u}\right)\right]\right\}
@@ -372,7 +372,7 @@ p(u | \widetilde{w})=\left\{\begin{array}{ll}{\sigma\left(\mathbf{v}(\widetilde{
             <hr>
             <div class="new-meta-box">
               
-                <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-04-02T21:08:47+08:00">
+                <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-04-02T21:19:29+08:00">
                   <a class="notlink">
                     <i class="fas fa-pencil-alt" aria-hidden="true"></i>
                     2019-04-02

@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://huzuoliang.github.io/2019/04/04/Embeddings-at-Alibaba/</loc>
+    <lastmod>2019-04-02T13:09:19.577Z</lastmod>
+  </url>  <url>
+    <loc>https://huzuoliang.github.io/2019/04/03/Embeddings-at-Airbnb/</loc>
+    <lastmod>2019-04-02T13:09:15.010Z</lastmod>
+  </url>  <url>
+    <loc>https://huzuoliang.github.io/2019/03/30/Word2Vec%E8%AF%A6%E8%A7%A3%E7%9A%84%E6%90%AC%E8%BF%90%E5%B7%A5/</loc>
+    <lastmod>2019-04-02T13:08:47.944Z</lastmod>
+  </url>  <url>
+    <loc>https://huzuoliang.github.io/2019/03/31/Latex%E7%89%B9%E6%AE%8A%E7%AC%A6%E5%8F%B7/</loc>
+    <lastmod>2019-04-01T16:32:44.373Z</lastmod>
+  </url>  <url>
     <loc>https://huzuoliang.github.io/2019/03/10/ML-XGBoost%E7%AE%97%E6%B3%95/</loc>
-    <lastmod>2019-03-10T11:07:18.084Z</lastmod>
+    <lastmod>2019-03-13T05:06:42.824Z</lastmod>
+  </url>  <url>
+    <loc>https://huzuoliang.github.io/2019/03/04/TF-%E9%87%87%E6%A0%B7%E5%87%BD%E6%95%B0/</loc>
+    <lastmod>2019-03-10T11:08:51.472Z</lastmod>
   </url>  <url>
     <loc>https://huzuoliang.github.io/2019/02/14/ML%E6%A0%91%E7%AE%97%E6%B3%95%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E6%B1%87%E6%80%BB/</loc>
     <lastmod>2019-03-10T05:33:31.231Z</lastmod>
-  </url>  <url>
-    <loc>https://huzuoliang.github.io/2019/03/04/TF-%E9%87%87%E6%A0%B7%E5%87%BD%E6%95%B0/</loc>
-    <lastmod>2019-03-05T02:12:27.701Z</lastmod>
   </url>  <url>
     <loc>https://huzuoliang.github.io/2019/02/26/Word2Vec%E8%B4%9F%E9%87%87%E6%A0%B7%E5%8F%8ATF%E5%AE%9E%E7%8E%B0/</loc>
     <lastmod>2019-03-03T10:45:56.155Z</lastmod>

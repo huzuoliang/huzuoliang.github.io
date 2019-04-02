@@ -222,7 +222,16 @@ w_{j}^{*}=-\frac{\sum_{i \in I_{j}} g_{i}}{\sum_{i \in I_{j}} h_{i}+\lambda}</sc
 <script type="math/tex; mode=display">
 \tilde{\mathcal{L}}^{(t)}(q)=-\frac{1}{2} \sum_{j=1}^{T} \frac{\left(\sum_{i \in I_{j}} g_{i}\right)^{2}}{\sum_{i \in I_{j}} h_{i}+\lambda}+\gamma T</script><p>模型求解过程中，每一颗树由根节点开始分裂直至结束，我们假设某次分裂后，左子树和右子树的损失分别为<script type="math/tex">I_{L}</script>和<script type="math/tex">I_{R}</script>，令<script type="math/tex">I=I_{L} \cup I_{R}</script>，则分裂后，损失减少为（多了一个叶子节点<script type="math/tex">L_{after}-L_{before}</script>）：</p>
 <script type="math/tex; mode=display">
-\mathcal{L}_{s p l i t}=\frac{1}{2}\left[\frac{\left(\sum_{i \in I_{L}} g_{i}\right)^{2}}{\sum_{i \in I_{L}} h_{i}+\lambda}+\frac{\left(\sum_{i \in I_{R}} g_{i}\right)^{2}}{\sum_{i \in I_{R}} h_{i}+\lambda}-\frac{\left(\sum_{i \in I} g_{i}\right)^{2}}{\sum_{i \in I} h_{i}+\lambda}\right]-\gamma</script><h2 id="4-叶子节点分裂细节"><a href="#4-叶子节点分裂细节" class="headerlink" title="4. 叶子节点分裂细节"></a>4. 叶子节点分裂细节</h2><h2 id="5-优化"><a href="#5-优化" class="headerlink" title="5. 优化"></a>5. 优化</h2><ul>
+\mathcal{L}_{s p l i t}=\frac{1}{2}\left[\frac{\left(\sum_{i \in I_{L}} g_{i}\right)^{2}}{\sum_{i \in I_{L}} h_{i}+\lambda}+\frac{\left(\sum_{i \in I_{R}} g_{i}\right)^{2}}{\sum_{i \in I_{R}} h_{i}+\lambda}-\frac{\left(\sum_{i \in I} g_{i}\right)^{2}}{\sum_{i \in I} h_{i}+\lambda}\right]-\gamma</script><h2 id="4-叶子节点分裂细节（贪心算法）"><a href="#4-叶子节点分裂细节（贪心算法）" class="headerlink" title="4. 叶子节点分裂细节（贪心算法）"></a>4. 叶子节点分裂细节（贪心算法）</h2><h3 id="1-精确分裂点查找（效果好、速度慢）"><a href="#1-精确分裂点查找（效果好、速度慢）" class="headerlink" title="1. 精确分裂点查找（效果好、速度慢）"></a>1. 精确分裂点查找（效果好、速度慢）</h3><p>遍历每个特征的所有可能分裂点，以分裂后损失减少最多的分裂特征和分裂点作为本次的分裂位置，必须为连续值特征，算法如下：</p>
+<div align="center"><img src="/2019/03/10/ML-XGBoost算法/分裂1.png" width="360"></div>
+
+<h3 id="2-XGBoost-近似分裂点查找"><a href="#2-XGBoost-近似分裂点查找" class="headerlink" title="2. XGBoost 近似分裂点查找"></a>2. XGBoost 近似分裂点查找</h3><p>算法如下：</p>
+<div align="center"><img src="/2019/03/10/ML-XGBoost算法/分裂1.png" width="360"></div>
+
+<h3 id="3-特征缺失值处理"><a href="#3-特征缺失值处理" class="headerlink" title="3. 特征缺失值处理"></a>3. 特征缺失值处理</h3><p>算法如下：</p>
+<div align="center"><img src="/2019/03/10/ML-XGBoost算法/分裂1.png" width="360"></div>
+
+<h2 id="5-优化"><a href="#5-优化" class="headerlink" title="5. 优化"></a>5. 优化</h2><ul>
 <li>Shrinkage：如同梯度下降的学习率，每颗树输出的权重因子为<script type="math/tex">\eta</script></li>
 <li>Column Subsampling：类似随机森林，每棵树只优化部分列</li>
 </ul>
@@ -233,10 +242,10 @@ w_{j}^{*}=-\frac{\sum_{i \in I_{j}} g_{i}}{\sum_{i \in I_{j}} h_{i}+\lambda}</sc
             <hr>
             <div class="new-meta-box">
               
-                <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-03-10T19:07:18+08:00">
+                <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-03-13T13:06:42+08:00">
                   <a class="notlink">
                     <i class="fas fa-pencil-alt" aria-hidden="true"></i>
-                    2019-03-10
+                    2019-03-13
                   </a>
                 </div>
               
@@ -294,14 +303,33 @@ w_{j}^{*}=-\frac{\sum_{i \in I_{j}} g_{i}}{\sum_{i \in I_{j}} h_{i}+\lambda}</sc
         
             <div class="prev-next">
                 
+                    <section class="prev">
+                        <span class="art-item-left">
+                            <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
+                            <h4>
+                                <a href="/2019/03/30/Word2Vec详解的搬运工/" rel="prev" title="Word2Vec详解（知识汇总）">
+                                  
+                                      Word2Vec详解（知识汇总）
+                                  
+                                </a>
+                            </h4>
+                            
+                                
+                                <h6 class="tags">
+                                    <a class="tag" href="/tags/word2vec/"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>word2vec</a>
+                                </h6>
+                            
+                        </span>
+                    </section>
+                
                 
                     <section class="next">
                         <span class="art-item-right" aria-hidden="true">
                             <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
                             <h4>
-                                <a href="/2019/03/04/TF-采样函数/" rel="prev" title="TF-采样函数">
+                                <a href="/2019/03/04/TF-采样函数/" rel="prev" title="TF 采样函数">
                                     
-                                        TF-采样函数
+                                        TF 采样函数
                                     
                                 </a>
                             </h4>
@@ -374,7 +402,7 @@ w_{j}^{*}=-\frac{\sum_{i \in I_{j}} g_{i}}{\sum_{i \in I_{j}} h_{i}+\lambda}</sc
 </header>
 
     <div class="content material">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-简介"><span class="toc-text">1. 简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-算法目标函数"><span class="toc-text">2. 算法目标函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-梯度提升树模型的求解"><span class="toc-text">3. 梯度提升树模型的求解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-叶子节点分裂细节"><span class="toc-text">4. 叶子节点分裂细节</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-优化"><span class="toc-text">5. 优化</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-简介"><span class="toc-text">1. 简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-算法目标函数"><span class="toc-text">2. 算法目标函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-梯度提升树模型的求解"><span class="toc-text">3. 梯度提升树模型的求解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-叶子节点分裂细节（贪心算法）"><span class="toc-text">4. 叶子节点分裂细节（贪心算法）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-精确分裂点查找（效果好、速度慢）"><span class="toc-text">1. 精确分裂点查找（效果好、速度慢）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-XGBoost-近似分裂点查找"><span class="toc-text">2. XGBoost 近似分裂点查找</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-特征缺失值处理"><span class="toc-text">3. 特征缺失值处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-优化"><span class="toc-text">5. 优化</span></a></li></ol>
     </div>
   </section>
 
@@ -396,7 +424,7 @@ w_{j}^{*}=-\frac{\sum_{i \in I_{j}} g_{i}}{\sum_{i \in I_{j}} h_{i}+\lambda}</sc
     <div class="content material">
       <ul class="entry">
         
-          <li><a class="flat-box" title="/categories/dl/" href="/categories/dl/"><div class="name">dl</div><div class="badge">(4)</div></a></li>
+          <li><a class="flat-box" title="/categories/dl/" href="/categories/dl/"><div class="name">dl</div><div class="badge">(5)</div></a></li>
         
           <li><a class="flat-box" title="/categories/ml/" href="/categories/ml/"><div class="name">ml</div><div class="badge">(5)</div></a></li>
         
@@ -422,7 +450,7 @@ w_{j}^{*}=-\frac{\sum_{i \in I_{j}} g_{i}}{\sum_{i \in I_{j}} h_{i}+\lambda}</sc
 </header>
 
     <div class="content material">
-      <a href="/tags/Batch-Normalization/" style="font-size: 14px; color: #999">Batch Normalization</a> <a href="/tags/SVM/" style="font-size: 24px; color: #555">SVM</a> <a href="/tags/XGBOOST/" style="font-size: 14px; color: #999">XGBOOST</a> <a href="/tags/feature-column/" style="font-size: 14px; color: #999">feature_column</a> <a href="/tags/numpy/" style="font-size: 19px; color: #777">numpy</a> <a href="/tags/pandas/" style="font-size: 14px; color: #999">pandas</a> <a href="/tags/tf-nn/" style="font-size: 14px; color: #999">tf.nn</a> <a href="/tags/word2vec/" style="font-size: 14px; color: #999">word2vec</a> <a href="/tags/均值-方差/" style="font-size: 14px; color: #999">均值,方差</a>
+      <a href="/tags/Batch-Normalization/" style="font-size: 14px; color: #999">Batch Normalization</a> <a href="/tags/SVM/" style="font-size: 24px; color: #555">SVM</a> <a href="/tags/XGBOOST/" style="font-size: 14px; color: #999">XGBOOST</a> <a href="/tags/feature-column/" style="font-size: 14px; color: #999">feature_column</a> <a href="/tags/latex/" style="font-size: 14px; color: #999">latex</a> <a href="/tags/numpy/" style="font-size: 19px; color: #777">numpy</a> <a href="/tags/pandas/" style="font-size: 14px; color: #999">pandas</a> <a href="/tags/tf-nn/" style="font-size: 14px; color: #999">tf.nn</a> <a href="/tags/word2vec/" style="font-size: 19px; color: #777">word2vec</a> <a href="/tags/均值-方差/" style="font-size: 14px; color: #999">均值,方差</a>
     </div>
   </section>
 

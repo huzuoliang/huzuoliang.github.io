@@ -167,6 +167,293 @@
   <div class="meta" id="header-meta">
     
       <h2 class="title">
+          <a href="/2019/02/12/TF-Logloss/">
+              
+                  TF sigmoid_cross_entropy_with_logits
+              
+          </a>
+      </h2>
+    
+
+    <div class="new-meta-box">
+      
+        <div class="new-meta-item author">
+          <a href="https://huzuoliang.github.io">
+            <i class="fas fa-user" aria-hidden="true"></i>
+            HuZuoliang
+          </a>
+        </div>
+      
+      
+        <div class="new-meta-item date">
+          <a class="notlink">
+            <i class="fas fa-clock" aria-hidden="true"></i>
+            2019-02-12
+          </a>
+        </div>
+      
+      
+        
+      
+      
+      
+    </div>
+    <hr>
+  </div>
+</section>
+
+    <section class="article typo">
+        <h3 id="logloss"><a href="#logloss" class="headerlink" title="logloss"></a>logloss</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">z * -log(sigmoid(x)) + (1 - z) * -log(1 - sigmoid(x))</span><br><span class="line">= z * -log(1 / (1 + exp(-x))) + (1 - z) * -log(exp(-x) / (1 + exp(-x)))</span><br><span class="line">= z * log(1 + exp(-x)) + (1 - z) * (-log(exp(-x)) + log(1 + exp(-x)))</span><br><span class="line">= z * log(1 + exp(-x)) + (1 - z) * (x + log(1 + exp(-x))</span><br><span class="line">= (1 - z) * x + log(1 + exp(-x))</span><br><span class="line">= x - x * z + log(1 + exp(-x))</span><br></pre></td></tr></table></figure>
+        
+            <div class="readmore">
+                <a href="/2019/02/12/TF-Logloss/" class="flat-box">
+                    <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
+                    阅读全文
+                </a>
+            </div>
+        
+
+        
+    </section>
+</article>
+
+            </div>
+          
+        
+          
+            <div class="post-wrapper">
+              <article class="post reveal ">
+    
+<section class="meta">
+  
+  
+  <div class="meta" id="header-meta">
+    
+      <h2 class="title">
+          <a href="/2019/02/12/TF操作/">
+              
+                  TF fixed_unigram_candidate_sampler
+              
+          </a>
+      </h2>
+    
+
+    <div class="new-meta-box">
+      
+        <div class="new-meta-item author">
+          <a href="https://huzuoliang.github.io">
+            <i class="fas fa-user" aria-hidden="true"></i>
+            HuZuoliang
+          </a>
+        </div>
+      
+      
+        <div class="new-meta-item date">
+          <a class="notlink">
+            <i class="fas fa-clock" aria-hidden="true"></i>
+            2019-02-12
+          </a>
+        </div>
+      
+      
+        
+      
+      
+      
+    </div>
+    <hr>
+  </div>
+</section>
+
+    <section class="article typo">
+        <h3 id="随机采样"><a href="#随机采样" class="headerlink" title="随机采样"></a>随机采样</h3><ul>
+<li>true_classes: A Tensor of type int64 and shape [batch_size, num_true]. The target classes.</li>
+<li>num_true: An int. The number of target classes per training example.</li>
+<li>num_sampled: An int. The number of classes to randomly sample.随机采样的总数</li>
+<li>unique: A bool. Determines whether all sampled classes in a batch are unique.</li>
+<li>range_max: An int. The number of possible classes.</li>
+<li>vocab_file: Each valid line in this file (which should have a CSV-like format) corresponds to a valid word ID. IDs are in sequential order, starting from num_reserved_ids. The last entry in each line is expected to be a value corresponding to the count or relative probability. Exactly one of vocab_file and unigrams needs to be passed to this operation.</li></ul>
+        
+            <div class="readmore">
+                <a href="/2019/02/12/TF操作/" class="flat-box">
+                    <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
+                    阅读全文
+                </a>
+            </div>
+        
+
+        
+    </section>
+</article>
+
+            </div>
+          
+        
+          
+            <div class="post-wrapper">
+              <article class="post reveal ">
+    
+<section class="meta">
+  
+  
+  <div class="meta" id="header-meta">
+    
+      <h2 class="title">
+          <a href="/2019/01/14/TF之feature-column/">
+              
+                  TF feature_column
+              
+          </a>
+      </h2>
+    
+
+    <div class="new-meta-box">
+      
+        <div class="new-meta-item author">
+          <a href="https://huzuoliang.github.io">
+            <i class="fas fa-user" aria-hidden="true"></i>
+            HuZuoliang
+          </a>
+        </div>
+      
+      
+        <div class="new-meta-item date">
+          <a class="notlink">
+            <i class="fas fa-clock" aria-hidden="true"></i>
+            2019-01-14
+          </a>
+        </div>
+      
+      
+        
+          
+          <div class="new-meta-item category">
+            <a href="/categories/dl/">
+              <i class="fas fa-folder-open" aria-hidden="true"></i>
+              dl
+            </a>
+          </div>
+        
+      
+      
+      
+    </div>
+    <hr>
+  </div>
+</section>
+
+    <section class="article typo">
+        <p>通过<code>Estimator</code>的<code>feature_column</code>参数指定模型的输入。<strong>特征列作为输入数据（由 <code>input_fn</code> 返回）与模型之间的桥梁</strong>。</p>
+<p><div align="center"><img src="/2019/01/14/TF之feature-column/inputs_to_model_bridge.jpg" width="860">图1：特征列作为原始数据与模型所需的数据之间的桥梁</div><br></p>
+        
+            <div class="readmore">
+                <a href="/2019/01/14/TF之feature-column/" class="flat-box">
+                    <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
+                    阅读全文
+                </a>
+            </div>
+        
+
+        
+            <div class="full-width auto-padding tags">
+                
+                    <a href="/tags/feature-column/"><i class="fas fa-hashtag fa-fw"></i>feature_column</a>
+                
+            </div>
+        
+    </section>
+</article>
+
+            </div>
+          
+        
+          
+            <div class="post-wrapper">
+              <article class="post reveal ">
+    
+<section class="meta">
+  
+  
+  <div class="meta" id="header-meta">
+    
+      <h2 class="title">
+          <a href="/2019/01/04/统计学之无偏估计-均值与方差/">
+              
+                  无偏估计
+              
+          </a>
+      </h2>
+    
+
+    <div class="new-meta-box">
+      
+        <div class="new-meta-item author">
+          <a href="https://huzuoliang.github.io">
+            <i class="fas fa-user" aria-hidden="true"></i>
+            HuZuoliang
+          </a>
+        </div>
+      
+      
+        <div class="new-meta-item date">
+          <a class="notlink">
+            <i class="fas fa-clock" aria-hidden="true"></i>
+            2019-01-04
+          </a>
+        </div>
+      
+      
+        
+          
+          <div class="new-meta-item category">
+            <a href="/categories/ml/">
+              <i class="fas fa-folder-open" aria-hidden="true"></i>
+              ml
+            </a>
+          </div>
+        
+      
+      
+      
+    </div>
+    <hr>
+  </div>
+</section>
+
+    <section class="article typo">
+        <h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h2><p>估计量的数学期望等于被估计参数的真实值，则称此估计量为被估计参数的<strong>无偏估计</strong>，即具有无偏性，是一种用于评价被评估量优良性的准则。<strong>无偏估计的意义是：在多次重复采样下，它们的平均数接近所估计参数真值</strong>。<br></p>
+        
+            <div class="readmore">
+                <a href="/2019/01/04/统计学之无偏估计-均值与方差/" class="flat-box">
+                    <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
+                    阅读全文
+                </a>
+            </div>
+        
+
+        
+            <div class="full-width auto-padding tags">
+                
+                    <a href="/tags/均值-方差/"><i class="fas fa-hashtag fa-fw"></i>均值,方差</a>
+                
+            </div>
+        
+    </section>
+</article>
+
+            </div>
+          
+        
+          
+            <div class="post-wrapper">
+              <article class="post reveal ">
+    
+<section class="meta">
+  
+  
+  <div class="meta" id="header-meta">
+    
+      <h2 class="title">
           <a href="/2018/12/28/SVM之SMO/">
               
                   SVM SMO
@@ -582,166 +869,6 @@ y_1\alpha_1+y_2\alpha_2=y_1\alpha_1^{old}+y_2\alpha_2^{old}=Const</script>
             </div>
           
         
-          
-            <div class="post-wrapper">
-              <article class="post reveal ">
-    
-<section class="meta">
-  
-  
-  <div class="meta" id="header-meta">
-    
-      <h2 class="title">
-          <a href="/2018/11/29/Python之Numpy-reshape/">
-              
-                  Python Numpy.reshape
-              
-          </a>
-      </h2>
-    
-
-    <div class="new-meta-box">
-      
-        <div class="new-meta-item author">
-          <a href="https://huzuoliang.github.io">
-            <i class="fas fa-user" aria-hidden="true"></i>
-            HuZuoliang
-          </a>
-        </div>
-      
-      
-        <div class="new-meta-item date">
-          <a class="notlink">
-            <i class="fas fa-clock" aria-hidden="true"></i>
-            2018-11-29
-          </a>
-        </div>
-      
-      
-        
-          
-          <div class="new-meta-item category">
-            <a href="/categories/python/">
-              <i class="fas fa-folder-open" aria-hidden="true"></i>
-              python
-            </a>
-          </div>
-        
-      
-      
-      
-    </div>
-    <hr>
-  </div>
-</section>
-
-    <section class="article typo">
-        <p><strong>numpy.reshape(a, newshape, order=’C’)</strong></p>
-<ul>
-<li>a : array_like</li>
-<li>newshape : int or tuple of ints</li>
-<li>order : {‘C’, ‘F’, ‘A’}, optional</li></ul>
-        
-            <div class="readmore">
-                <a href="/2018/11/29/Python之Numpy-reshape/" class="flat-box">
-                    <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
-                    阅读全文
-                </a>
-            </div>
-        
-
-        
-            <div class="full-width auto-padding tags">
-                
-                    <a href="/tags/numpy/"><i class="fas fa-hashtag fa-fw"></i>numpy</a>
-                
-            </div>
-        
-    </section>
-</article>
-
-            </div>
-          
-        
-          
-            <div class="post-wrapper">
-              <article class="post reveal ">
-    
-<section class="meta">
-  
-  
-  <div class="meta" id="header-meta">
-    
-      <h2 class="title">
-          <a href="/2018/11/28/Python之NumPy（axis-0-与axis-1）区分/">
-              
-                  Python Numpy(axis=0,1)区分
-              
-          </a>
-      </h2>
-    
-
-    <div class="new-meta-box">
-      
-        <div class="new-meta-item author">
-          <a href="https://huzuoliang.github.io">
-            <i class="fas fa-user" aria-hidden="true"></i>
-            HuZuoliang
-          </a>
-        </div>
-      
-      
-        <div class="new-meta-item date">
-          <a class="notlink">
-            <i class="fas fa-clock" aria-hidden="true"></i>
-            2018-11-28
-          </a>
-        </div>
-      
-      
-        
-          
-          <div class="new-meta-item category">
-            <a href="/categories/python/">
-              <i class="fas fa-folder-open" aria-hidden="true"></i>
-              python
-            </a>
-          </div>
-        
-      
-      
-      
-    </div>
-    <hr>
-  </div>
-</section>
-
-    <section class="article typo">
-        <p>python中的axis究竟是如何定义的呢？他们究竟代表是DataFrame的行还是列？考虑以下代码：<br><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>df = pd.DataFrame([[<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>], [<span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>]], \</span><br><span class="line"><span class="meta">... </span>columns=[<span class="string">"col1"</span>, <span class="string">"col2"</span>, <span class="string">"col3"</span>, <span class="string">"col4"</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>df</span><br><span class="line">   col1  col2  col3  col4</span><br><span class="line"><span class="number">0</span>     <span class="number">1</span>     <span class="number">1</span>     <span class="number">1</span>     <span class="number">1</span></span><br><span class="line"><span class="number">1</span>     <span class="number">2</span>     <span class="number">2</span>     <span class="number">2</span>     <span class="number">2</span></span><br><span class="line"><span class="number">2</span>     <span class="number">3</span>     <span class="number">3</span>     <span class="number">3</span>     <span class="number">3</span></span><br></pre></td></tr></table></figure></p>
-        
-            <div class="readmore">
-                <a href="/2018/11/28/Python之NumPy（axis-0-与axis-1）区分/" class="flat-box">
-                    <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
-                    阅读全文
-                </a>
-            </div>
-        
-
-        
-            <div class="full-width auto-padding tags">
-                
-                    <a href="/tags/pandas/"><i class="fas fa-hashtag fa-fw"></i>pandas</a>
-                
-                    <a href="/tags/numpy/"><i class="fas fa-hashtag fa-fw"></i>numpy</a>
-                
-            </div>
-        
-    </section>
-</article>
-
-            </div>
-          
-        
       
 
   </section>
@@ -763,8 +890,14 @@ y_1\alpha_1+y_2\alpha_2=y_1\alpha_1^{old}+y_2\alpha_2^{old}=Const</script>
                   </a>
               
               <p class="current">
-                  2 / 2
+                  2 / 3
               </p>
+              
+                  <a class="next" rel="next" href="/page/3/">
+                      <section class="post next">
+                          &nbsp;下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i>
+                      </section>
+                  </a>
               
 
           </div>
@@ -807,7 +940,7 @@ y_1\alpha_1+y_2\alpha_2=y_1\alpha_1^{old}+y_2\alpha_2^{old}=Const</script>
     <div class="content material">
       <ul class="entry">
         
-          <li><a class="flat-box" title="/categories/dl/" href="/categories/dl/"><div class="name">dl</div><div class="badge">(4)</div></a></li>
+          <li><a class="flat-box" title="/categories/dl/" href="/categories/dl/"><div class="name">dl</div><div class="badge">(5)</div></a></li>
         
           <li><a class="flat-box" title="/categories/ml/" href="/categories/ml/"><div class="name">ml</div><div class="badge">(5)</div></a></li>
         
@@ -833,7 +966,7 @@ y_1\alpha_1+y_2\alpha_2=y_1\alpha_1^{old}+y_2\alpha_2^{old}=Const</script>
 </header>
 
     <div class="content material">
-      <a href="/tags/Batch-Normalization/" style="font-size: 14px; color: #999">Batch Normalization</a> <a href="/tags/SVM/" style="font-size: 24px; color: #555">SVM</a> <a href="/tags/XGBOOST/" style="font-size: 14px; color: #999">XGBOOST</a> <a href="/tags/feature-column/" style="font-size: 14px; color: #999">feature_column</a> <a href="/tags/numpy/" style="font-size: 19px; color: #777">numpy</a> <a href="/tags/pandas/" style="font-size: 14px; color: #999">pandas</a> <a href="/tags/tf-nn/" style="font-size: 14px; color: #999">tf.nn</a> <a href="/tags/word2vec/" style="font-size: 14px; color: #999">word2vec</a> <a href="/tags/均值-方差/" style="font-size: 14px; color: #999">均值,方差</a>
+      <a href="/tags/Batch-Normalization/" style="font-size: 14px; color: #999">Batch Normalization</a> <a href="/tags/SVM/" style="font-size: 24px; color: #555">SVM</a> <a href="/tags/XGBOOST/" style="font-size: 14px; color: #999">XGBOOST</a> <a href="/tags/feature-column/" style="font-size: 14px; color: #999">feature_column</a> <a href="/tags/latex/" style="font-size: 14px; color: #999">latex</a> <a href="/tags/numpy/" style="font-size: 19px; color: #777">numpy</a> <a href="/tags/pandas/" style="font-size: 14px; color: #999">pandas</a> <a href="/tags/tf-nn/" style="font-size: 14px; color: #999">tf.nn</a> <a href="/tags/word2vec/" style="font-size: 19px; color: #777">word2vec</a> <a href="/tags/均值-方差/" style="font-size: 14px; color: #999">均值,方差</a>
     </div>
   </section>
 

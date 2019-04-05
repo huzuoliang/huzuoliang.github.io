@@ -4,7 +4,7 @@
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   
-  <title>ML树算法损失函数汇总 | HuZuoliang</title>
+  <title>Tag: Embedding | HuZuoliang</title>
   
   
 
@@ -142,16 +142,87 @@
     <div class="l_body">
     <div class='container clearfix'>
         <div class='l_main'>
-            <article id="post" class="post white-box article-type-post" itemscope="" itemprop="blogPost">
-  
+            
+    <script>
+        window.subData= { title:'标签 : Embedding'}
+    </script>
+
+
+
+
+  <section class="post-list">
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+
+
+
+      
+
+      
+
+      
+        
+          
+            <div class="post-wrapper">
+              <article class="post reveal ">
+    
 <section class="meta">
   
   
   <div class="meta" id="header-meta">
     
-      
-          <h1 class="title">ML树算法损失函数汇总</h1>
-      
+      <h2 class="title">
+          <a href="/2019/04/03/Embeddings-at-Airbnb/">
+              
+                  Embeddings at Airbnb（KDD 2018 Best Paper）
+              
+          </a>
+      </h2>
     
 
     <div class="new-meta-box">
@@ -167,24 +238,21 @@
         <div class="new-meta-item date">
           <a class="notlink">
             <i class="fas fa-clock" aria-hidden="true"></i>
-            2019-02-14
+            2019-04-03
           </a>
         </div>
       
       
         
-      
-      
-        
-          <div class="new-meta-item browse busuanzi">
-            <a class="notlink">
-              <i class="fas fa-eye" aria-hidden="true"></i>
-              <span id="busuanzi_value_page_pv">
-                <i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i>
-              </span>
+          
+          <div class="new-meta-item category">
+            <a href="/categories/dl/">
+              <i class="fas fa-folder-open" aria-hidden="true"></i>
+              dl
             </a>
           </div>
         
+      
       
       
     </div>
@@ -193,140 +261,131 @@
 </section>
 
     <section class="article typo">
-      <div class="article-entry" itemprop="articleBody">
+        <h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1 前言"></a>1 前言</h2><p>Airbnb（爱彼迎）是一家连接旅游人士（guest/user）和家有空房出租的房主（host）的服务型网站，平台主要包括一些搜索和推荐场景，基于这些场景产生的数据，Airbnb的搜索团队构建了一个realtime的ranking model。为了捕捉到用户short term以及long term的兴趣，Airbnb并没有把user history的clicked listing ids或者booked listing ids直接输入ranking model，而是先对user和listing进行了embedding，进而利用embedding的结果构建出诸多feature，作为ranking model的输入。这篇文章的核心内容就是介绍如何生成listing和user的embedding。<br></p>
         
-      </div>
-        
-          <section class="meta" id="footer-meta">
-            <hr>
-            <div class="new-meta-box">
-              
-                <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-03-10T13:33:31+08:00">
-                  <a class="notlink">
-                    <i class="fas fa-pencil-alt" aria-hidden="true"></i>
-                    2019-03-10
-                  </a>
-                </div>
-              
-              
-              
-                
-  <div class="new-meta-item share -mob-share-list">
-    <i class="fas fa-share-alt" aria-hidden="true"></i>
-    <div class="-mob-share-list share-body">
-      
-        
-          <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer" href="http://connect.qq.com/widget/shareqq/index.html?url=https://huzuoliang.github.io/2019/02/14/ML树算法损失函数汇总/&title=ML树算法损失函数汇总 | HuZuoliang&summary=">
-            
-              <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qq.png">
-            
-          </a>
-        
-      
-        
-          <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://huzuoliang.github.io/2019/02/14/ML树算法损失函数汇总/&title=ML树算法损失函数汇总 | HuZuoliang&summary=">
-            
-              <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qzone.png">
-            
-          </a>
-        
-      
-        
-          <a class="-mob-share-qrcode" title="微信" rel="external nofollow noopener noreferrer">
-            
-              <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/wechat.png">
-            
-          </a>
-        
-      
-        
-          <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer" href="http://service.weibo.com/share/share.php?url=https://huzuoliang.github.io/2019/02/14/ML树算法损失函数汇总/&title=ML树算法损失函数汇总 | HuZuoliang&summary=">
-            
-              <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/weibo.png">
-            
-          </a>
-        
-      
-    </div>
-  </div>
-
-
-              
-            </div>
-          </section>
-        
-
-        
-            <div class="prev-next">
-                
-                    <section class="prev">
-                        <span class="art-item-left">
-                            <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
-                            <h4>
-                                <a href="/2019/02/14/TF-embedding可视化/" rel="prev" title="TF embedding可视化">
-                                  
-                                      TF embedding可视化
-                                  
-                                </a>
-                            </h4>
-                            
-                        </span>
-                    </section>
-                
-                
-                    <section class="next">
-                        <span class="art-item-right" aria-hidden="true">
-                            <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
-                            <h4>
-                                <a href="/2019/02/14/TF-get-variable和Variable/" rel="prev" title="TF get_variable和Variable">
-                                    
-                                        TF get_variable和Variable
-                                    
-                                </a>
-                            </h4>
-                            
-                        </span>
-                    </section>
-                
+            <div class="readmore">
+                <a href="/2019/04/03/Embeddings-at-Airbnb/" class="flat-box">
+                    <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
+                    阅读全文
+                </a>
             </div>
         
 
+        
+            <div class="full-width auto-padding tags">
+                
+                    <a href="/tags/word2vec/"><i class="fas fa-hashtag fa-fw"></i>word2vec</a>
+                
+                    <a href="/tags/Embedding/"><i class="fas fa-hashtag fa-fw"></i>Embedding</a>
+                
+            </div>
+        
     </section>
-
 </article>
 
-<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
+            </div>
+          
+        
+          
+            <div class="post-wrapper">
+              <article class="post reveal ">
+    
+<section class="meta">
+  
+  
+  <div class="meta" id="header-meta">
+    
+      <h2 class="title">
+          <a href="/2019/03/30/Word2Vec详解的搬运工/">
+              
+                  Word2Vec详解（知识汇总）
+              
+          </a>
+      </h2>
+    
 
-
-<br>
-
-<!-- 显示推荐文章和评论 -->
-
-
-
-  <article class="post white-box comments">
-    <section class="article typo">
-      <h4><i class="fas fa-comments fa-fw" aria-hidden="true"></i>&nbsp;评论</h4>
+    <div class="new-meta-box">
+      
+        <div class="new-meta-item author">
+          <a href="https://huzuoliang.github.io">
+            <i class="fas fa-user" aria-hidden="true"></i>
+            HuZuoliang
+          </a>
+        </div>
       
       
+        <div class="new-meta-item date">
+          <a class="notlink">
+            <i class="fas fa-clock" aria-hidden="true"></i>
+            2019-03-30
+          </a>
+        </div>
       
-        <section id="comments">
-          <div id="valine_container" class="valine_thread">
-            <i class="fas fa-spinner fa-spin fa-fw"></i>
+      
+        
+          
+          <div class="new-meta-item category">
+            <a href="/categories/dl/">
+              <i class="fas fa-folder-open" aria-hidden="true"></i>
+              dl
+            </a>
           </div>
-        </section>
+        
       
+      
+      
+    </div>
+    <hr>
+  </div>
+</section>
+
+    <section class="article typo">
+        <p><strong>网上关于<code>Word2Vec</code>资料已经写得很好很全了，这里做一个知识的汇总，如觉任何侵权行为，请联系<a href="huzuoliang1990@163.com">huzuoliang1990@163.com</a>。</strong></p>
+<h2 id="1-词向量"><a href="#1-词向量" class="headerlink" title="1 词向量"></a>1 词向量</h2><p>在处理自然语言相关任务中，要将自然语言交给机器学习中的算法处理，通常需要先将自然语言数字化，一种处理方式就是词向量化，即用一个向量来表示词。向量化表示方式主要分两种：<code>One-Hot Representation</code>和<code>Distributed Representation</code>。<br></p>
+        
+            <div class="readmore">
+                <a href="/2019/03/30/Word2Vec详解的搬运工/" class="flat-box">
+                    <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
+                    阅读全文
+                </a>
+            </div>
+        
+
+        
+            <div class="full-width auto-padding tags">
+                
+                    <a href="/tags/word2vec/"><i class="fas fa-hashtag fa-fw"></i>word2vec</a>
+                
+                    <a href="/tags/Embedding/"><i class="fas fa-hashtag fa-fw"></i>Embedding</a>
+                
+                    <a href="/tags/CBOW/"><i class="fas fa-hashtag fa-fw"></i>CBOW</a>
+                
+                    <a href="/tags/Skip-gram/"><i class="fas fa-hashtag fa-fw"></i>Skip-gram</a>
+                
+            </div>
+        
     </section>
-  </article>
+</article>
+
+            </div>
+          
+        
+      
+
+  </section>
 
 
 
-<script>
-    window.subData = {
-        title: 'ML树算法损失函数汇总',
-        tools: true
-    }
-</script>
+
+
+
+  
+
+  <!-- 根据主题中的设置决定是否在archive中针对摘要部分的MathJax公式加载mathjax.js文件 -->
+  
+
+  
+
 
 
         </div>

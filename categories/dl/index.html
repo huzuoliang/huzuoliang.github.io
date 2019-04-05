@@ -217,6 +217,85 @@
   <div class="meta" id="header-meta">
     
       <h2 class="title">
+          <a href="/2019/04/03/Embeddings-at-Airbnb/">
+              
+                  Embeddings at Airbnb（KDD 2018 Best Paper）
+              
+          </a>
+      </h2>
+    
+
+    <div class="new-meta-box">
+      
+        <div class="new-meta-item author">
+          <a href="https://huzuoliang.github.io">
+            <i class="fas fa-user" aria-hidden="true"></i>
+            HuZuoliang
+          </a>
+        </div>
+      
+      
+        <div class="new-meta-item date">
+          <a class="notlink">
+            <i class="fas fa-clock" aria-hidden="true"></i>
+            2019-04-03
+          </a>
+        </div>
+      
+      
+        
+          
+          <div class="new-meta-item category">
+            <a href="/categories/dl/">
+              <i class="fas fa-folder-open" aria-hidden="true"></i>
+              dl
+            </a>
+          </div>
+        
+      
+      
+      
+    </div>
+    <hr>
+  </div>
+</section>
+
+    <section class="article typo">
+        <h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1 前言"></a>1 前言</h2><p>Airbnb（爱彼迎）是一家连接旅游人士（guest/user）和家有空房出租的房主（host）的服务型网站，平台主要包括一些搜索和推荐场景，基于这些场景产生的数据，Airbnb的搜索团队构建了一个realtime的ranking model。为了捕捉到用户short term以及long term的兴趣，Airbnb并没有把user history的clicked listing ids或者booked listing ids直接输入ranking model，而是先对user和listing进行了embedding，进而利用embedding的结果构建出诸多feature，作为ranking model的输入。这篇文章的核心内容就是介绍如何生成listing和user的embedding。<br></p>
+        
+            <div class="readmore">
+                <a href="/2019/04/03/Embeddings-at-Airbnb/" class="flat-box">
+                    <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
+                    阅读全文
+                </a>
+            </div>
+        
+
+        
+            <div class="full-width auto-padding tags">
+                
+                    <a href="/tags/word2vec/"><i class="fas fa-hashtag fa-fw"></i>word2vec</a>
+                
+                    <a href="/tags/Embedding/"><i class="fas fa-hashtag fa-fw"></i>Embedding</a>
+                
+            </div>
+        
+    </section>
+</article>
+
+            </div>
+          
+        
+          
+            <div class="post-wrapper">
+              <article class="post reveal ">
+    
+<section class="meta">
+  
+  
+  <div class="meta" id="header-meta">
+    
+      <h2 class="title">
           <a href="/2019/03/30/Word2Vec详解的搬运工/">
               
                   Word2Vec详解（知识汇总）
@@ -276,6 +355,12 @@
             <div class="full-width auto-padding tags">
                 
                     <a href="/tags/word2vec/"><i class="fas fa-hashtag fa-fw"></i>word2vec</a>
+                
+                    <a href="/tags/Embedding/"><i class="fas fa-hashtag fa-fw"></i>Embedding</a>
+                
+                    <a href="/tags/CBOW/"><i class="fas fa-hashtag fa-fw"></i>CBOW</a>
+                
+                    <a href="/tags/Skip-gram/"><i class="fas fa-hashtag fa-fw"></i>Skip-gram</a>
                 
             </div>
         
@@ -650,7 +735,7 @@ f=\frac{C}{r^a}</script><p>在语言学中，<script type="math/tex">C=1,a=1</sc
     <div class="content material">
       <ul class="entry">
         
-          <li><a class="flat-box" title="/categories/dl/" href="/categories/dl/"><div class="name">dl</div><div class="badge">(5)</div></a></li>
+          <li><a class="flat-box" title="/categories/dl/" href="/categories/dl/"><div class="name">dl</div><div class="badge">(6)</div></a></li>
         
           <li><a class="flat-box" title="/categories/ml/" href="/categories/ml/"><div class="name">ml</div><div class="badge">(5)</div></a></li>
         
@@ -676,7 +761,7 @@ f=\frac{C}{r^a}</script><p>在语言学中，<script type="math/tex">C=1,a=1</sc
 </header>
 
     <div class="content material">
-      <a href="/tags/Batch-Normalization/" style="font-size: 14px; color: #999">Batch Normalization</a> <a href="/tags/SVM/" style="font-size: 24px; color: #555">SVM</a> <a href="/tags/XGBOOST/" style="font-size: 14px; color: #999">XGBOOST</a> <a href="/tags/feature-column/" style="font-size: 14px; color: #999">feature_column</a> <a href="/tags/latex/" style="font-size: 14px; color: #999">latex</a> <a href="/tags/numpy/" style="font-size: 19px; color: #777">numpy</a> <a href="/tags/pandas/" style="font-size: 14px; color: #999">pandas</a> <a href="/tags/tf-nn/" style="font-size: 14px; color: #999">tf.nn</a> <a href="/tags/word2vec/" style="font-size: 19px; color: #777">word2vec</a> <a href="/tags/均值-方差/" style="font-size: 14px; color: #999">均值,方差</a>
+      <a href="/tags/Batch-Normalization/" style="font-size: 14px; color: #999">Batch Normalization</a> <a href="/tags/CBOW/" style="font-size: 14px; color: #999">CBOW</a> <a href="/tags/Embedding/" style="font-size: 19px; color: #777">Embedding</a> <a href="/tags/SVM/" style="font-size: 24px; color: #555">SVM</a> <a href="/tags/Skip-gram/" style="font-size: 14px; color: #999">Skip-gram</a> <a href="/tags/XGBOOST/" style="font-size: 14px; color: #999">XGBOOST</a> <a href="/tags/feature-column/" style="font-size: 14px; color: #999">feature_column</a> <a href="/tags/latex/" style="font-size: 14px; color: #999">latex</a> <a href="/tags/numpy/" style="font-size: 19px; color: #777">numpy</a> <a href="/tags/pandas/" style="font-size: 14px; color: #999">pandas</a> <a href="/tags/tf-nn/" style="font-size: 14px; color: #999">tf.nn</a> <a href="/tags/word2vec/" style="font-size: 24px; color: #555">word2vec</a> <a href="/tags/均值-方差/" style="font-size: 14px; color: #999">均值,方差</a>
     </div>
   </section>
 

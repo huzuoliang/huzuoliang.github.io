@@ -241,7 +241,7 @@ f=\frac{C}{r^a}</script><p>在语言学中，<script type="math/tex">C=1,a=1</sc
 </ul>
 <h2 id="3-tf-nn-fixed-unigram-candidate-sampler"><a href="#3-tf-nn-fixed-unigram-candidate-sampler" class="headerlink" title="3. tf.nn.fixed_unigram_candidate_sampler"></a>3. tf.nn.fixed_unigram_candidate_sampler</h2><p>按词频采样，</p>
 <script type="math/tex; mode=display">
-\operatorname{p}(class)=\frac{[\operatorname{counter}(w)]^{\frac{3}{4}}}{\sum_{u \in \mathcal{D}}[\operatorname{counter}(u)]^{\frac{3}{4}}}</script><h3 id="函数说明-1"><a href="#函数说明-1" class="headerlink" title="函数说明"></a>函数说明</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tf.nn.fixed_unigram_candidate_sampler(</span><br><span class="line">    true_classes,</span><br><span class="line">    num_true,</span><br><span class="line">    num_sampled,</span><br><span class="line">    unique,</span><br><span class="line">    range_max,</span><br><span class="line">    vocab_file=<span class="string">''</span>,</span><br><span class="line">    distortion=<span class="number">1.0</span>,</span><br><span class="line">    num_reserved_ids=<span class="number">0</span>,</span><br><span class="line">    num_shards=<span class="number">1</span>,</span><br><span class="line">    shard=<span class="number">0</span>,</span><br><span class="line">    unigrams=(),</span><br><span class="line">    seed=<span class="keyword">None</span>,</span><br><span class="line">    name=<span class="keyword">None</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+\operatorname{p}(class)=\frac{[\operatorname{counter}(w)]^{distortion}}{\sum_{u \in \mathcal{D}}[\operatorname{counter}(u)]^{distortion}}</script><h3 id="函数说明-1"><a href="#函数说明-1" class="headerlink" title="函数说明"></a>函数说明</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tf.nn.fixed_unigram_candidate_sampler(</span><br><span class="line">    true_classes,</span><br><span class="line">    num_true,</span><br><span class="line">    num_sampled,</span><br><span class="line">    unique,</span><br><span class="line">    range_max,</span><br><span class="line">    vocab_file=<span class="string">''</span>,</span><br><span class="line">    distortion=<span class="number">1.0</span>,</span><br><span class="line">    num_reserved_ids=<span class="number">0</span>,</span><br><span class="line">    num_shards=<span class="number">1</span>,</span><br><span class="line">    shard=<span class="number">0</span>,</span><br><span class="line">    unigrams=(),</span><br><span class="line">    seed=<span class="keyword">None</span>,</span><br><span class="line">    name=<span class="keyword">None</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 <p>Args:</p>
 <ul>
 <li><strong>distortion: 光滑因子The distortion is used to skew the unigram probability distribution. Each weight is first raised to the distortion’s power before adding to the internal unigram distribution. As a result, distortion = 1.0 gives regular unigram sampling (as defined by the vocab file), and distortion = 0.0 gives a uniform distribution.</strong></li>
@@ -254,10 +254,10 @@ f=\frac{C}{r^a}</script><p>在语言学中，<script type="math/tex">C=1,a=1</sc
             <hr>
             <div class="new-meta-box">
               
-                <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-03-10T19:08:51+08:00">
+                <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-04-07T22:42:29+08:00">
                   <a class="notlink">
                     <i class="fas fa-pencil-alt" aria-hidden="true"></i>
-                    2019-03-10
+                    2019-04-07
                   </a>
                 </div>
               

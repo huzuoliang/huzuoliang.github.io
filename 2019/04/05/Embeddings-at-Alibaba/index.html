@@ -4,7 +4,7 @@
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   
-  <title>Embeddings at Alibaba | HuZuoliang</title>
+  <title>embeddings at Alibaba | HuZuoliang</title>
   
   
 
@@ -150,7 +150,7 @@
   <div class="meta" id="header-meta">
     
       
-          <h1 class="title">Embeddings at Alibaba</h1>
+          <h1 class="title">embeddings at Alibaba</h1>
       
     
 
@@ -194,7 +194,50 @@
 
     <section class="article typo">
       <div class="article-entry" itemprop="articleBody">
-        <h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1 前言"></a>1 前言</h2><p>本文出自于电商领域龙头Alibaba，介绍的是word2vec在Hema App的应用，不同于前文直接用item ID sequence训练word2vec，文中作者将诸如product ID, store ID, brand ID, cate-level1 ID, cate-level2 ID and cate-level3 ID等item属性ID也加入模型中训练；作者认为，相似的item不仅仅是共现，还应该有着相似的属性，约束模型在训练的过程中考虑属性的相似性。<br><a id="more"></a><br>作者将训练出来的embedding在盒马生鲜app上进行了尝试，并得出了一下结论：</p>
+        <h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1 前言"></a>1 前言</h2><p>本文出自于电商巨头Alibaba，介绍的是word2vec在Hema App的运用，不同于前文直接用item ID sequence训练word2vec，作者认为相似的item不仅仅是共现，还应该有着相似的属性，于是将诸如item的product ID, store ID, brand ID, cate-level1 ID等item属性ID也加入模型中训练，以约束模型在训练的过程中考虑属性的相似性。<br><a id="more"></a></p>
+<h2 id="2-LEARNING-IDS-REPRESENTATION"><a href="#2-LEARNING-IDS-REPRESENTATION" class="headerlink" title="2 LEARNING IDS REPRESENTATION"></a>2 LEARNING IDS REPRESENTATION</h2><p>我们前文已介绍过基于Skip-gram的word2vec目标函数</p>
+<script type="math/tex; mode=display">
+\mathcal{J}=\frac{1}{N} \sum_{n=1}^{N} \sum_{-C \leq j \leq C}^{1 \leq n+j \leq N, j \neq 0} \log p\left(\text { item }_{n+j} | \text { item }_{n}\right)\tag{1}</script><p>通过负采样的方式优化模型的训练</p>
+<script type="math/tex; mode=display">
+p\left(\text { item }_{j} | \text { item }_{i}\right)=\sigma\left(\mathbf{e}_{j}^{\prime \mathrm{T}} \mathbf{e}_{i}\right) \prod_{s=1}^{S} \sigma\left(-\mathbf{e}_{s}^{\prime \mathrm{T}} \mathbf{e}_{i}\right)\tag{2}</script><p>其中<script type="math/tex">\sigma(x)=\frac{1}{1+\exp^{(-x)}}</script>，S为负采样的样本数，<strong>这里也介绍了他们使用的负采样方法</strong>。</p>
+<h3 id="2-1-Log-uniform-Negative-sampling"><a href="#2-1-Log-uniform-Negative-sampling" class="headerlink" title="2.1 Log-uniform Negative-sampling"></a>2.1 Log-uniform Negative-sampling</h3><p>因为不同item的出现频率是不一样的，高频率的item在上下文出现的频率更大，而所携带的信息是很少的，所以这里基于zipfian分布进行了负采样：先将所有items按出现的频率由大到小排序，并且分别赋值索index[0,D]，然后以如下概率进行负采样</p>
+<script type="math/tex; mode=display">
+p(\text { index })=\frac{\log (\text { index }+2)-\log (\text { index }+1)}{\log (D+1)}</script><h3 id="2-2-Jointly-embedding-Attribute-IDs"><a href="#2-2-Jointly-embedding-Attribute-IDs" class="headerlink" title="2.2 Jointly embedding Attribute IDs"></a>2.2 Jointly embedding Attribute IDs</h3><p><strong>item ID的共现关系也暗示了其对应attribute ID的共现关系</strong>，如图</p>
+<div align="center"><img src="/2019/04/05/Embeddings-at-Alibaba/1.png" width="460">图1：属性共现</div>
+
+<p>假设每个item由个<script type="math/tex">K(k=1, \ldots, K)</script>ID组成，即<script type="math/tex">\text { IDs (item }_{i} )=\left[\mathrm{id}_{1}\left(\text { item }_{i}\right), \ldots, \text { id }_{k}\left(\text { item }_{i}\right), \ldots, \text { id }_{K}\left(\text { item }_{i}\right)\right]</script>，这里<script type="math/tex">id1(item_i)</script> 代表 <script type="math/tex">item_i</script>，<script type="math/tex">id2 (item_i )</script> 为product ID，<script type="math/tex">id3 (item_i)</script>为store ID等，那么新的目标函数为</p>
+<script type="math/tex; mode=display">
+p(\text {IDs (item }_{j}) | \operatorname{IDs}\left(\text { item }_{i}\right) )=\sigma\left(\sum_{k=1}^{K}\left(w_{j k} \mathbf{e}_{j k}^{\prime}\right)^{\mathrm{T}}\left(w_{i k} \mathbf{e}_{i k}\right)\right)\prod_{s=1}^{S} \sigma\left(-\sum_{k=1}^{K}\left(w_{s k} \mathbf{e}_{s k}^{\prime}\right)^{\mathrm{T}}\left(w_{i k} \mathbf{e}_{i k}\right)\right)</script><p>这里每个属性的维度可以不同，<script type="math/tex">w_{i k}</script>为属性的权重</p>
+<script type="math/tex; mode=display">
+w_{i k}=\frac{1}{\sum_{j=1}^{D} \mathbf{I}\left(\text {id}_{k}\left(\text { item }_{i}\right)=\text {id}_{k}(\text { item }_{j})\right)}(k=1, \ldots, K)</script><script type="math/tex; mode=display">
+\mathrm{I}(x)=\left\{\begin{array}{ll}{0} & {, x \text { is False }} \\ {1} & {, x \text { is True }}\end{array}\right.</script><h3 id="2-3-Jointly-embedding-Attribute-IDs"><a href="#2-3-Jointly-embedding-Attribute-IDs" class="headerlink" title="2.3 Jointly embedding Attribute IDs"></a>2.3 Jointly embedding Attribute IDs</h3><p><strong>item ID和attribute ID间存在着结构联系，这意味着可对模型增加限制</strong>。如果product ID、restore ID等特征相同则两者的embedding也应该相似，所以可通过attribute ID来预测item ID</p>
+<script type="math/tex; mode=display">
+p\left(\text { item }_{i} | \operatorname{IDs}\left(\text { item }_{i}\right)\right)=\sigma\left(\sum_{k=2}^{K} w_{i k} \mathbf{e}_{i 1}^{T} \mathbf{M}_{k} \mathbf{e}_{i k}\right)</script><p>其中<script type="math/tex">\mathbf{M}_{k} \subset \mathbb{R}^{m_{1} \times m_{k}}(k=2, \ldots, K)</script>是转换矩阵，使属性在同一个维度，得到最终的目标函数最大化</p>
+<script type="math/tex; mode=display">
+\mathcal{J}=\frac{1}{N} \sum_{n=1}^{N} \left(\sum_{-C \leq j \leq C}^{1 \leq n+j \leq N, j \neq 0} \log p(\text { IDs (item }_{n+j})| \operatorname{IDs}(\text {item}_{n})+\alpha \log p\left(\text { item }_{n} | \operatorname{IDs}\left(\text { item }_{n}\right)\right)-\beta \sum_{k=1}^{K}\left\|\mathbf{M}_{k}\right\|{_{2}})\right)</script><p>其中<script type="math/tex">\alpha</script>为IDs属性约束，<script type="math/tex">\beta</script>是L2正则约束。<br>Our approach embeds the item ID and its attribute IDs into one semantic space, which is a useful property for deploying and transferring these representations in real world scenarios. As the properties of item ID and its attribute IDs remain stable for a relative long time, the jointly embedding model and the learned representations are updated weekly in our work(模型每周更新一次)。</p>
+<h3 id="2-4-embedding-User-IDs"><a href="#2-4-embedding-User-IDs" class="headerlink" title="2.4 embedding User IDs"></a>2.4 embedding User IDs</h3><p>将用户最近点击的T个item embedding均值作为用户的实时embedding</p>
+<script type="math/tex; mode=display">
+\operatorname{embedding}(u)=\frac{1}{T} \sum\limits_{t=1}^{T} e_{t}</script><p>The hyper-parameters in our model are set as follows: the length of the context window is C = 4; the number of negative samples is S = 2; the embedding dimensions are [m<sub>1</sub> ,m<sub>2</sub> ,m<sub>3</sub> ,m<sub>4</sub> ,m<sub>5</sub> ,m<sub>6</sub> , m<sub>7</sub>] = [100, 100, 10, 20, 10, 10, 20]; the strength of constraints is α = 1.0; the strength of L2 regularization on transformations is β = 0.01; the batch size is 128 and the neural network is trained for 5 epochs.</p>
+<h3 id="2-5-Transferring-from-Seen-Items-to-Unseen-Items"><a href="#2-5-Transferring-from-Seen-Items-to-Unseen-Items" class="headerlink" title="2.5 Transferring from Seen Items to Unseen Items"></a>2.5 Transferring from Seen Items to Unseen Items</h3><p>对于新发布的item，可以通过attribute ID的embedding来预测得到新物品的embedding</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+p \left(\text { item }_{i} | \operatorname{IDs}\left(\text { item }_{i}\right)\right) & =\sigma\left(\sum_{k=2}^{K} w_{i k} \mathbf{e}_{i 1}^{T} \mathbf{M}_{k} \mathbf{e}_{i k}\right) \propto \sum_{k=2}^{K} w_{i k} \mathbf{e}_{i 1}^{T} \mathbf{M}_{k} \mathbf{e}_{i k} =\mathbf{e}_{i 1}^{T}\left(\sum_{k=2}^{K} w_{i k} \mathbf{M}_{k} \mathbf{e}_{i k}\right)
+\end{aligned}</script><script type="math/tex; mode=display">
+\begin{array}{l}{p\left(\text { item }_{i} | \operatorname{Ds}\left(\text { item }_{i}\right)\right) \rightarrow 1} \\ {\Rightarrow \mathbf{e}_{i 1}^{T}\left(\sum\limits_{k=2}^{K} w_{i k} \mathbf{M}_{k} \mathbf{e}_{i k}\right) \text { is relatively large }} \\ {\Rightarrow \mathbf{e}_{i 1} \approx \sum\limits_{k=2}^{K} w_{i k} \mathbf{e}_{i k}^{T} \mathbf{M}_{k}^{T}}\end{array}</script><p>id越多，效果越好并且这里仅仅考虑有行为的id。</p>
+<h3 id="2-6-EXPERIMENTS"><a href="#2-6-EXPERIMENTS" class="headerlink" title="2.6 EXPERIMENTS"></a>2.6 EXPERIMENTS</h3><ol>
+<li><strong>计算item相似度</strong><br>物品间的相似性在推荐系统中使用广泛，比如给用户推荐和用户感兴趣的物品相似的物品，物品相似性可以通过两者对应的embedding向量的余弦距离来度量。item-based CF方法需要明确的user-item关系，但很大比例的交互数据并没有用户识别信息；而skip-gram模型基于会话的，可以利用全量的数据，因此基于embedding的方法比基于item-based的CF方法要更好一些，实验结果也说明其有更高的召回。</li>
+<li><strong>迁移到新的item</strong><br>推荐系统中冷启动是个很大的问题，新物品由于没有交互信息，此时item-based的CF方法失效。一般可通过基于image或者text的辅助信息来进行推荐。这里解决冷启动的方法出发点是和新物品连接的attribute ID通常有历史记录，因此可以通过这些attribute ID的embedding来预测得到新物品的embedding。</li>
+<li><strong>迁移到新的领域</strong><br>盒马鲜生作为一个新平台，很大比例的用户是新的，因此做个性化的推荐较为困难。文章提出了一种将淘宝(source domain)用户的兴趣迁移到盒马(target domain)上的方法。设 <script type="math/tex">U^s</script> 和 <script type="math/tex">U^t</script> 分别表示淘宝和盒马的用户，其交集 <script type="math/tex">U^i=U^s\cap U^t</script>。<ul>
+<li>首先获得 <script type="math/tex">U^s</script> 中用户的embedding，用户embedding的计算有两种方式</li>
+<li>直接取平均值</li>
+<li>加权平均<script type="math/tex; mode=display">\text { embedding }(u)=\frac{\sum_{t=1}^{T} w_{t} e_{t}}{\sum_{t=1}^{T} w_{t}}</script><script type="math/tex; mode=display">w_{t}=\sum_{u^{\prime} \in U^{i}} \operatorname{IA}\left(u^{\prime}, \text { item }_{t}\right)</script><script type="math/tex; mode=display">\mathbf{I A}(x)=\left\{\begin{array}{ll}{0,} & {u^{\prime} \text { has no interaction on item }_{t}} \\ {A_{j},} & {u^{\prime} \text { has interaction } j \text { on item }_{t}}\end{array}\right.</script></li>
+<li>然后通过K-means算法将 <script type="math/tex">U^i</script> 中的用户划分成1000个簇，每个簇选择最热门的target item集合作为候选集合</li>
+<li>对于新来的用户 <script type="math/tex">U^s \verb|\|U^t</script>，根据用户的embedding和簇中心的距离分配一个最相近的簇，然后将这个簇对应的候选集合推荐给新用户</li>
+</ul>
+</li>
+<li><strong>迁移到不同任务</strong><br>作者在预测店铺销量的任务上进行了测试，使用历史销售数据和store embedding作为输入，baseline是只用历史销售数据或者使用store one-hot编码来作为输入。</li>
+</ol>
+<p>参考文献：<br><a href="https://zhuanlan.zhihu.com/p/56119617" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/56119617</a></p>
 
       </div>
         
@@ -202,10 +245,10 @@
             <hr>
             <div class="new-meta-box">
               
-                <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-04-05T19:22:06+08:00">
+                <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-04-07T23:45:53+08:00">
                   <a class="notlink">
                     <i class="fas fa-pencil-alt" aria-hidden="true"></i>
-                    2019-04-05
+                    2019-04-07
                   </a>
                 </div>
               
@@ -217,7 +260,7 @@
     <div class="-mob-share-list share-body">
       
         
-          <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer" href="http://connect.qq.com/widget/shareqq/index.html?url=https://huzuoliang.github.io/2019/04/05/Embeddings-at-Alibaba/&title=Embeddings at Alibaba | HuZuoliang&summary=1 前言本文出自于电商领域龙头Alibaba，介绍的是word2vec在Hema App的应用，不同于前文直接用item ID sequence训练word2vec，文中作者将诸如product ID, store ID, brand ID, cate-level1 ID, cate-level2 ID and cate-level3 ID等item属性ID也加入模型中训练；作者认为，相似的item不仅仅是共现，还应该有着相似的属性，约束模型在训练的过程中考虑属性的相似性。">
+          <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer" href="http://connect.qq.com/widget/shareqq/index.html?url=https://huzuoliang.github.io/2019/04/05/Embeddings-at-Alibaba/&title=embeddings at Alibaba | HuZuoliang&summary=1 前言本文出自于电商巨头Alibaba，介绍的是word2vec在Hema App的运用，不同于前文直接用item ID sequence训练word2vec，作者认为相似的item不仅仅是共现，还应该有着相似的属性，于是将诸如item的product ID, store ID, brand ID, cate-level1 ID等item属性ID也加入模型中训练，以约束模型在训练的过程中考虑属性的相似性。">
             
               <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qq.png">
             
@@ -225,7 +268,7 @@
         
       
         
-          <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://huzuoliang.github.io/2019/04/05/Embeddings-at-Alibaba/&title=Embeddings at Alibaba | HuZuoliang&summary=1 前言本文出自于电商领域龙头Alibaba，介绍的是word2vec在Hema App的应用，不同于前文直接用item ID sequence训练word2vec，文中作者将诸如product ID, store ID, brand ID, cate-level1 ID, cate-level2 ID and cate-level3 ID等item属性ID也加入模型中训练；作者认为，相似的item不仅仅是共现，还应该有着相似的属性，约束模型在训练的过程中考虑属性的相似性。">
+          <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://huzuoliang.github.io/2019/04/05/Embeddings-at-Alibaba/&title=embeddings at Alibaba | HuZuoliang&summary=1 前言本文出自于电商巨头Alibaba，介绍的是word2vec在Hema App的运用，不同于前文直接用item ID sequence训练word2vec，作者认为相似的item不仅仅是共现，还应该有着相似的属性，于是将诸如item的product ID, store ID, brand ID, cate-level1 ID等item属性ID也加入模型中训练，以约束模型在训练的过程中考虑属性的相似性。">
             
               <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qzone.png">
             
@@ -241,7 +284,7 @@
         
       
         
-          <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer" href="http://service.weibo.com/share/share.php?url=https://huzuoliang.github.io/2019/04/05/Embeddings-at-Alibaba/&title=Embeddings at Alibaba | HuZuoliang&summary=1 前言本文出自于电商领域龙头Alibaba，介绍的是word2vec在Hema App的应用，不同于前文直接用item ID sequence训练word2vec，文中作者将诸如product ID, store ID, brand ID, cate-level1 ID, cate-level2 ID and cate-level3 ID等item属性ID也加入模型中训练；作者认为，相似的item不仅仅是共现，还应该有着相似的属性，约束模型在训练的过程中考虑属性的相似性。">
+          <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer" href="http://service.weibo.com/share/share.php?url=https://huzuoliang.github.io/2019/04/05/Embeddings-at-Alibaba/&title=embeddings at Alibaba | HuZuoliang&summary=1 前言本文出自于电商巨头Alibaba，介绍的是word2vec在Hema App的运用，不同于前文直接用item ID sequence训练word2vec，作者认为相似的item不仅仅是共现，还应该有着相似的属性，于是将诸如item的product ID, store ID, brand ID, cate-level1 ID等item属性ID也加入模型中训练，以约束模型在训练的过程中考虑属性的相似性。">
             
               <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/weibo.png">
             
@@ -315,7 +358,7 @@
 
 <script>
     window.subData = {
-        title: 'Embeddings at Alibaba',
+        title: 'embeddings at Alibaba',
         tools: true
     }
 </script>
@@ -340,7 +383,7 @@
 </header>
 
     <div class="content material">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-前言"><span class="toc-text">1 前言</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-前言"><span class="toc-text">1 前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-LEARNING-IDS-REPRESENTATION"><span class="toc-text">2 LEARNING IDS REPRESENTATION</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Log-uniform-Negative-sampling"><span class="toc-text">2.1 Log-uniform Negative-sampling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Jointly-embedding-Attribute-IDs"><span class="toc-text">2.2 Jointly embedding Attribute IDs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-Jointly-embedding-Attribute-IDs"><span class="toc-text">2.3 Jointly embedding Attribute IDs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-embedding-User-IDs"><span class="toc-text">2.4 embedding User IDs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-Transferring-from-Seen-Items-to-Unseen-Items"><span class="toc-text">2.5 Transferring from Seen Items to Unseen Items</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-EXPERIMENTS"><span class="toc-text">2.6 EXPERIMENTS</span></a></li></ol></li></ol>
     </div>
   </section>
 

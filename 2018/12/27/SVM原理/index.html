@@ -4,7 +4,7 @@
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   
-  <title>ML SVM | HuZuoliang</title>
+  <title>ML SVM原理 | HuZuoliang</title>
   
   
 
@@ -150,7 +150,7 @@
   <div class="meta" id="header-meta">
     
       
-          <h1 class="title">ML SVM</h1>
+          <h1 class="title">ML SVM原理</h1>
       
     
 
@@ -205,7 +205,7 @@
         <h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h2><p>给定<script type="math/tex">m</script>个数据点的数据集<script type="math/tex">T=\left\{ \left( x  _ { 1 } , y _ { 1 } \right) , \left( x  _ { 2 } , y _ { 2 } \right) , \ldots , \left( x  _ { m } , y_{ m } \right) \right\}</script>，其中<script type="math/tex">x _ { i } \in \mathcal { R } ^ { n }</script>，<script type="math/tex">y _ { i } \in \{ \pm 1 \}</script>，一个线性分类器的学习目标是要在<script type="math/tex">n</script>维的数据空间中找到一个超平面将数据集<script type="math/tex">T</script>分开，超平面的方程可以表达为：</p>
 <script type="math/tex; mode=display">w^Tx +b=0</script><a id="more"></a>
 <p>令<script type="math/tex">f ( x ) = w ^ { T } x + b</script>，则当<script type="math/tex">f(x)=0</script>时，<script type="math/tex">x</script>为位于超平面上，<script type="math/tex">f(x) > 0</script>对应<script type="math/tex">y=+1</script>的数据点，<script type="math/tex">f(x) < 0</script>对应<script type="math/tex">y=-1</script>的数据点，如图1所示：</p>
-<p><div align="center"><img src="/2018/12/27/SVM/xianxingfeilei.png" width="260">图1：线性分类示例</div><br>在超平面<script type="math/tex">w^Tx+b=0</script>确定的情况下，<script type="math/tex">\left| w ^ { T } x + b \right|</script>能够表示点<script type="math/tex">x</script>距离超平面的远近（相对距离），并且可以通过<script type="math/tex">yf ( x )</script>的正负性来判定或表示分类的正确性，即<script type="math/tex">yf ( x ) > 0</script>时分类正确，并且值越大，确信度越大，定义<strong>函数间隔</strong><script type="math/tex">\hat { \gamma }</script>为：</p>
+<p><div align="center"><img src="/2018/12/27/SVM原理/SVM/xianxingfeilei.png" width="260">图1：线性分类示例</div><br>在超平面<script type="math/tex">w^Tx+b=0</script>确定的情况下，<script type="math/tex">\left| w ^ { T } x + b \right|</script>能够表示点<script type="math/tex">x</script>距离超平面的远近（相对距离），并且可以通过<script type="math/tex">yf ( x )</script>的正负性来判定或表示分类的正确性，即<script type="math/tex">yf ( x ) > 0</script>时分类正确，并且值越大，确信度越大，定义<strong>函数间隔</strong><script type="math/tex">\hat { \gamma }</script>为：</p>
 <script type="math/tex; mode=display">\hat { \gamma } = y \left( w ^ { T } x + b \right) = y f ( x )</script><p>超平面<script type="math/tex">\left(w,b \right)</script>关于<script type="math/tex">T</script>中所有样本点<script type="math/tex">\left(x_i,y_i \right)</script>的函数间隔最小值为超平面关于数据集<script type="math/tex">T</script>的函数间隔：</p>
 <script type="math/tex; mode=display">\hat { \gamma } = \min \hat { \gamma } _ { i } , \quad ( i = 1 , \ldots , n )</script><p>但函数间隔会随着超平面参数的放缩而放缩，比如将<script type="math/tex">w</script>，<script type="math/tex">b</script>成比例放大2倍，超平面位置虽不会改变，但函数间隔却变成原来的2倍，实际上点到超平面的距离是不会改变的，定义<strong>几何间隔</strong><script type="math/tex">\tilde {\gamma}</script>为：</p>
 <script type="math/tex; mode=display">\tilde {\gamma} = \frac { w ^ { T } x + b } { \| w \| } = \frac { f ( x ) } { \| w \| }</script><p>易知：</p>
@@ -215,7 +215,7 @@
 <script type="math/tex; mode=display">y _ { i } \left( w ^ { T } x _ { i } + b \right) = \hat { \gamma } _ { i } \geq \hat { \gamma } , \quad i = 1 , \dots , n</script><p>而<script type="math/tex">\tilde { \gamma } = y \gamma = \frac { \hat { \gamma } } { \| w \| }</script>，可以通过放缩参数，使得函数间隔<script type="math/tex">\hat { \gamma }=1</script>，最终目标函数转化为：</p>
 <script type="math/tex; mode=display">
 \max \frac { 1 } { \| w \| } , \quad \text { s.t. } \quad y _ { i } \left( w ^ { T } x _ { i } + b \right) \geq 1 , i = 1 , \dots , n</script><p>如图2所示，中间的虚线便是寻找到的最优超平面，其到两条实线的距离相等，这个距离便是几何间隔<script type="math/tex">\tilde { \gamma } = \frac{1}{\|w\|}</script>，两条虚线之间的距离等于<script type="math/tex">2 \tilde { \gamma }</script>，而虚线上的点则是支持向量。由于支持向量刚好在超平面上，所有它们满足<script type="math/tex">y \left( w ^ { T } x + b \right) = 1</script>，而非支持向量则有<script type="math/tex">y \left( w ^ { T } x + b \right) > 1</script>。</p>
-<p><div align="center"><img src="/2018/12/27/SVM/svm.jpg" width="360">图2：`SVM`分类示例</div></p>
+<p><div align="center"><img src="/2018/12/27/SVM原理/SVM/svm.jpg" width="360">图2：`SVM`分类示例</div></p>
 <h2 id="3-对偶问题"><a href="#3-对偶问题" class="headerlink" title="3. 对偶问题"></a>3. 对偶问题</h2><p>考虑到目标函数：</p>
 <script type="math/tex; mode=display">
 \max \frac{1}{\|w\|}, \quad \text { s.t. } \quad y_i\left(w^Tx_i+b \right)\geq 1</script><p>等价于</p>
@@ -261,10 +261,10 @@ w ^ { * } = \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } x _ { i }</script>
             <hr>
             <div class="new-meta-box">
               
-                <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-02-12T08:45:06+08:00">
+                <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-04-07T23:49:20+08:00">
                   <a class="notlink">
                     <i class="fas fa-pencil-alt" aria-hidden="true"></i>
-                    2019-02-12
+                    2019-04-07
                   </a>
                 </div>
               
@@ -279,7 +279,7 @@ w ^ { * } = \sum _ { i = 1 } ^ { n } \alpha _ { i } y _ { i } x _ { i }</script>
     <div class="-mob-share-list share-body">
       
         
-          <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer" href="http://connect.qq.com/widget/shareqq/index.html?url=https://huzuoliang.github.io/2018/12/27/SVM/&title=ML SVM | HuZuoliang&summary=1. 简介给定m个数据点的数据集T=\left\{ \left( x  _ { 1 } , y _ { 1 } \right) , \left( x  _ { 2 } , y _ { 2 } \right) , \ldots , \left( x  _ { m } , y_{ m } \right) \right\}，其中x _ { i } \in \mathcal { R } ^ { n }，y _ { i } \in \{ \pm 1 \}，一个线性分类器的学习目标是要在n维的数据空间中找到一个超平面将数据集T分开，超平面的方程可以表达为：
+          <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer" href="http://connect.qq.com/widget/shareqq/index.html?url=https://huzuoliang.github.io/2018/12/27/SVM原理/&title=ML SVM原理 | HuZuoliang&summary=1. 简介给定m个数据点的数据集T=\left\{ \left( x  _ { 1 } , y _ { 1 } \right) , \left( x  _ { 2 } , y _ { 2 } \right) , \ldots , \left( x  _ { m } , y_{ m } \right) \right\}，其中x _ { i } \in \mathcal { R } ^ { n }，y _ { i } \in \{ \pm 1 \}，一个线性分类器的学习目标是要在n维的数据空间中找到一个超平面将数据集T分开，超平面的方程可以表达为：
 w^Tx +b=0">
             
               <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qq.png">
@@ -288,7 +288,7 @@ w^Tx +b=0">
         
       
         
-          <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://huzuoliang.github.io/2018/12/27/SVM/&title=ML SVM | HuZuoliang&summary=1. 简介给定m个数据点的数据集T=\left\{ \left( x  _ { 1 } , y _ { 1 } \right) , \left( x  _ { 2 } , y _ { 2 } \right) , \ldots , \left( x  _ { m } , y_{ m } \right) \right\}，其中x _ { i } \in \mathcal { R } ^ { n }，y _ { i } \in \{ \pm 1 \}，一个线性分类器的学习目标是要在n维的数据空间中找到一个超平面将数据集T分开，超平面的方程可以表达为：
+          <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://huzuoliang.github.io/2018/12/27/SVM原理/&title=ML SVM原理 | HuZuoliang&summary=1. 简介给定m个数据点的数据集T=\left\{ \left( x  _ { 1 } , y _ { 1 } \right) , \left( x  _ { 2 } , y _ { 2 } \right) , \ldots , \left( x  _ { m } , y_{ m } \right) \right\}，其中x _ { i } \in \mathcal { R } ^ { n }，y _ { i } \in \{ \pm 1 \}，一个线性分类器的学习目标是要在n维的数据空间中找到一个超平面将数据集T分开，超平面的方程可以表达为：
 w^Tx +b=0">
             
               <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qzone.png">
@@ -305,7 +305,7 @@ w^Tx +b=0">
         
       
         
-          <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer" href="http://service.weibo.com/share/share.php?url=https://huzuoliang.github.io/2018/12/27/SVM/&title=ML SVM | HuZuoliang&summary=1. 简介给定m个数据点的数据集T=\left\{ \left( x  _ { 1 } , y _ { 1 } \right) , \left( x  _ { 2 } , y _ { 2 } \right) , \ldots , \left( x  _ { m } , y_{ m } \right) \right\}，其中x _ { i } \in \mathcal { R } ^ { n }，y _ { i } \in \{ \pm 1 \}，一个线性分类器的学习目标是要在n维的数据空间中找到一个超平面将数据集T分开，超平面的方程可以表达为：
+          <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer" href="http://service.weibo.com/share/share.php?url=https://huzuoliang.github.io/2018/12/27/SVM原理/&title=ML SVM原理 | HuZuoliang&summary=1. 简介给定m个数据点的数据集T=\left\{ \left( x  _ { 1 } , y _ { 1 } \right) , \left( x  _ { 2 } , y _ { 2 } \right) , \ldots , \left( x  _ { m } , y_{ m } \right) \right\}，其中x _ { i } \in \mathcal { R } ^ { n }，y _ { i } \in \{ \pm 1 \}，一个线性分类器的学习目标是要在n维的数据空间中找到一个超平面将数据集T分开，超平面的方程可以表达为：
 w^Tx +b=0">
             
               <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/weibo.png">
@@ -394,7 +394,7 @@ w^Tx +b=0">
 
 <script>
     window.subData = {
-        title: 'ML SVM',
+        title: 'ML SVM原理',
         tools: true
     }
 </script>

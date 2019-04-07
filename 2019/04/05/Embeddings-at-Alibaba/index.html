@@ -4,7 +4,7 @@
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   
-  <title>embeddings at Alibaba | HuZuoliang</title>
+  <title>Embeddings at Alibaba | HuZuoliang</title>
   
   
 
@@ -150,7 +150,7 @@
   <div class="meta" id="header-meta">
     
       
-          <h1 class="title">embeddings at Alibaba</h1>
+          <h1 class="title">Embeddings at Alibaba</h1>
       
     
 
@@ -228,9 +228,11 @@ p \left(\text { item }_{i} | \operatorname{IDs}\left(\text { item }_{i}\right)\r
 <li><strong>计算item相似度</strong><br>物品间的相似性在推荐系统中使用广泛，比如给用户推荐和用户感兴趣的物品相似的物品，物品相似性可以通过两者对应的embedding向量的余弦距离来度量。item-based CF方法需要明确的user-item关系，但很大比例的交互数据并没有用户识别信息；而skip-gram模型基于会话的，可以利用全量的数据，因此基于embedding的方法比基于item-based的CF方法要更好一些，实验结果也说明其有更高的召回。</li>
 <li><strong>迁移到新的item</strong><br>推荐系统中冷启动是个很大的问题，新物品由于没有交互信息，此时item-based的CF方法失效。一般可通过基于image或者text的辅助信息来进行推荐。这里解决冷启动的方法出发点是和新物品连接的attribute ID通常有历史记录，因此可以通过这些attribute ID的embedding来预测得到新物品的embedding。</li>
 <li><strong>迁移到新的领域</strong><br>盒马鲜生作为一个新平台，很大比例的用户是新的，因此做个性化的推荐较为困难。文章提出了一种将淘宝(source domain)用户的兴趣迁移到盒马(target domain)上的方法。设 <script type="math/tex">U^s</script> 和 <script type="math/tex">U^t</script> 分别表示淘宝和盒马的用户，其交集 <script type="math/tex">U^i=U^s\cap U^t</script>。<ul>
-<li>首先获得 <script type="math/tex">U^s</script> 中用户的embedding，用户embedding的计算有两种方式</li>
+<li>首先获得 <script type="math/tex">U^s</script> 中用户的embedding，用户embedding的计算有两种方式<ul>
 <li>直接取平均值</li>
 <li>加权平均<script type="math/tex; mode=display">\text { embedding }(u)=\frac{\sum_{t=1}^{T} w_{t} e_{t}}{\sum_{t=1}^{T} w_{t}}</script><script type="math/tex; mode=display">w_{t}=\sum_{u^{\prime} \in U^{i}} \operatorname{IA}\left(u^{\prime}, \text { item }_{t}\right)</script><script type="math/tex; mode=display">\mathbf{I A}(x)=\left\{\begin{array}{ll}{0,} & {u^{\prime} \text { has no interaction on item }_{t}} \\ {A_{j},} & {u^{\prime} \text { has interaction } j \text { on item }_{t}}\end{array}\right.</script></li>
+</ul>
+</li>
 <li>然后通过K-means算法将 <script type="math/tex">U^i</script> 中的用户划分成1000个簇，每个簇选择最热门的target item集合作为候选集合</li>
 <li>对于新来的用户 <script type="math/tex">U^s \verb|\|U^t</script>，根据用户的embedding和簇中心的距离分配一个最相近的簇，然后将这个簇对应的候选集合推荐给新用户</li>
 </ul>
@@ -245,7 +247,7 @@ p \left(\text { item }_{i} | \operatorname{IDs}\left(\text { item }_{i}\right)\r
             <hr>
             <div class="new-meta-box">
               
-                <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-04-07T23:45:53+08:00">
+                <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-04-07T23:48:03+08:00">
                   <a class="notlink">
                     <i class="fas fa-pencil-alt" aria-hidden="true"></i>
                     2019-04-07
@@ -260,7 +262,7 @@ p \left(\text { item }_{i} | \operatorname{IDs}\left(\text { item }_{i}\right)\r
     <div class="-mob-share-list share-body">
       
         
-          <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer" href="http://connect.qq.com/widget/shareqq/index.html?url=https://huzuoliang.github.io/2019/04/05/Embeddings-at-Alibaba/&title=embeddings at Alibaba | HuZuoliang&summary=1 前言本文出自于电商巨头Alibaba，介绍的是word2vec在Hema App的运用，不同于前文直接用item ID sequence训练word2vec，作者认为相似的item不仅仅是共现，还应该有着相似的属性，于是将诸如item的product ID, store ID, brand ID, cate-level1 ID等item属性ID也加入模型中训练，以约束模型在训练的过程中考虑属性的相似性。">
+          <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer" href="http://connect.qq.com/widget/shareqq/index.html?url=https://huzuoliang.github.io/2019/04/05/Embeddings-at-Alibaba/&title=Embeddings at Alibaba | HuZuoliang&summary=1 前言本文出自于电商巨头Alibaba，介绍的是word2vec在Hema App的运用，不同于前文直接用item ID sequence训练word2vec，作者认为相似的item不仅仅是共现，还应该有着相似的属性，于是将诸如item的product ID, store ID, brand ID, cate-level1 ID等item属性ID也加入模型中训练，以约束模型在训练的过程中考虑属性的相似性。">
             
               <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qq.png">
             
@@ -268,7 +270,7 @@ p \left(\text { item }_{i} | \operatorname{IDs}\left(\text { item }_{i}\right)\r
         
       
         
-          <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://huzuoliang.github.io/2019/04/05/Embeddings-at-Alibaba/&title=embeddings at Alibaba | HuZuoliang&summary=1 前言本文出自于电商巨头Alibaba，介绍的是word2vec在Hema App的运用，不同于前文直接用item ID sequence训练word2vec，作者认为相似的item不仅仅是共现，还应该有着相似的属性，于是将诸如item的product ID, store ID, brand ID, cate-level1 ID等item属性ID也加入模型中训练，以约束模型在训练的过程中考虑属性的相似性。">
+          <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://huzuoliang.github.io/2019/04/05/Embeddings-at-Alibaba/&title=Embeddings at Alibaba | HuZuoliang&summary=1 前言本文出自于电商巨头Alibaba，介绍的是word2vec在Hema App的运用，不同于前文直接用item ID sequence训练word2vec，作者认为相似的item不仅仅是共现，还应该有着相似的属性，于是将诸如item的product ID, store ID, brand ID, cate-level1 ID等item属性ID也加入模型中训练，以约束模型在训练的过程中考虑属性的相似性。">
             
               <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qzone.png">
             
@@ -284,7 +286,7 @@ p \left(\text { item }_{i} | \operatorname{IDs}\left(\text { item }_{i}\right)\r
         
       
         
-          <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer" href="http://service.weibo.com/share/share.php?url=https://huzuoliang.github.io/2019/04/05/Embeddings-at-Alibaba/&title=embeddings at Alibaba | HuZuoliang&summary=1 前言本文出自于电商巨头Alibaba，介绍的是word2vec在Hema App的运用，不同于前文直接用item ID sequence训练word2vec，作者认为相似的item不仅仅是共现，还应该有着相似的属性，于是将诸如item的product ID, store ID, brand ID, cate-level1 ID等item属性ID也加入模型中训练，以约束模型在训练的过程中考虑属性的相似性。">
+          <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer" href="http://service.weibo.com/share/share.php?url=https://huzuoliang.github.io/2019/04/05/Embeddings-at-Alibaba/&title=Embeddings at Alibaba | HuZuoliang&summary=1 前言本文出自于电商巨头Alibaba，介绍的是word2vec在Hema App的运用，不同于前文直接用item ID sequence训练word2vec，作者认为相似的item不仅仅是共现，还应该有着相似的属性，于是将诸如item的product ID, store ID, brand ID, cate-level1 ID等item属性ID也加入模型中训练，以约束模型在训练的过程中考虑属性的相似性。">
             
               <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/weibo.png">
             
@@ -358,7 +360,7 @@ p \left(\text { item }_{i} | \operatorname{IDs}\left(\text { item }_{i}\right)\r
 
 <script>
     window.subData = {
-        title: 'embeddings at Alibaba',
+        title: 'Embeddings at Alibaba',
         tools: true
     }
 </script>

@@ -4,7 +4,7 @@
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   
-  <title>Word2Vec详解（知识汇总） | HuZuoliang</title>
+  <title>Word2Vec原理资料汇总 | HuZuoliang</title>
   
   
 
@@ -150,7 +150,7 @@
   <div class="meta" id="header-meta">
     
       
-          <h1 class="title">Word2Vec详解（知识汇总）</h1>
+          <h1 class="title">Word2Vec原理资料汇总</h1>
       
     
 
@@ -218,20 +218,20 @@ p\left(w_{k} | w_{1}^{k-1}\right) \approx \frac{\operatorname{count}\left(w_{1}^
 \prod_{w \in \mathcal{C}} p(w | Context(w))\tag{4}</script><p>其中<script type="math/tex">\mathcal{C}</script>表示语料，Context(w)表示词w的上下文，即w周边的词的集合。当Context(w)为空时，就取<script type="math/tex">p(w | C \text {ontext }(w))=p(w)</script>，特别的，对于前面介绍的n-gram模型，就有<script type="math/tex">\text {Context}\left(w_{i}\right)=w_{i-n+1}^{i-1}</script>，一般对于这种连乘的最大相似函数，会取对数，即<strong>最大对数似然</strong>，则目标函数为：</p>
 <script type="math/tex; mode=display">
 \mathcal{L}=\sum_{u \in C} \log p(w | \text {Context}(w))\tag{5}</script><h3 id="2-2-神经概率语言模型"><a href="#2-2-神经概率语言模型" class="headerlink" title="2.2 神经概率语言模型"></a>2.2 神经概率语言模型</h3><p>神经概率语言模型是一个神经网络模型，包含四层：输入层、投影层、隐藏层及输出层，如下图所示：</p>
-<p><div align="center"><img src="/2019/03/30/Word2Vec详解的搬运工/1.webp" width="460">图1：神经概率语言模型</div><br>【输入层】首先，将 context(w) 中的每个词映射为一个长为 m 的词向量，词向量在训练开始时是随机的，并参与训练；<br>【投影层】将所有上下文词向量拼接为一个长向量，作为 w 的特征向量，该向量的维度为 m(n-1)<br>【隐藏层】拼接后的向量会经过一个规模为 h 隐藏层，该隐层使用的激活函数为 tanh<br>【输出层】最后会经过一个规模为 N 的 Softmax 输出层，从而得到词表中每个词作为下一个词的概率分布</p>
+<p><div align="center"><img src="/2019/03/30/Word2Vec原理资料汇总/1.webp" width="460">图1：神经概率语言模型</div><br>【输入层】首先，将 context(w) 中的每个词映射为一个长为 m 的词向量，词向量在训练开始时是随机的，并参与训练；<br>【投影层】将所有上下文词向量拼接为一个长向量，作为 w 的特征向量，该向量的维度为 m(n-1)<br>【隐藏层】拼接后的向量会经过一个规模为 h 隐藏层，该隐层使用的激活函数为 tanh<br>【输出层】最后会经过一个规模为 N 的 Softmax 输出层，从而得到词表中每个词作为下一个词的概率分布</p>
 <p>其中 m, n, h 为超参数，N 为词表大小，视训练集规模而定，也可以人为设置阈值；训练时，使用交叉熵作为损失函数，当训练完成时，就得到了 N-gram 神经语言模型，以及副产品词向量。整个模型可以概括为以下方程：</p>
 <script type="math/tex; mode=display">
 y=U \cdot \tanh (W x+p)+q\tag{6}</script><p>原文的模型还考虑了投影层与输出层有边相连的情形，因而会多一个权重矩阵，但本质上是一致的：</p>
-<p><div align="center"><img src="/2019/03/30/Word2Vec详解的搬运工/2.webp" width="460">图2：原神经概率语言模型</div></p>
+<p><div align="center"><img src="/2019/03/30/Word2Vec原理资料汇总/2.webp" width="460">图2：原神经概率语言模型</div></p>
 <script type="math/tex; mode=display">
 y=U \cdot \tanh \left(W_{1} x+p\right)+W_{2} x+q\tag{7}</script><p>经过上述两步计算得到<script type="math/tex">\mathbf{y}_{w}=\left(y_{w, 1}, y_{w, 2}, \cdots, y_{w, N}\right)^{\top}</script>只是一个长度为N的分量，如果想要<script type="math/tex">\mathbf{y}_{w}</script>的分量<script type="math/tex">y_{w,i}</script>表示当上下文为Context(w)是下一个词恰好为词典中第i个词的概率，还需要通过softmax函数进行归一化，即</p>
 <script type="math/tex; mode=display">
 p(w | \text { context }(w))=\frac{e^{y_{w, i}}}{\sum_{i=1}^{N} e^{y_{w, i}}}\tag{8}</script><h2 id="3-Word2Vec"><a href="#3-Word2Vec" class="headerlink" title="3 Word2Vec"></a>3 Word2Vec</h2><p>word2vec主要包括两种模型，CBOW(Continuous Bag of Words Model)和Skip-gram(Continuous Skip-gram Model)，如下图所示：</p>
-<p><div align="center"><img src="/2019/03/30/Word2Vec详解的搬运工/3.jpeg" width="460">图3：Word2Vec模型</div></p>
+<p><div align="center"><img src="/2019/03/30/Word2Vec原理资料汇总/3.jpeg" width="460">图3：Word2Vec模型</div></p>
 <h3 id="3-1-基于Hierarchical-softmax的模型"><a href="#3-1-基于Hierarchical-softmax的模型" class="headerlink" title="3.1 基于Hierarchical softmax的模型"></a>3.1 基于Hierarchical softmax的模型</h3><p>上面我们介绍，基于神经网络的语言模型目标函数通常取为如下的对数似然函数：</p>
 <script type="math/tex; mode=display">
 \mathcal{L}=\sum_{w \in \mathcal{C}} \log p(w | Context(w))\tag{9}</script><p>其中最核心的是<script type="math/tex">p(w | \text { Context }(w))</script>的构造，上诉的Softmax就是构造的一种方式。<br>CBOW的网络模型如下：</p>
-<p><div align="center"><img src="/2019/03/30/Word2Vec详解的搬运工/4.jpeg" width="460">图4：CBOW</div></p>
+<p><div align="center"><img src="/2019/03/30/Word2Vec原理资料汇总/4.jpeg" width="460">图4：CBOW</div></p>
 <ol>
 <li>输入层：包括Context(w)中2c个词的词向量，<script type="math/tex">\mathbf{v}\left(\text { Context }(w)_{1}\right),\mathbf{v}\left(\text { Context }(w)_{2}\right),cdot,\mathbf{v}\left(\text { Context }(w)_{2c}\right) \in \mathbb{R}^{m}</script>，m表其实词向量的长度。</li>
 <li>投影层：将输入层的2c个向量做求和累加，即<script type="math/tex">\mathbf{x}_{w}=\sum\limits_{i=1}^{2 c} \mathbf{v}\left(\text {Context}(w)_{i}\right) \in \mathbb{R}^{m}</script></li>
@@ -246,7 +246,7 @@ p(w | \text { context }(w))=\frac{e^{y_{w, i}}}{\sum_{i=1}^{N} e^{y_{w, i}}}\tag
 <li><script type="math/tex">\theta_{1}^{w}, \theta_{2}^{w}, \cdots, \theta_{l^{w}-1}^{w} \in \mathbb{R}^{m}</script>：路径<script type="math/tex">p^{w}</script>中非叶子结点对应的辅助向量，<script type="math/tex">\theta_{j}^{w}</script>表示路径<script type="math/tex">p^{w}</script>中第j个非叶子结点对应的向量。</li>
 </ol>
 <p>我们通过一个例子来看如何构造<script type="math/tex">p(w | C \text { ontex }(w))</script>，以<script type="math/tex">w=足球</script>的情形：</p>
-<p><div align="center"><img src="/2019/03/30/Word2Vec详解的搬运工/5.png" width="460">图5：Huffman示例</div><br>如图所示，由4条红色边串起来的5个结点就构成了路径<script type="math/tex">p^{w}</script>，其长度<script type="math/tex">l^{w}=5，p_{1}^{w}, p_{2}^{w}, p_{3}^{w}, p_{4}^{w},p_{5}^{w}</script>为路径<script type="math/tex">p^{w}</script>上的5个结点，其中<script type="math/tex">p_{1}^{w}</script>对应根结点，<script type="math/tex">d_{2}^{w}, d_{3}^{w}, d_{4}^{w}, d_{5}^{w}</script>分别为1，0，0，1，即足球的Huffman编码为1001，此外<script type="math/tex">\theta_{1}^{w}, \theta_{2}^{w}, \theta_{3}^{w}, \theta_{4}^{w}</script>分别表示路径<script type="math/tex">p^{w}</script>上4个非叶子结点对应的向量。从根结点出发到达足球这个叶子结点，中间共经历了4次分支，每一次分支都可以视为进行了一次二分类。<br>由于Huffman树每个结点都有编码，那正好我们可以将结点编码作为分类标识，比如编号为0的结点编为正类，编号为1的编为负类，当然也可以反过来。在word2vec中，就是选择后者，即将一个结点进行分类时，分到左边的是负类，分到右边的是正类：</p>
+<p><div align="center"><img src="/2019/03/30/Word2Vec原理资料汇总/5.png" width="460">图5：Huffman示例</div><br>如图所示，由4条红色边串起来的5个结点就构成了路径<script type="math/tex">p^{w}</script>，其长度<script type="math/tex">l^{w}=5，p_{1}^{w}, p_{2}^{w}, p_{3}^{w}, p_{4}^{w},p_{5}^{w}</script>为路径<script type="math/tex">p^{w}</script>上的5个结点，其中<script type="math/tex">p_{1}^{w}</script>对应根结点，<script type="math/tex">d_{2}^{w}, d_{3}^{w}, d_{4}^{w}, d_{5}^{w}</script>分别为1，0，0，1，即足球的Huffman编码为1001，此外<script type="math/tex">\theta_{1}^{w}, \theta_{2}^{w}, \theta_{3}^{w}, \theta_{4}^{w}</script>分别表示路径<script type="math/tex">p^{w}</script>上4个非叶子结点对应的向量。从根结点出发到达足球这个叶子结点，中间共经历了4次分支，每一次分支都可以视为进行了一次二分类。<br>由于Huffman树每个结点都有编码，那正好我们可以将结点编码作为分类标识，比如编号为0的结点编为正类，编号为1的编为负类，当然也可以反过来。在word2vec中，就是选择后者，即将一个结点进行分类时，分到左边的是负类，分到右边的是正类：</p>
 <script type="math/tex; mode=display">
 \text {Label}\left(p_{i}^{w}\right)=1-d_{i}^{w}, i=2,3, \cdots, l^{w}\tag{10}</script><p>逻辑回归中，一个结点被分为正类的概率：</p>
 <script type="math/tex; mode=display">
@@ -372,10 +372,10 @@ p(u | \widetilde{w})=\left\{\begin{array}{ll}{\sigma\left(\mathbf{v}(\widetilde{
             <hr>
             <div class="new-meta-box">
               
-                <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-04-02T23:59:18+08:00">
+                <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-04-07T23:50:55+08:00">
                   <a class="notlink">
                     <i class="fas fa-pencil-alt" aria-hidden="true"></i>
-                    2019-04-02
+                    2019-04-07
                   </a>
                 </div>
               
@@ -390,7 +390,7 @@ p(u | \widetilde{w})=\left\{\begin{array}{ll}{\sigma\left(\mathbf{v}(\widetilde{
     <div class="-mob-share-list share-body">
       
         
-          <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer" href="http://connect.qq.com/widget/shareqq/index.html?url=https://huzuoliang.github.io/2019/03/30/Word2Vec详解的搬运工/&title=Word2Vec详解（知识汇总） | HuZuoliang&summary=网上关于Word2Vec资料已经写得很好很全了，这里做一个知识的汇总，如觉任何侵权行为，请联系huzuoliang1990@163.com。
+          <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer" href="http://connect.qq.com/widget/shareqq/index.html?url=https://huzuoliang.github.io/2019/03/30/Word2Vec原理资料汇总/&title=Word2Vec原理资料汇总 | HuZuoliang&summary=网上关于Word2Vec资料已经写得很好很全了，这里做一个知识的汇总，如觉任何侵权行为，请联系huzuoliang1990@163.com。
 1 词向量在处理自然语言相关任务中，要将自然语言交给机器学习中的算法处理，通常需要先将自然语言数字化，一种处理方式就是词向量化，即用一个向量来表示词。向量化表示方式主要分两种：One-Hot Representation和Distributed Representation。">
             
               <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qq.png">
@@ -399,7 +399,7 @@ p(u | \widetilde{w})=\left\{\begin{array}{ll}{\sigma\left(\mathbf{v}(\widetilde{
         
       
         
-          <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://huzuoliang.github.io/2019/03/30/Word2Vec详解的搬运工/&title=Word2Vec详解（知识汇总） | HuZuoliang&summary=网上关于Word2Vec资料已经写得很好很全了，这里做一个知识的汇总，如觉任何侵权行为，请联系huzuoliang1990@163.com。
+          <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://huzuoliang.github.io/2019/03/30/Word2Vec原理资料汇总/&title=Word2Vec原理资料汇总 | HuZuoliang&summary=网上关于Word2Vec资料已经写得很好很全了，这里做一个知识的汇总，如觉任何侵权行为，请联系huzuoliang1990@163.com。
 1 词向量在处理自然语言相关任务中，要将自然语言交给机器学习中的算法处理，通常需要先将自然语言数字化，一种处理方式就是词向量化，即用一个向量来表示词。向量化表示方式主要分两种：One-Hot Representation和Distributed Representation。">
             
               <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qzone.png">
@@ -416,7 +416,7 @@ p(u | \widetilde{w})=\left\{\begin{array}{ll}{\sigma\left(\mathbf{v}(\widetilde{
         
       
         
-          <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer" href="http://service.weibo.com/share/share.php?url=https://huzuoliang.github.io/2019/03/30/Word2Vec详解的搬运工/&title=Word2Vec详解（知识汇总） | HuZuoliang&summary=网上关于Word2Vec资料已经写得很好很全了，这里做一个知识的汇总，如觉任何侵权行为，请联系huzuoliang1990@163.com。
+          <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer" href="http://service.weibo.com/share/share.php?url=https://huzuoliang.github.io/2019/03/30/Word2Vec原理资料汇总/&title=Word2Vec原理资料汇总 | HuZuoliang&summary=网上关于Word2Vec资料已经写得很好很全了，这里做一个知识的汇总，如觉任何侵权行为，请联系huzuoliang1990@163.com。
 1 词向量在处理自然语言相关任务中，要将自然语言交给机器学习中的算法处理，通常需要先将自然语言数字化，一种处理方式就是词向量化，即用一个向量来表示词。向量化表示方式主要分两种：One-Hot Representation和Distributed Representation。">
             
               <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/weibo.png">
@@ -510,7 +510,7 @@ p(u | \widetilde{w})=\left\{\begin{array}{ll}{\sigma\left(\mathbf{v}(\widetilde{
 
 <script>
     window.subData = {
-        title: 'Word2Vec详解（知识汇总）',
+        title: 'Word2Vec原理资料汇总',
         tools: true
     }
 </script>

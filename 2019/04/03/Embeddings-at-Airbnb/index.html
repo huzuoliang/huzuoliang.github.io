@@ -254,7 +254,24 @@ s_{b}=\left(u_{t y p e_{1}} l_{t y p e_{1}}, \ldots, u_{t y p e_{M}} l_{t y p e_
 \sum_{\left(u_{t}, l_t\right) \in \mathcal{D}_{reject}} \log \frac{1}{1+e^{\mathbf{v}_{l_t}^{\prime} \mathbf{v}_{u_t}}}</script><p>以listing为中心embedding最终目标函数为</p>
 <script type="math/tex; mode=display">
 \underset{\theta}{\operatorname{argmax}} \sum_{\left(l_{t}, c\right) \in \mathcal{D}_{b o o k}} \log \frac{1}{1+e^{-\mathbf{v}_{c}^{\prime} \mathrm{v}_{l_{t}}}}+\sum_{\left(l_{t}, c\right) \in \mathcal{D}_{n e g}} \log \frac{1}{1+e^{\mathbf{v}_{c}^{\prime} \mathbf{v}_{l_{t}}}}+
-\sum_{\left(l_{t}, u_t\right) \in \mathcal{D}_{reject}} \log \frac{1}{1+e^{\mathbf{v}_{u_t}^{\prime} \mathbf{v}_{l_t}}}</script><p><strong>原文的疑惑</strong></p>
+\sum_{\left(l_{t}, u_t\right) \in \mathcal{D}_{reject}} \log \frac{1}{1+e^{\mathbf{v}_{u_t}^{\prime} \mathbf{v}_{l_t}}}</script><h2 id="3-Rank-Model"><a href="#3-Rank-Model" class="headerlink" title="3 Rank Model"></a>3 Rank Model</h2><p>作者使用Gradient Boosting Decision Trees (GBDT) model作为rank model，特征主要包括四个维度</p>
+<ul>
+<li>Listing features: features associated with the listing itself, such as price per night, listing type, number of rooms, rejection rate, etc.</li>
+<li>Query features: features associated with the issued query, such as number of guests, length of stay, lead days,</li>
+<li>User features: features associated with the user who is conducting the search, such as average booked price, guest rating, etc.</li>
+<li>Cross-features: features derived from two or more of these feature sources: listing, user, query. Examples of such features are query listing distance: distance between query location and listing location, capacity fit: difference between query number of guests and listing capacity, price difference: difference between listing price and average price of user’s historical bookings, rejection probability: probability that host will reject these query parameters, click percentage: real-time memorization feature that tracks what percentage of user’s clicks were on that particular listing, etc.</li>
+</ul>
+<p>将近100个特征，并基于embedding构建了8个新的特征，如下</p>
+<p><div align="center"><img src="/2019/04/03/Embeddings-at-Airbnb/6.png" width="460">图3：gbdt新特征</div></p>
+<ul>
+<li>H<sub>c</sub> : clicked listing_ids - listings that user clicked on in last 2 weeks.</li>
+<li>H<sub>lc</sub> : long-clicked listing_ids - listing that user clicked and stayed on the listing page for longer than 60 sec.</li>
+<li>H<sub>s</sub> : skipped listing_ids - listings that user skipped in favor of a click on a lower positioned listing</li>
+<li>H<sub>w</sub> : wishlisted listing_ids - listings that user added to a wishlist in last 2 weeks.</li>
+<li>H<sub>i</sub> : inquired listing_ids - listings that user contacted in last 2 weeks but did not book.</li>
+<li>H<sub>b</sub> : booked listing_ids - listings that user booked in last 2 weeks.</li>
+</ul>
+<p><strong><font color="red">原文的疑惑</font></strong></p>
 <ol>
 <li><p>对于只有1个booking session的user是如何处理的？<br>(1) 直接丢弃<br>(2) 数据稀疏是因为listing太多，有效的listing序列无法覆盖到大部分的listing；聚合后的Listing变少，并且大部分频率通过有效的序列就能达到5次以上；应该是完全不用长度较短的序列；</p>
 </li>
@@ -281,10 +298,10 @@ s_{b}=\left(u_{t y p e_{1}} l_{t y p e_{1}}, \ldots, u_{t y p e_{M}} l_{t y p e_
             <hr>
             <div class="new-meta-box">
               
-                <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-04-05T11:51:55+08:00">
+                <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-04-19T15:17:56+08:00">
                   <a class="notlink">
                     <i class="fas fa-pencil-alt" aria-hidden="true"></i>
-                    2019-04-05
+                    2019-04-19
                   </a>
                 </div>
               
@@ -436,7 +453,7 @@ s_{b}=\left(u_{t y p e_{1}} l_{t y p e_{1}}, \ldots, u_{t y p e_{M}} l_{t y p e_
 </header>
 
     <div class="content material">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-前言"><span class="toc-text">1 前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Listing-Embeddings"><span class="toc-text">2 Listing Embeddings</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-前言"><span class="toc-text">1 前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Listing-Embeddings"><span class="toc-text">2 Listing Embeddings</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Rank-Model"><span class="toc-text">3 Rank Model</span></a></li></ol>
     </div>
   </section>
 

@@ -204,18 +204,18 @@
       <div class="article-entry" itemprop="articleBody">
         <p><strong>网上关于<code>Word2Vec</code>资料已经写得很好很全了，这里做一个知识的汇总，如觉任何侵权行为，请联系<a href="huzuoliang1990@163.com">huzuoliang1990@163.com</a>。</strong></p>
 <h2 id="1-词向量"><a href="#1-词向量" class="headerlink" title="1 词向量"></a>1 词向量</h2><p>在处理自然语言相关任务中，要将自然语言交给机器学习中的算法处理，通常需要先将自然语言数字化，一种处理方式就是词向量化，即用一个向量来表示词。向量化表示方式主要分两种：<code>One-Hot Representation</code>和<code>Distributed Representation</code>。<br><a id="more"></a></p>
-<h3 id="1-1-One-Hot-Representation（独热编码）"><a href="#1-1-One-Hot-Representation（独热编码）" class="headerlink" title="1.1 One-Hot Representation（独热编码）"></a>1.1 One-Hot Representation（独热编码）</h3><p><code>One-Hot Representation</code>是一种最简单的词向量表示方式， 每个词用长度为词总量的向量表示，向量的分量只有一个为1，其余为0，1的位置对应该词在词典中的位置。比如：<br>“话筒”表示为 [0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 …]<br>“麦克风”表示为 [0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 …]<br>这种表示方法简单且易于实现，但有两个缺陷：<br>(1) 容易受维数灾难的影响，尤其是在<code>Deep Learning</code>中的一些算法；<br>(2) 不能很好的刻画词与词之间的相似性，任何两个词之间都是孤立的。</p>
-<h3 id="1-2-Distributed-Representation（分布式表示）"><a href="#1-2-Distributed-Representation（分布式表示）" class="headerlink" title="1.2 Distributed Representation（分布式表示）"></a>1.2 Distributed Representation（分布式表示）</h3><p><code>Distributed Representation</code>最早是由Hinton在1986年提出的，克服了<code>One-Hot Representation</code>的缺点，这种表示方法是用模型训练出一个长度比较小的实值向量表示一个词，维度以 50 和 100 维比较常见，其优点是得到的词向量一般是有空间上的意义的，也就是说，将所有这些向量放在一起形成一个词向量空间，每一向量则为该空间中的一个点，在这个空间上的词向量之间的距离度量也可以表示对应的两个词之间的“距离”。 所谓两个词之间的“距离”，就是这两个词之间的语法、语义之间的相似性。</p>
-<h2 id="2-语言模型"><a href="#2-语言模型" class="headerlink" title="2 语言模型"></a>2 语言模型</h2><p>语言模型形式化的描述就是给定一个 T 个词的字符串 s ， 看它是自然语言的概率<script type="math/tex">\mathrm{P}(\mathrm{w_1}, \mathrm{w_2}, \cdots, \mathrm{w_T})</script>。<script type="math/tex">\mathrm{w_1}</script> 到 <script type="math/tex">\mathrm{w_T}</script> 依次表示这句话中的各个词。根据概率链式法则：</p>
+<h3 id="1-1-One-Hot-Representation（独热编码）"><a href="#1-1-One-Hot-Representation（独热编码）" class="headerlink" title="1.1 One-Hot Representation（独热编码）"></a>1.1 One-Hot Representation（独热编码）</h3><p><code>One-Hot Representation</code>是一种最简单的词向量表示方式， 每个词用长度为词总量的向量表示，向量的分量只有一个为1，其余为0，1的位置对应该词在词典中的位置。比如：<br>“话筒”表示为 [0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 …]<br>“麦克风”表示为 [0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 …]<br>这种表示方法简单且易于实现，但有两个缺陷：<br>(1) 容易受<a href="https://blog.csdn.net/zbc1090549839/article/details/38929215" target="_blank" rel="noopener">维数灾难</a>的影响，尤其是在<code>Deep Learning</code>中的一些算法；<br>(2) 不能很好的刻画词与词之间的相似性，任何两个词之间都是孤立的。</p>
+<h3 id="1-2-Distributed-Representation（分布式表示）"><a href="#1-2-Distributed-Representation（分布式表示）" class="headerlink" title="1.2 Distributed Representation（分布式表示）"></a>1.2 Distributed Representation（分布式表示）</h3><p><code>Distributed Representation</code>最早是由Hinton在1986年提出的，用一种能够刻画语义之间的相似度并且维度较低的稠密向量表示，其优点是得到的词向量一般是有空间上的意义的，也就是说，将所有这些向量放在一起形成一个词向量空间，每一向量则为该空间中的一个点，在这个空间上的词向量之间的距离度量也可以表示对应的两个词之间的“距离”。 所谓两个词之间的“距离”，就是这两个词之间的语法、语义之间的相似性。</p>
+<h2 id="2-语言模型"><a href="#2-语言模型" class="headerlink" title="2 语言模型"></a>2 语言模型</h2><p>语言模型形式化的描述就是给定一个 T 个词的字符串 s ， 看它是自然语言的概率<script type="math/tex">\mathrm{P}(\mathrm{w_1}, \mathrm{w_2}, \cdots, \mathrm{w_T})</script>。<script type="math/tex">\mathrm{w_1}</script> 到 <script type="math/tex">\mathrm{w_T}</script> 依次表示这句话中的各个词。根据概率链式法则</p>
 <script type="math/tex; mode=display">
-\mathrm{p}(s)=\mathrm{p}\left(w_{1}, w_{2}, \cdots w_{T}\right)=\mathrm{p}\left(w_{1}\right) \mathrm{p}\left(w_{2} | w_{1}\right) \mathrm{p}\left(w_{3} | w_{1}, w_{2}\right) \cdots \mathrm{p}\left(w_{t} | w_{1}, w_{2}, \cdots w_{T-1}\right) \tag{1}</script><p>如果这个概率非常低，说明这句话不常出现，那么就不算一句自然语言了，因为在语料库中很少出现。如果概率很高，就说明是一句自然语言。其中概率<script type="math/tex">\mathrm{p}\left(w_{1}\right), \mathrm{p}\left(w_{2} | w_{1}\right),\mathrm{p}\left(w_{3} | w_{1}, w_{2}\right),\cdots \mathrm{p}\left(w_{t} | w_{1}, w_{2}, \cdots w_{T-1}\right)</script>为模型参数，若这些参数都已经计算完成，那么一个句子的概率<script type="math/tex">\mathrm{p}(s)=\mathrm{p}\left(w_{1}, w_{2}, \cdots w_{T}\right)</script>很容易计算。但现实中却是一件很麻烦的事情。列如考虑参数的个数，对于一个长度为T的句子，就需要T个参数，假设语料库对应的词典大小为N，那么考虑长度为T的任意句子，理论上就有<script type="math/tex">N^T</script>种可能，而每种可能都要计算T个参数，总共需要<script type="math/tex">TN^T</script>个参数，这对计算和存储都是一件很难的事情。</p>
+\mathrm{p}(s)=\mathrm{p}\left(w_{1}, w_{2}, \cdots w_{T}\right)=\mathrm{p}\left(w_{1}\right) \mathrm{p}\left(w_{2} | w_{1}\right) \mathrm{p}\left(w_{3} | w_{1}, w_{2}\right) \cdots \mathrm{p}\left(w_{t} | w_{1}, w_{2}, \cdots w_{T-1}\right) \tag{1}</script><p>如果这个概率非常低，说明这句话不常出现，那么就不算一句自然语言了，因为在语料库中很少出现。如果概率很高，就说明是一句自然语言。其中概率<script type="math/tex">\mathrm{p}\left(w_{1}\right), \mathrm{p}\left(w_{2} | w_{1}\right),\mathrm{p}\left(w_{3} | w_{1}, w_{2}\right),\cdots \mathrm{p}\left(w_{t} | w_{1}, w_{2}, \cdots w_{T-1}\right)</script>为模型参数，若这些参数都已经计算完成，那么一个句子的概率<script type="math/tex">\mathrm{p}(s)=\mathrm{p}\left(w_{1}, w_{2}, \cdots w_{T}\right)</script>很容易计算。但现实中却是一件很麻烦的事情。列如考虑参数的个数，对于一个长度为T的句子，就需要T个参数，假设语料库对应的词典大小为N，那么考虑长度为T的任意句子，理论上就有<script type="math/tex">N^T</script>种可能（不考虑重复），而每种可能都要计算T个参数，总共需要<script type="math/tex">TN^T</script>个参数，这对计算和存储都是一件很难的事情。</p>
 <h3 id="2-1-n-gram模型"><a href="#2-1-n-gram模型" class="headerlink" title="2.1 n-gram模型"></a>2.1 n-gram模型</h3><p>n-gram模型假设一个词出现的概率只与它前面的k个词有关。利用Bayes公式：</p>
 <script type="math/tex; mode=display">
 p\left(w_{k} | w_{1}^{k-1}\right)=\frac{p\left(w_{1}^{k}\right)}{p\left(w_{1}^{k-1}\right)}\tag{2}</script><p>根据大数定律，只要语料库足够大，<script type="math/tex">p\left(w_{k} | w_{1}^{k-1}\right)</script>可以近似的表示为：</p>
 <script type="math/tex; mode=display">
-p\left(w_{k} | w_{1}^{k-1}\right) \approx \frac{\operatorname{count}\left(w_{1}^{k}\right)}{\operatorname{count}\left(w_{1}^{k-1}\right)}\tag{3}</script><p>在计算复杂度方面，n-gram模型中参数的数量随着n的逐渐增大而变化，模型参数的量级是n的指数函数<script type="math/tex">O(N^n)</script>，显然n不能取得太大，实际应用中采用最多是n=3的三元模型。在模型效果方面，理论上n越大，效果越好，但当n达到一定程度后，模型的提升幅度会变小。当然有些词出现的次数为零，也要考虑平滑处理。<br>总结起来，n-gram模型主要的工作时统计语料中各种词出现的次数以及平滑处理，概率值计算好后就存储起来，下次需要计算的一个句子的概率时，只需要找到相关的参数，将它们连乘起来就行了。<br>然而，在机器学习领域有一种通用的招式是这样的：对所考虑的问题建模后先为其构造一个目标函数，然后对这个目标函数进行优化，从而求得一组最优的参数，最后利用这组最优参数对应的模型来进行预测。对统计语言模型而言，利用最大似然，可以把目标函数设置为：</p>
+p\left(w_{k} | w_{1}^{k-1}\right) \approx \frac{\operatorname{count}\left(w_{1}^{k}\right)}{\operatorname{count}\left(w_{1}^{k-1}\right)}\tag{3}</script><p>在计算复杂度方面，n-gram模型中参数的数量随着n的逐渐增大而变化，模型参数的量级是n的指数函数<script type="math/tex">O(N^n)</script>，显然n不能取得太大，实际应用中采用最多是n=3的三元模型。在模型效果方面，理论上n越大，效果越好，但当n达到一定程度后，模型的提升幅度会变小。当然有些词出现的次数为零，也要考虑平滑处理。<br><strong>总结起来，n-gram模型主要的工作时统计语料中各种词出现的次数以及平滑处理，概率值计算好后就存储起来，下次需要计算的一个句子的概率时，只需要找到相关的参数，将它们连乘起来就行了</strong>。<br><strong>然而，在机器学习领域有一种通用的招式是这样的：对所考虑的问题建模后先为其构造一个目标函数，然后对这个目标函数进行优化，从而求得一组最优的参数，最后利用这组最优参数对应的模型来进行预测。对统计语言模型而言，利用最大似然，可以把目标函数设置为</strong></p>
 <script type="math/tex; mode=display">
-\prod_{w \in \mathcal{C}} p(w | Context(w))\tag{4}</script><p>其中<script type="math/tex">\mathcal{C}</script>表示语料，Context(w)表示词w的上下文，即w周边的词的集合。当Context(w)为空时，就取<script type="math/tex">p(w | C \text {ontext }(w))=p(w)</script>，特别的，对于前面介绍的n-gram模型，就有<script type="math/tex">\text {Context}\left(w_{i}\right)=w_{i-n+1}^{i-1}</script>，一般对于这种连乘的最大相似函数，会取对数，即<strong>最大对数似然</strong>，则目标函数为：</p>
+\prod_{w \in \mathcal{C}} p(w | Context(w))\tag{4}</script><p>其中<script type="math/tex">\mathcal{C}</script>表示语料，Context(w)表示词w的上下文，即w周边的词的集合。当Context(w)为空时，就取<script type="math/tex">p(w | C \text {ontext }(w))=p(w)</script>，特别的，对于前面介绍的n-gram模型，就有<script type="math/tex">\text {Context}\left(w_{i}\right)=w_{i-n+1}^{i-1}</script>，一般对于这种连乘的最大相似函数，会取对数，即<strong>最大对数似然</strong>，则目标函数为</p>
 <script type="math/tex; mode=display">
 \mathcal{L}=\sum_{u \in C} \log p(w | \text {Context}(w))\tag{5}</script><h3 id="2-2-神经概率语言模型"><a href="#2-2-神经概率语言模型" class="headerlink" title="2.2 神经概率语言模型"></a>2.2 神经概率语言模型</h3><p>神经概率语言模型是一个神经网络模型，包含四层：输入层、投影层、隐藏层及输出层，如下图所示：</p>
 <p><div align="center"><img src="/2019/03/30/Word2Vec原理资料汇总/1.webp" width="460">图1：神经概率语言模型</div><br>【输入层】首先，将 context(w) 中的每个词映射为一个长为 m 的词向量，词向量在训练开始时是随机的，并参与训练；<br>【投影层】将所有上下文词向量拼接为一个长向量，作为 w 的特征向量，该向量的维度为 m(n-1)<br>【隐藏层】拼接后的向量会经过一个规模为 h 隐藏层，该隐层使用的激活函数为 tanh<br>【输出层】最后会经过一个规模为 N 的 Softmax 输出层，从而得到词表中每个词作为下一个词的概率分布</p>
@@ -224,7 +224,7 @@ p\left(w_{k} | w_{1}^{k-1}\right) \approx \frac{\operatorname{count}\left(w_{1}^
 y=U \cdot \tanh (W x+p)+q\tag{6}</script><p>原文的模型还考虑了投影层与输出层有边相连的情形，因而会多一个权重矩阵，但本质上是一致的：</p>
 <p><div align="center"><img src="/2019/03/30/Word2Vec原理资料汇总/2.webp" width="460">图2：原神经概率语言模型</div></p>
 <script type="math/tex; mode=display">
-y=U \cdot \tanh \left(W_{1} x+p\right)+W_{2} x+q\tag{7}</script><p>经过上述两步计算得到<script type="math/tex">\mathbf{y}_{w}=\left(y_{w, 1}, y_{w, 2}, \cdots, y_{w, N}\right)^{\top}</script>只是一个长度为N的分量，如果想要<script type="math/tex">\mathbf{y}_{w}</script>的分量<script type="math/tex">y_{w,i}</script>表示当上下文为Context(w)是下一个词恰好为词典中第i个词的概率，还需要通过softmax函数进行归一化，即</p>
+y=U \cdot \tanh \left(W_{1} x+p\right)+W_{2} x+q\tag{7}</script><p>经过上述两步计算得到<script type="math/tex">\mathbf{y}_{w}=\left(y_{w, 1}, y_{w, 2}, \cdots, y_{w, N}\right)^{\top}</script>只是一个长度为N的分量，如果想要<script type="math/tex">\mathbf{y}_{w}</script>的分量<script type="math/tex">y_{w,i}</script>表示当上下文为Context(w)时下一个词恰好为词典中第i个词的概率，还需要通过softmax函数进行归一化，即</p>
 <script type="math/tex; mode=display">
 p(w | \text { context }(w))=\frac{e^{y_{w, i}}}{\sum_{i=1}^{N} e^{y_{w, i}}}\tag{8}</script><h2 id="3-Word2Vec"><a href="#3-Word2Vec" class="headerlink" title="3 Word2Vec"></a>3 Word2Vec</h2><p>word2vec主要包括两种模型，CBOW(Continuous Bag of Words Model)和Skip-gram(Continuous Skip-gram Model)，如下图所示：</p>
 <p><div align="center"><img src="/2019/03/30/Word2Vec原理资料汇总/3.jpeg" width="460">图3：Word2Vec模型</div></p>
@@ -233,17 +233,17 @@ p(w | \text { context }(w))=\frac{e^{y_{w, i}}}{\sum_{i=1}^{N} e^{y_{w, i}}}\tag
 \mathcal{L}=\sum_{w \in \mathcal{C}} \log p(w | Context(w))\tag{9}</script><p>其中最核心的是<script type="math/tex">p(w | \text { Context }(w))</script>的构造，上诉的Softmax就是构造的一种方式。<br>CBOW的网络模型如下：</p>
 <p><div align="center"><img src="/2019/03/30/Word2Vec原理资料汇总/4.jpeg" width="460">图4：CBOW</div></p>
 <ol>
-<li>输入层：包括Context(w)中2c个词的词向量，<script type="math/tex">\mathbf{v}\left(\text { Context }(w)_{1}\right),\mathbf{v}\left(\text { Context }(w)_{2}\right),cdot,\mathbf{v}\left(\text { Context }(w)_{2c}\right) \in \mathbb{R}^{m}</script>，m表其实词向量的长度。</li>
+<li>输入层：包括Context(w)中2c个词的词向量，<script type="math/tex">\mathbf{v}\left(\text { Context }(w)_{1}\right),\mathbf{v}\left(\text { Context }(w)_{2}\right),\dots,\mathbf{v}\left(\text { Context }(w)_{2c}\right) \in \mathbb{R}^{m}</script>，m表其实词向量的长度。</li>
 <li>投影层：将输入层的2c个向量做求和累加，即<script type="math/tex">\mathbf{x}_{w}=\sum\limits_{i=1}^{2 c} \mathbf{v}\left(\text {Context}(w)_{i}\right) \in \mathbb{R}^{m}</script></li>
-<li>输出层：对应一颗Huffman树，叶子结点为每个词（N=|D|,非叶子结点N-1个），值为词频。</li>
+<li>输出层：对应一颗Huffman树，叶子结点为每个词（N=|D|,非叶子结点N-1个），Huffman树按词频构造。</li>
 </ol>
 <p>Hierarchical Softmax是word2vec中用于提高性能的一项关键技术，为描述方便，我们引入若干符合，考虑Huffman树中的某个叶子结点，假设它对应词典D中的词w，记：</p>
 <ol>
 <li><script type="math/tex">p^{w}</script>：从根结点出发到达w对应叶子结点的路径</li>
 <li><script type="math/tex">l^{w}</script>：路径<script type="math/tex">p^{w}</script>包含的结点个数</li>
 <li><script type="math/tex">p_{1}^{w}, p_{2}^{w}, \cdots, p_{l^{w}}^{w}</script>：路径<script type="math/tex">p^{w}</script>中的<script type="math/tex">l^{w}</script>个结点，其中<script type="math/tex">p_{1}^{w}</script>表示根结点，<script type="math/tex">p_{l^{w}}^{w}</script>表示w对应词的结点</li>
-<li><script type="math/tex">d_{2}^{w}, d_{3}^{w}, \cdots, d_{l w}^{w} \in\{0,1\}</script>：词w的Huffman编码（这里假设左结点编码0，右结点编码1），<script type="math/tex">p^{w}</script>由<script type="math/tex">l^{w}-1</script>个编码组成，<script type="math/tex">d_{j}^{w}</script>表示路径<script type="math/tex">p^{w}</script>中第j个结点对应的编码</li>
-<li><script type="math/tex">\theta_{1}^{w}, \theta_{2}^{w}, \cdots, \theta_{l^{w}-1}^{w} \in \mathbb{R}^{m}</script>：路径<script type="math/tex">p^{w}</script>中非叶子结点对应的辅助向量，<script type="math/tex">\theta_{j}^{w}</script>表示路径<script type="math/tex">p^{w}</script>中第j个非叶子结点对应的向量。</li>
+<li><script type="math/tex">d_{2}^{w}, d_{3}^{w}, \cdots, d_{l w}^{w} \in\{0,1\}</script>：词w的Huffman编码（这里假设左结点编码1，右结点编码0），<script type="math/tex">p^{w}</script>由<script type="math/tex">l^{w}-1</script>个编码组成，<script type="math/tex">d_{j}^{w}</script>表示路径<script type="math/tex">p^{w}</script>中第<script type="math/tex">j</script>个结点对应的编码</li>
+<li><script type="math/tex">\theta_{1}^{w}, \theta_{2}^{w}, \cdots, \theta_{l^{w}-1}^{w} \in \mathbb{R}^{m}</script>：路径<script type="math/tex">p^{w}</script>中非叶子结点对应的辅助向量，<script type="math/tex">\theta_{j}^{w}</script>表示路径<script type="math/tex">p^{w}</script>中第<script type="math/tex">j</script>个非叶子结点对应的向量。</li>
 </ol>
 <p>我们通过一个例子来看如何构造<script type="math/tex">p(w | C \text { ontex }(w))</script>，以<script type="math/tex">w=足球</script>的情形：</p>
 <p><div align="center"><img src="/2019/03/30/Word2Vec原理资料汇总/5.png" width="460">图5：Huffman示例</div><br>如图所示，由4条红色边串起来的5个结点就构成了路径<script type="math/tex">p^{w}</script>，其长度<script type="math/tex">l^{w}=5，p_{1}^{w}, p_{2}^{w}, p_{3}^{w}, p_{4}^{w},p_{5}^{w}</script>为路径<script type="math/tex">p^{w}</script>上的5个结点，其中<script type="math/tex">p_{1}^{w}</script>对应根结点，<script type="math/tex">d_{2}^{w}, d_{3}^{w}, d_{4}^{w}, d_{5}^{w}</script>分别为1，0，0，1，即足球的Huffman编码为1001，此外<script type="math/tex">\theta_{1}^{w}, \theta_{2}^{w}, \theta_{3}^{w}, \theta_{4}^{w}</script>分别表示路径<script type="math/tex">p^{w}</script>上4个非叶子结点对应的向量。从根结点出发到达足球这个叶子结点，中间共经历了4次分支，每一次分支都可以视为进行了一次二分类。<br>由于Huffman树每个结点都有编码，那正好我们可以将结点编码作为分类标识，比如编号为0的结点编为正类，编号为1的编为负类，当然也可以反过来。在word2vec中，就是选择后者，即将一个结点进行分类时，分到左边的是负类，分到右边的是正类：</p>
@@ -252,7 +252,7 @@ p(w | \text { context }(w))=\frac{e^{y_{w, i}}}{\sum_{i=1}^{N} e^{y_{w, i}}}\tag
 <script type="math/tex; mode=display">
 \sigma\left(\mathbf{x}_{w}^{\top} \theta\right)=\frac{1}{1+e^{-\mathbf{x}_{w}^{\top} \theta}}\tag{11}</script><p>被分为负类的概率为</p>
 <script type="math/tex; mode=display">
-\sigma\left(\mathbf{x}_{w}^{\top} \theta\right)=\frac{1}{1+e^{-\mathbf{x}_{w}^{\top} \theta}}\tag{12}</script><p>则对于上例，从根结点到足球叶子结点总共经历了4次二分类，每次分类结果分别为：</p>
+1-\sigma\left(\mathbf{x}_{w}^{\top} \theta\right)=\frac{1}{1+e^{\mathbf{x}_{w}^{\top} \theta}}\tag{12}</script><p>则对于上例，从根结点到足球叶子结点总共经历了4次二分类，每次分类结果分别为：</p>
 <ol>
 <li>第一次：<script type="math/tex">p\left(d_{2}^{w} | \mathbf{x}_{w}, \theta_{1}^{w}\right)=1-\sigma\left(\mathbf{x}_{w}^{\top} \theta_{1}^{w}\right)</script></li>
 <li>第二次：<script type="math/tex">p\left(d_{3}^{w} | \mathbf{x}_{w}, \theta_{2}^{w}\right)=\sigma\left(\mathbf{x}_{w}^{\top} \theta_{2}^{w}\right)</script></li>
@@ -261,7 +261,7 @@ p(w | \text { context }(w))=\frac{e^{y_{w, i}}}{\sum_{i=1}^{N} e^{y_{w, i}}}\tag
 </ol>
 <p>最终：</p>
 <script type="math/tex; mode=display">
-p(足球|Context(足球))=\prod_{j=2}^{5} p\left(d_{j}^{w} | \mathbf{x}_{w}, \theta_{j-1}^{w}\right)\tag{13}</script><p>不失一般性，对于词典<script type="math/tex">\mathcal{D}</script>中的任意词w,Huffman树中必存在一条从根结点到词w对应结点的路径<script type="math/tex">p^{w}</script>，路径<script type="math/tex">p^{w}</script>上存在<script type="math/tex">l^{w}-1</script>个分支，将每个分支看做一次二分类，每一次分类就产生一个概率，将这些概率乘起来，就是所需的<script type="math/tex">p(w | \text { ontext }(w))</script>，即：</p>
+p(足球|Context(足球))=\prod_{j=2}^{5} p\left(d_{j}^{w} | \mathbf{x}_{w}, \theta_{j-1}^{w}\right)\tag{13}</script><p>不失一般性，对于词典<script type="math/tex">\mathcal{D}</script>中的任意词w，Huffman树中必存在一条从根结点到词w对应结点的路径<script type="math/tex">p^{w}</script>，路径<script type="math/tex">p^{w}</script>上存在<script type="math/tex">l^{w}-1</script>个分支，将每个分支看做一次二分类，每一次分类就产生一个概率，将这些概率乘起来，就是所需的<script type="math/tex">p(w | \text { Context }(w))</script>，即：</p>
 <script type="math/tex; mode=display">
 p(w | \text { Context }(w))=\prod_{j=2}^{l^{w}} p\left(d_{j}^{w} | \mathbf{x}_{w}, \theta_{j-1}^{w}\right)\tag{14}</script><p>其中</p>
 <script type="math/tex; mode=display">
@@ -278,11 +278,11 @@ p\left(d_{j}^{w} | \mathbf{x}_{w}, \theta_{j-1}^{w}\right) & =  \left\{\begin{ar
 \theta_{j-1}^{w} =\theta_{j-1}^{w}+\eta\left[1-d_{j}^{w}-\sigma\left(\mathbf{x}_{w}^{\top} \theta_{j-1}^{w}\right)\right] \mathbf{x}_{w}\tag{18}</script><p>同理，计算<script type="math/tex">\mathcal{L}(w)</script>关于<script type="math/tex">x_w</script>的梯度：</p>
 <script type="math/tex; mode=display">
 \begin{array}{l}
-\frac{\partial \mathcal{L}(w, j)}{\partial \mathbf{x}_{w}}=\sum_{j=2}^{l^w}\left[1-d_{j}^{w}-\sigma\left(\mathbf{x}_{w}^{\top} \theta_{j-1}^{w}\right)\right] \theta_{j-1}^{w}
+\frac{\partial \mathcal{L}(w, j)}{\partial \mathbf{x}_{w}}=\sum\limits_{j=2}^{l^w}\left[1-d_{j}^{w}-\sigma\left(\mathbf{x}_{w}^{\top} \theta_{j-1}^{w}\right)\right] \theta_{j-1}^{w}
 \end{array}\tag{19}</script><p>其实，我们最终的目标是要词典中每个词的词向量，而<script type="math/tex">x_w</script>表示的是Context(w)中各个词词向量的累加。所以有</p>
 <script type="math/tex; mode=display">
 \begin{array}{l}
-\mathbf{v}(\widetilde{w}) & =\mathbf{v}(\widetilde{w})+\eta \frac{\partial \mathcal{L}(w, j)}{\partial \mathbf{x}_{w}}\\ & = \mathbf{v}(\widetilde{w})+\eta \sum_{j=2}^{l^{w}} \frac{\partial \mathcal{L}(w, j)}{\partial \mathbf{x}_{w}}, \quad \widetilde{w} \in \operatorname{Context}(w)
+\mathbf{v}(\widetilde{w}) & =\mathbf{v}(\widetilde{w})+\eta \frac{\partial \mathcal{L}(w, j)}{\partial \mathbf{x}_{w}}\\ & = \mathbf{v}(\widetilde{w})+\eta \sum\limits_{j=2}^{l^{w}} \frac{\partial \mathcal{L}(w, j)}{\partial \mathbf{x}_{w}}, \quad \widetilde{w} \in \operatorname{Context}(w)
 \end{array}\tag{20}</script><h3 id="3-2-基于Hierarchical-Skip-gram的模型"><a href="#3-2-基于Hierarchical-Skip-gram的模型" class="headerlink" title="3.2 基于Hierarchical Skip-gram的模型"></a>3.2 基于Hierarchical Skip-gram的模型</h3><p>同CBOW模型的网络结构一样，Skip-gram也包含三层：</p>
 <ol>
 <li>输入层：只含当前样本的中心词w的词向量<script type="math/tex">\mathbf{v}(w) \in \mathbb{R}^{m}</script></li>
@@ -291,31 +291,31 @@ p\left(d_{j}^{w} | \mathbf{x}_{w}, \theta_{j-1}^{w}\right) & =  \left\{\begin{ar
 </ol>
 <p>对应Skip-gram模型，已知当前词w，需要对上下文Context(w)中的词进行预测，即</p>
 <script type="math/tex; mode=display">
-p(\text {Context}(w) | w)=\prod_{u \in \operatorname{Context}(w)} p(u | w)\tag{21}</script><p>p(u | w)按上述的思想，可以写成：</p>
+p(\text {Context}(w) | w)=\prod_{u \in \operatorname{Context}(w)} p(u | w)\tag{21}</script><p>p(u|w)按上述的思想，可以写成：</p>
 <script type="math/tex; mode=display">
 p(u | w)=\prod_{j=2}^{l^{u}} p\left(d_{j}^{u} | \mathbf{v}(w), \theta_{j-1}^{u}\right)\tag{22}</script><p>其中</p>
 <script type="math/tex; mode=display">
 \begin{array}{l}
-p\left(d_{j}^{u} | \mathbf{v}(w), \theta_{j-1}^{u}\right)=\left[\sigma\left(\mathbf{v}(w)^{\top} \theta_{j-1}^{u}\right)\right]^{1-d_{j}^{u}} \cdot\left[1-\sigma\left(\mathbf{v}(w)^{\top} \theta_{j-1}^{u}\right)\right]^{d u}
+p\left(d_{j}^{u} | \mathbf{v}(w), \theta_{j-1}^{u}\right)=\left[\sigma\left(\mathbf{v}(w)^{\top} \theta_{j-1}^{u}\right)\right]^{1-d_{j}^{u}} \cdot\left[1-\sigma\left(\mathbf{v}(w)^{\top} \theta_{j-1}^{u}\right)\right]^{d_{j}^{u}}
 \end{array}\tag{23}</script><p>于是得到对数似然函数的具体表达式为</p>
 <script type="math/tex; mode=display">
 \begin{array}{l}
-\mathcal{L}=\sum\limits_{w \in \mathcal{C}} \log \prod\limits_{u \in Context(w) j=2}^{l^u}\left\{\left[\sigma\left(\mathbf{v}(w)^{\top} \theta_{j-1}^{u}\right)\right]^{1-d_{j}^{u}} \cdot\left[1-\sigma\left(\mathbf{v}(w)^{\top} \theta_{j-1}^{u}\right)\right]^{d_{j}^{u}}\right\}
+\mathcal{L}=\sum\limits_{w \in \mathcal{C}} \log \prod\limits_{u \in Context(w)}\prod\limits_{j=2}^{l^u}\left\{\left[\sigma\left(\mathbf{v}(w)^{\top} \theta_{j-1}^{u}\right)\right]^{1-d_{j}^{u}} \cdot\left[1-\sigma\left(\mathbf{v}(w)^{\top} \theta_{j-1}^{u}\right)\right]^{d_{j}^{u}}\right\}
 \end{array}\tag{24}</script><p>同样利用随机梯度上升法对其进行优化，首先考虑<script type="math/tex">\mathcal{L}</script>关于<script type="math/tex">\theta_{j-1}^{u}</script>的梯度计算</p>
 <script type="math/tex; mode=display">
 \begin{array}{l}
 \frac{\partial \mathcal{L}}{\partial \theta_{j-1}^{u}} & =\frac{\partial}{\partial \theta_{j-1}^{u}}\left\{\left(1-d_{j}^{u}\right) \cdot \log \left[\sigma\left(\mathbf{v}(w)^{\top} \theta_{j-1}^{u}\right)\right]+d_{j}^{u} \cdot \log \left[1-\sigma\left(\mathbf{v}(w)^{\top} \theta_{j-1}^{u}\right)\right]\right\} \\ & =\left(1-d_{j}^{u}\right)\left[1-\sigma\left(\mathbf{v}(w)^{\top} \theta_{j-1}^{u}\right)\right] \mathbf{v}(w)-d_{j}^{u} \sigma\left(\mathbf{v}(w)^{\top} \theta_{j-1}^{u}\right) \mathbf{v}(w) \\ & =\left\{\left(1-d_{j}^{u}\right)\left[1-\sigma\left(\mathbf{v}(w)^{\top} \mathbf{v}_{j-1}^{u}\right)\right]-d_{j}^{u} \sigma\left(\mathbf{v}(w)^{\top} \theta_{j-1}^{u}\right)\right\} \mathbf{v}(w) \\ & =\left[1-d_{j}^{u}-\sigma\left(\mathbf{v}(w)^{\top} \theta_{j-1}^{u}\right)\right] \mathbf{v}(w)
 \end{array}\tag{25}</script><p>于是，<script type="math/tex">\theta_{j-1}^{u}</script>的更新公式可以写为</p>
 <script type="math/tex; mode=display">
-\theta_{j-1}^{u} =\theta_{j-1}^{u}+\eta\left[1-d_{j}^{u}-\sigma\left(\mathbf{v}(w)^{\top} \theta_{j-1}^{u}\right)\right] \mathbf{v}(w)\tag{26}</script><p>同理，\mathcal{L}关于\mathbf{v}(w)的梯度公式为</p>
+\theta_{j-1}^{u} =\theta_{j-1}^{u}+\eta\left[1-d_{j}^{u}-\sigma\left(\mathbf{v}(w)^{\top} \theta_{j-1}^{u}\right)\right] \mathbf{v}(w)\tag{26}</script><p>同理，<script type="math/tex">\mathcal{L}</script>关于<script type="math/tex">\mathbf{v}(w)</script>的梯度公式为</p>
 <script type="math/tex; mode=display">
-\frac{\partial \mathcal{L}}{\partial \mathbf{v}(w)}=\sum_{u \in \operatorname{Contex} t(w)} \sum_{j=2}^{l^{u}}\left[1-d_{j}^{u}-\sigma\left(\mathbf{v}(w)^{\top} \theta_{j-1}^{u}\right)\right] \theta_{j-1}^{u}\tag{27}</script><p>Negative Sampling(NCE)是Word2Vec训练中最常用的一种模型，与Hierarchical Softmax相比，NCE不再使用复杂的Huffman树，而是利用随机负采样，从而大幅度提高性能。</p>
+\frac{\partial \mathcal{L}}{\partial \mathbf{v}(w)}=\sum_{u \in \operatorname{Contex} t(w)} \sum_{j=2}^{l^{u}}\left[1-d_{j}^{u}-\sigma\left(\mathbf{v}(w)^{\top} \theta_{j-1}^{u}\right)\right] \theta_{j-1}^{u}\tag{27}</script><p><strong>Negative Sampling(NCE)是Word2Vec训练中最常用的一种模型，与Hierarchical Softmax相比，NCE不再使用复杂的Huffman树，而是利用随机负采样，从而大幅度提高性能</strong>。</p>
 <h3 id="3-3-基于Negative-Sampling的CBOW模型"><a href="#3-3-基于Negative-Sampling的CBOW模型" class="headerlink" title="3.3 基于Negative Sampling的CBOW模型"></a>3.3 基于Negative Sampling的CBOW模型</h3><p>在CBOW模型中，已知词w的上下文Context(w)，需要预测w，因此对于给定的Context(w)，词w就是一个正样本，其它词就是负样本。负样本的选择方式有多种，下文再介绍。<br>假设现在已经选好了一个关于w的负样本子集<script type="math/tex">NEG(w) \neq \emptyset</script>，且对<script type="math/tex">\forall \widetilde{w} \in \mathcal{D}</script>，定义</p>
 <script type="math/tex; mode=display">
-L^{w}(\widetilde{w})=\left\{\begin{array}{ll}{1,} & {\widetilde{w}=w} \\ {0,} & {\widetilde{w} \neq w}\end{array}\right.\tag{28}</script><p>表示词<script type="math/tex">\widetilde{w}</script>的标签，即正样本的标签为1，负样本的标签为0.对于一个给的正样本(Context(w), w)，我们希望最大化</p>
+L^{w}(\widetilde{w})=\left\{\begin{array}{ll}{1,} & {\widetilde{w}=w} \\ {0,} & {\widetilde{w} \neq w}\end{array}\right.\tag{28}</script><p>表示词<script type="math/tex">\widetilde{w}</script>的标签，即正样本的标签为1，负样本的标签为0。对于一个给的正样本(Context(w), w)，我们希望最大化</p>
 <script type="math/tex; mode=display">
 \begin{array}{l}
-g(w) & =\prod\limits_{u \in\{w\} \cup N E G(w)} p(u | C \text { ontext }(w)) \\
+g(w) & =\prod\limits_{u \in\{w\} \cup N E G(w)} p(u | \text { Context }(w)) \\
  & =\sigma\left(\mathbf{x}_{w}^{\top} \theta^{w}\right) \prod\limits_{u \in N E G(w)}\left[1-\sigma\left(\mathbf{x}_{w}^{\top} \theta^{u}\right)\right]
 \end{array}\tag{29}</script><p>其中</p>
 <script type="math/tex; mode=display">
@@ -335,9 +335,9 @@ G=\prod_{w \in \mathcal{C}} g(w)\tag{31}</script><p>得到对数似然损失：<
 <script type="math/tex; mode=display">
 \frac{\partial \mathcal{L}}{\partial \mathbf{x}_{w}}=\sum_{u \in\{w\} \cup N E G(w)}\left[L^{w}(u)-\sigma\left(\mathbf{x}_{w}^{\top} \theta^{u}\right)\right] \theta^{u}\tag{35}</script><p>得到v(w)的更新公式：</p>
 <script type="math/tex; mode=display">
-\mathbf{v}(\widetilde{w}) =\mathbf{v}(\widetilde{w})+\eta \frac{\partial \mathcal{L}(w, u)}{\partial \mathbf{x}_{w}}, \quad \widetilde{w} \in \operatorname{context}(w)\tag{36}</script><h2 id="3-4-Skip-gram模型"><a href="#3-4-Skip-gram模型" class="headerlink" title="3.4 Skip-gram模型"></a>3.4 Skip-gram模型</h2><p>借鉴Hierarchical Softmax由CBOW模型过渡到Skip-gram模型的推导经验，首先，优化目标函数：</p>
+\mathbf{v}(\widetilde{w}) =\mathbf{v}(\widetilde{w})+\eta \frac{\partial \mathcal{L}(w, u)}{\partial \mathbf{x}_{w}}, \quad \widetilde{w} \in \operatorname{context}(w)\tag{36}</script><h2 id="3-4-Skip-gram模型"><a href="#3-4-Skip-gram模型" class="headerlink" title="3.4 Skip-gram模型"></a>3.4 Skip-gram模型</h2><p>借鉴Hierarchical Softmax由CBOW模型过渡到Skip-gram模型的推导经验，首先，优化目标函数</p>
 <script type="math/tex; mode=display">
-G=\prod_{w \in \mathcal{C}} g(w) \longrightarrow \prod_{w \in \mathcal{C}} \prod_{u \in \operatorname{contex}(w)} g(u)\tag{37}</script><p>其中g(u)</p>
+G=\prod_{w \in \mathcal{C}} g(w) \longrightarrow \prod_{w \in \mathcal{C}} \prod_{u \in \operatorname{contex}(w)} g(u)\tag{37}</script><p>其中u是上下文的每一个词，g(u)</p>
 <script type="math/tex; mode=display">
 \begin{array}{l}
 g(u) & =\prod\limits_{z \in\{u\} \cup NEG(u)} p(z | w) \\ & = \left[\sigma\left(\mathbf{v}(w)^{\top} \theta^{z}\right)\right]^{L^{u}(z)} \cdot\left[1-\sigma\left(\mathbf{v}(w)^{\top} \theta^{z}\right)\right]^{1-L^{u}(z)}
@@ -346,16 +346,16 @@ g(u) & =\prod\limits_{z \in\{u\} \cup NEG(u)} p(z | w) \\ & = \left[\sigma\left(
 p(z | w)=\left\{\begin{array}{ll}{\sigma\left(\mathbf{v}(w)^{\top} \theta^{z}\right),} & {L^{u}(z)=1} \\ {1-\sigma\left(\mathbf{v}(w)^{\top} \theta^{z}\right),} & {L^{u}(z)=0}\end{array}\right. \tag{39}</script><p>得到最终的目标函数为</p>
 <script type="math/tex; mode=display">
 \begin{array}{l}
-\mathcal{L} & =\log G=\log \prod\limits_{w \in \mathcal{C}} \prod\limits_{u \in C o n t e x t(w)} g(u)=\sum\limits_{w \in \mathcal{C}} \sum\limits_{u \in \operatorname{Context}(w)} \log g(u) \\ & =\sum\limits_{w \in C} \sum\limits_{u \in C o n t e x t(w)} \log\limits_{z \in\{u\} \cup N E G(u)} p(z | w) \\ & =\sum_{w \in \mathcal{C}} \sum\limits_{u \in \operatorname{Context}(w) z \in\{u\} \cup N E G(u)} \log p(z | w) \\ & =\sum\limits\limits_{w \in \mathcal{C}} \sum\limits_{u \in \operatorname{Context}(w) z \in\{u\} \cup N E G(u)} \log \left\{\left[\sigma\left(\mathbf{v}(w)^{\top} \theta^{z}\right)\right]^{L^{u}(z)} \cdot\left[1-\sigma\left(\mathbf{v}(w)^{\top} \theta^{z}\right)\right]^{1-L^{u}(z)}\right\} \\ & = \sum\limits_{w \in C} \sum\limits_{u \in \operatorname{cntext}(w) z \in\{u\} \cup N E G(u)} \\ &\left\{L^{u}(z) \cdot \log \left[\sigma\left(\mathbf{v}(w)^{\top} \theta^{z}\right)\right]+\left[1-L^{u}(z)\right] \cdot \log \left[1-\sigma\left(\mathbf{v}(w)^{\top} \theta^{z}\right)\right]\right\}
-\end{array}\tag{40}</script><p>这里意味着对于每一个样本(w,Context(w))，需要针对Context(w)中的每一个词进行负采样，而word2vec只是针对w进行了|Context(w)|次负采样，具体怎么做的呢？<br>其实模型我们依然可以采用DBOW的思想</p>
+\mathcal{L} & =\log G=\log \prod\limits_{w \in \mathcal{C}} \prod\limits_{u \in C o n t e x t(w)} g(u)=\sum\limits_{w \in \mathcal{C}} \sum\limits_{u \in \operatorname{Context}(w)} \log g(u) \\ & =\sum\limits_{w \in C} \sum\limits_{u \in Context(w)} \log\prod\limits_{z \in\{u\} \cup N E G(u)} p(z | w) \\ & =\sum_{w \in \mathcal{C}} \sum\limits_{u \in \operatorname{Context}(w) z \in\{u\} \cup N E G(u)} \log p(z | w) \\ & =\sum\limits\limits_{w \in \mathcal{C}} \sum\limits_{u \in \operatorname{Context}(w) z \in\{u\} \cup N E G(u)} \log \left\{\left[\sigma\left(\mathbf{v}(w)^{\top} \theta^{z}\right)\right]^{L^{u}(z)} \cdot\left[1-\sigma\left(\mathbf{v}(w)^{\top} \theta^{z}\right)\right]^{1-L^{u}(z)}\right\} \\ & = \sum\limits_{w \in C} \sum\limits_{u \in \operatorname{cntext}(w) z \in\{u\} \cup N E G(u)} \\ &\left\{L^{u}(z) \cdot \log \left[\sigma\left(\mathbf{v}(w)^{\top} \theta^{z}\right)\right]+\left[1-L^{u}(z)\right] \cdot \log \left[1-\sigma\left(\mathbf{v}(w)^{\top} \theta^{z}\right)\right]\right\}
+\end{array}\tag{40}</script><p><font color="red">这里意味着对于每一个样本(w,Context(w))，需要针对Context(w)中的每一个词进行负采样，而word2vec只是针对w进行了|Context(w)|次负采样，具体怎么做的呢？</font><br>其实模型我们依然可以采用CBOW的思想</p>
 <script type="math/tex; mode=display">
 g(w)=\prod_{\widetilde{w} \in \operatorname{Context}(w)} \sum_{u \in\{w\} \cup NEG^{\widetilde{w}} (w)} p(u | \widetilde{w})\tag{41}</script><p>其中</p>
 <script type="math/tex; mode=display">
 p(u | \widetilde{w})=\left\{\begin{array}{ll}{\sigma\left(\mathbf{v}(\widetilde{w})^{\top} \theta^{u}\right),} & {L^{w}(u)=1} \\ {1-\sigma\left(\mathbf{v}(\widetilde{w})^{\top} \theta^{u}\right),} & {L^{w}(u)=0}\end{array}\right.\tag{42}</script><p>则最终的目标函数为</p>
 <script type="math/tex; mode=display">
 \begin{array}{l}
-\mathcal{L} & =\log G=\log \prod_{w \in \mathcal{C}} g(w)=\sum_{w \in \mathcal{C}} \log g(w) \\ & =\sum_{w \in \mathcal{C}} \log \prod_{\widetilde{w} \in \operatorname{Context}(w)} \prod_{u \in\{w\} \cup N E G(w)}\left\{\left[\sigma\left(\mathbf{v}(\widetilde{w})^{\top} \theta^{u}\right)\right]^{L^{w}(u)} \cdot\left[1-\sigma\left(\mathbf{v}(\widetilde{w})^{\top} \theta^{u}\right)\right]^{1-L^{w}(u)}\right\} \\ & = \sum_{w \in C} \sum_{\widetilde{w} \in \operatorname{Cntext}(w)} \sum_{u \in\{w\} \cup N E G \tilde{w}(w)} \\ &\left\{L^{w}(u) \cdot \log \left[\sigma\left(\mathbf{v}(\widetilde{w})^{\top} \theta^{u}\right)\right]+\left[1-L^{w}(u)\right] \cdot \log \left[1-\sigma\left(\mathbf{v}(\widetilde{w})^{\top} \theta^{u}\right)\right]\right\}
-\end{array}\tag{43}</script><p>采用梯度上升法进行求解，计算<script type="math/tex">\mathcal{L}</script>关于<script type="math/tex">\theta^u</script>的导数为：</p>
+\mathcal{L} & =\log G=\log \prod\limits_{w \in \mathcal{C}} g(w)=\sum\limits_{w \in \mathcal{C}} \log g(w) \\ & =\sum\limits_{w \in \mathcal{C}} \log \prod\limits_{\widetilde{w} \in \operatorname{Context}(w)} \prod\limits_{u \in\{w\} \cup N E G(w)}\left\{\left[\sigma\left(\mathbf{v}(\widetilde{w})^{\top} \theta^{u}\right)\right]^{L^{w}(u)} \cdot\left[1-\sigma\left(\mathbf{v}(\widetilde{w})^{\top} \theta^{u}\right)\right]^{1-L^{w}(u)}\right\} \\ & = \sum\limits_{w \in C} \sum\limits_{\widetilde{w} \in \operatorname{Cntext}(w)} \sum\limits_{u \in\{w\} \cup N E G \tilde{w}(w)} \\ &\left\{L^{w}(u) \cdot \log \left[\sigma\left(\mathbf{v}(\widetilde{w})^{\top} \theta^{u}\right)\right]+\left[1-L^{w}(u)\right] \cdot \log \left[1-\sigma\left(\mathbf{v}(\widetilde{w})^{\top} \theta^{u}\right)\right]\right\}
+\end{array}\tag{43}</script><p>采用梯度上升法进行求解，计算<script type="math/tex">\mathcal{L}</script>关于<script type="math/tex">\theta^u</script>的导数为</p>
 <script type="math/tex; mode=display">
 \begin{array}{l}
 \frac{\partial \mathcal{L}(w, \widetilde{w}, u)}{\partial \theta^{u}} & = \frac{\partial}{\partial \theta^{u}}\left\{L^{w}(u) \cdot \log \left[\sigma\left(\mathbf{v}(\widetilde{w})^{\top} \theta^{u}\right)\right]+\left[1-L^{w}(u)\right] \cdot \log \left[1-\sigma\left(\mathbf{v}(\widetilde{w})^{\top} \theta^{u}\right)\right]\right\} \\ & = L^{w}(u)\left[1-\sigma\left(\mathbf{v}(\widetilde{w})^{\top} \theta^{u}\right)\right] \mathbf{v}(\tilde{w})-\left[1-L^{w}(u)\right] \sigma\left(\mathbf{v}(\tilde{w})^{\top} \theta^{u}\right) \mathbf{v}(\widetilde{w}) \\ & = \left\{L^{w}(u)\left[1-\sigma\left(\mathbf{v}(\widetilde{w})^{\top} \theta^{u}\right)\right]-\left[1-L^{w}(u)\right] \sigma\left(\mathbf{v}(\widetilde{w})^{\top} \theta^{u}\right)\right\} \mathbf{v}(\widetilde{w}) \\ & = \left[L^{w}(u)-\sigma\left(\mathbf{v}(\widetilde{w})^{\top} \theta^{u}\right)\right] \mathbf{v}(\widetilde{w})
@@ -372,10 +372,10 @@ p(u | \widetilde{w})=\left\{\begin{array}{ll}{\sigma\left(\mathbf{v}(\widetilde{
             <hr>
             <div class="new-meta-box">
               
-                <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-04-07T23:50:55+08:00">
+                <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-04-19T14:21:06+08:00">
                   <a class="notlink">
                     <i class="fas fa-pencil-alt" aria-hidden="true"></i>
-                    2019-04-07
+                    2019-04-19
                   </a>
                 </div>
               

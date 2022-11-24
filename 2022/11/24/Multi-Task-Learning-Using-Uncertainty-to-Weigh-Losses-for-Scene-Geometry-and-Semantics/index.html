@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/uncertainty_weigh_losses/head.png">
 <meta property="article:published_time" content="2022-11-24T07:06:39.000Z">
-<meta property="article:modified_time" content="2022-11-24T09:23:14.120Z">
+<meta property="article:modified_time" content="2022-11-24T09:55:24.569Z">
 <meta property="article:author" content="huzuoliang">
 <meta property="article:tag" content="深度学习">
 <meta property="article:tag" content="多目标排序">
@@ -342,33 +342,32 @@ outperform separate models trained individually on each task.</p>
 Learning with Homoscedastic Uncertainty</h2>
 <p>The naive approach to combining multi objective losses would be to
 simply perform a weighted linear sum of the losses for each individual
-task:<br>
-<img src='/img/uncertainty_weigh_losses/naive_loss.PNG'><br></p>
-<p>The paper suggest that using Homoscedastic uncertainty can be used as
-a basis for weighting losses in a multi-task learning problem and
-produce supirior results then the naive approach.</p>
+task:<br> <img src="/img/uncertainty_weigh_losses/naive_loss.PNG" srcset="/img/loading.gif" lazyload /><br>
+The paper suggest that using Homoscedastic uncertainty can be used as a
+basis for weighting losses in a multi-task learning problem and produce
+supirior results then the naive approach.</p>
 <h3 id="mathematical-formulation">Mathematical Formulation</h3>
 <p>First the paper defines multi-task likelihoods:<br> - For regression
 tasks, likelihood is defined as a Gaussian with mean given by the model
-output with an observation noise scalar σ:<br>
-<img src='/img/uncertainty_weigh_losses/reg_likelihood.PNG'><br> - For
-classification, likelihood is defined as:<br>
-<img src='/img/uncertainty_weigh_losses/class_likelihood_1.PNG'><br>
-where:<br>
-<img src='/img/uncertainty_weigh_losses/class_likelihood_0.PNG'><br></p>
+output with an observation noise scalar σ:<br> <img
+src="/img/uncertainty_weigh_losses/reg_likelihood.PNG" srcset="/img/loading.gif" lazyload /><br> - For
+classification, likelihood is defined as:<br> <img
+src="/img/uncertainty_weigh_losses/class_likelihood_1.PNG" srcset="/img/loading.gif" lazyload /><br>
+where:<br> <img
+src="/img/uncertainty_weigh_losses/class_likelihood_0.PNG" srcset="/img/loading.gif" lazyload /><br></p>
 <p>In maximum likelihood inference, we maximise the log likelihood of
-the model. In regression for example:<br>
-<img src='/img/uncertainty_weigh_losses/reg_loglikelihood.PNG'><br> σ is
+the model. In regression for example:<br> <img
+src="/img/uncertainty_weigh_losses/reg_loglikelihood.PNG" srcset="/img/loading.gif" lazyload /><br> σ is
 the model’s observation noise parameter - capturing how much noise we
 have in the outputs. We then maximise the log likelihood with respect to
 the model parameters W and observation noise parameter σ.<br></p>
-<p>Assuming two tasks that follow a Gaussian distributions:<br>
-<img src='/img/uncertainty_weigh_losses/two_task.PNG'><br> The loss will
-be:<br> <img src='/img/uncertainty_weigh_losses/total_loss_h.PNG'><br>
-<img src='/img/uncertainty_weigh_losses/loss7.PNG'><br> This means that
-W and σ are the learned parameters of the network. W are the wights of
-the network while σ are used to calculate the wights of each task loss
-and also to regularize this task loss wight.</p>
+<p>Assuming two tasks that follow a Gaussian distributions:<br> <img
+src="/img/uncertainty_weigh_losses/two_task.PNG" srcset="/img/loading.gif" lazyload /><br> The loss will
+be:<br> <img src="/img/uncertainty_weigh_losses/total_loss_h.PNG" srcset="/img/loading.gif" lazyload /><br>
+<img src="/img/uncertainty_weigh_losses/loss7.PNG" srcset="/img/loading.gif" lazyload /><br> This means
+that W and σ are the learned parameters of the network. W are the wights
+of the network while σ are used to calculate the wights of each task
+loss and also to regularize this task loss wight.</p>
 <h2 id="paper-contents"><a
 target="_blank" rel="noopener" href="https://github.com/huzuoliang/mtl">PAPER CONTENTS</a></h2>
 <p><img src="/img/uncertainty_weigh_losses/c-01.png" srcset="/img/loading.gif" lazyload /> <img

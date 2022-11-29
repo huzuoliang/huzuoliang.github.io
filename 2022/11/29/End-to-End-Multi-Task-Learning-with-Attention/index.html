@@ -16,28 +16,28 @@
   <meta name="author" content="huzuoliang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="论文解读 Multi-task learning concerns the problem of optimising a model with respect to multiple objectives. The naive approach to combining multi objective losses would be to simply perform a weighted li">
+    <meta name="description" content="代码实现 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455class LossesDWAModel(tf.keras.Model):    def __init__(self, temperature&#x3D;1, *args, **kwargs):">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Multi-Task Learning Using Uncertainty to Weigh Losses for Scene Geometry and Semantics">
-<meta property="og:url" content="http://example.com/2022/11/24/Multi-Task-Learning-Using-Uncertainty-to-Weigh-Losses-for-Scene-Geometry-and-Semantics/index.html">
+<meta property="og:title" content="End-to-End Multi-Task Learning with Attention">
+<meta property="og:url" content="http://example.com/2022/11/29/End-to-End-Multi-Task-Learning-with-Attention/index.html">
 <meta property="og:site_name" content="Liang">
-<meta property="og:description" content="论文解读 Multi-task learning concerns the problem of optimising a model with respect to multiple objectives. The naive approach to combining multi objective losses would be to simply perform a weighted li">
+<meta property="og:description" content="代码实现 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455class LossesDWAModel(tf.keras.Model):    def __init__(self, temperature&#x3D;1, *args, **kwargs):">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/img/uwl/head.png">
-<meta property="article:published_time" content="2022-11-24T07:06:39.000Z">
-<meta property="article:modified_time" content="2022-11-29T06:06:38.179Z">
+<meta property="og:image" content="http://example.com/img/dwa/head.png">
+<meta property="article:published_time" content="2022-11-29T05:54:05.000Z">
+<meta property="article:modified_time" content="2022-11-29T06:58:06.758Z">
 <meta property="article:author" content="huzuoliang">
 <meta property="article:tag" content="深度学习">
 <meta property="article:tag" content="多目标排序">
 <meta property="article:tag" content="Loss权重优化">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/img/uwl/head.png">
+<meta name="twitter:image" content="http://example.com/img/dwa/head.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Multi-Task Learning Using Uncertainty to Weigh Losses for Scene Geometry and Semantics - Liang</title>
+  <title>End-to-End Multi-Task Learning with Attention - Liang</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -230,7 +230,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Multi-Task Learning Using Uncertainty to Weigh Losses for Scene Geometry and Semantics"></span>
+            <span id="subtitle" data-typed-text="End-to-End Multi-Task Learning with Attention"></span>
           
         </div>
 
@@ -241,8 +241,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-11-24 15:06" pubdate>
-          2022年11月24日 下午
+        <time datetime="2022-11-29 13:54" pubdate>
+          2022年11月29日 下午
         </time>
       </span>
     
@@ -253,7 +253,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.1k 字
+          1.8k 字
         
       </span>
     
@@ -264,7 +264,7 @@
         
         
         
-          35 分钟
+          16 分钟
         
       </span>
     
@@ -310,7 +310,7 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Multi-Task Learning Using Uncertainty to Weigh Losses for Scene Geometry and Semantics</h1>
+            <h1 style="display: none">End-to-End Multi-Task Learning with Attention</h1>
             
               <p class="note note-info">
                 
@@ -323,64 +323,11 @@
             
               <div class="markdown-body">
                 
-                <h2 id="论文解读">论文解读</h2>
-<p>Multi-task learning concerns the problem of optimising a model with
-respect to multiple objectives. The naive approach to combining multi
-objective losses would be to simply perform a weighted linear sum of the
-losses for each individual task:<br> <img
-src="/img/uwl/naive_loss.png" srcset="/img/loading.gif" lazyload /><br> However, there are a number of
-issues with this method. Namely, model performance is extremely
-sensitive to weight selection, wi, as illustrated in Figure 2. These
-weight hyper-parameters are expensive to tune, often taking many days
-for each trial. Therefore, it is desirable to find a more convenient
-approach which is able to learn the optimal weights</p>
-<h3 id="mathematical-formulation">Mathematical Formulation</h3>
-<p>First the paper defines multi-task likelihoods:<br> - For regression
-tasks, likelihood is defined as a Gaussian with mean given by the model
-output with an observation noise scalar σ:<br> <img
-src="/img/uwl/reg_likelihood.png" srcset="/img/loading.gif" lazyload /><br> - For classification,
-likelihood is defined as:<br> <img
-src="/img/uwl/class_likelihood_1.png" srcset="/img/loading.gif" lazyload /><br> where:<br> <img
-src="/img/uwl/class_likelihood_0.png" srcset="/img/loading.gif" lazyload /><br></p>
-<p>In maximum likelihood inference, we maximise the log likelihood of
-the model. In regression for example:<br> <img
-src="/img/uwl/reg_loglikelihood.png" srcset="/img/loading.gif" lazyload /><br> σ is the model’s observation
-noise parameter - capturing how much noise we have in the outputs. We
-then maximise the log likelihood with respect to the model parameters W
-and observation noise parameter σ.<br></p>
-<p>Assuming two tasks that follow a Gaussian distributions:<br> <img
-src="/img/uwl/two_task.png" srcset="/img/loading.gif" lazyload /><br> The loss will be:<br> <img
-src="/img/uwl/total_loss_h.png" srcset="/img/loading.gif" lazyload /><br> <img
-src="/img/uwl/loss7.png" srcset="/img/loading.gif" lazyload /><br> This means that W and σ are the learned
-parameters of the network. W are the wights of the network while σ are
-used to calculate the wights of each task loss and also to regularize
-this task loss wight.</p>
-<p>However, the extension to classification likelihoods is more
-interesting. We adapt the classification likelihood to squash a scaled
-version of the model output through a softmax function:<br> <img
-src="/img/uwl/sf.png" srcset="/img/loading.gif" lazyload /><br> with a positive scalar σ. This can be
-interpreted as a Boltzmann distribution (also called Gibbs distribution)
-where the input is scaled by σ2 (often referred to as temperature). This
-scalar is either fixed or can be learnt, where the parameter’s magnitude
-determines how ‘uniform’ (flat) the discrete distribution is. This
-relates to its uncertainty, as measured in entropy. The log likelihood
-for this output can then be written as<br> <img
-src="/img/uwl/sf1.png" srcset="/img/loading.gif" lazyload /><br> assume that a model’s multiple outputs are
-composed of a continuous output y1 and a discrete output y2, modelled
-with a Gaussian likelihood and a softmax likelihood, respectively. Like
-before, the joint loss, L(W, σ1, σ2), is given as:<br> <img
-src="/img/uwl/rgsf.png" srcset="/img/loading.gif" lazyload /><br> <u><strong><font color=#FF000>In
-practice, we train the network to predict the log variance, s := log σ2.
-This is because it is more numerically stable than regressing the
-variance, σ2, as the loss avoids any division by zero. The exponential
-mapping also allows us to regress unconstrained scalar values, where
-exp(−s) is resolved to the positive domain giving valid values for
-variance.</font></strong></u></p>
-<h2 id="代码实现">代码实现</h2>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">build_model</span>(<span class="hljs-params">model_config</span>):<br>  inputs = []<br>  outputs = []<br><br>  <span class="hljs-keyword">return</span> LossesUWLModel(inputs=inputs, outputs=outputs)<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">LossesUWLModel</span>(tf.keras.Model):<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, *args, **kwargs</span>):<br>        <span class="hljs-built_in">super</span>().__init__(*args, **kwargs)<br>        self.sigma = [tf.Variable(tf.random.uniform(shape=[], minval=<span class="hljs-number">0.2</span>, maxval=<span class="hljs-number">1</span>, seed=<span class="hljs-number">10</span>), dtype=tf.float32,<br>                                  trainable=<span class="hljs-literal">True</span>,<br>                                  constraint=tf.keras.constraints.NonNeg(),<br>                                  name=o + <span class="hljs-string">&#x27;sigma&#x27;</span>) <span class="hljs-keyword">for</span> o <span class="hljs-keyword">in</span> self.output_names]<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">train_step</span>(<span class="hljs-params">self, data</span>):<br>        <span class="hljs-comment"># Unpack the data. Its structure depends on your model and</span><br>        <span class="hljs-comment"># on what you pass to `fit()`.</span><br>        x, y = data<br><br>        <span class="hljs-keyword">with</span> tf.GradientTape() <span class="hljs-keyword">as</span> tape:<br>            y_pred = self(x, training=<span class="hljs-literal">True</span>)  <span class="hljs-comment"># Forward pass</span><br>            <span class="hljs-comment"># Compute the loss value</span><br>            <span class="hljs-comment"># (the loss function is configured in `compile()`)</span><br><br>            task_loss = []<br>            total_loss = <span class="hljs-number">0.0</span><br>            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(self.output_names)):<br>                target_name = self.output_names[i]<br>                loss_i = self.loss[target_name](y_true=y[target_name], y_pred=y_pred[i])<br>                task_loss.append(loss_i)<br>                total_loss = tf.add(total_loss, tf.divide(loss_i, self.sigma[i] ** <span class="hljs-number">2</span>))<br>                total_loss = tf.add(total_loss, tf.math.log(self.sigma[i] ** <span class="hljs-number">2</span>))<br><br>        trainable_vars = self.trainable_variables<br>        gradients = tape.gradient(total_loss, trainable_vars)<br>        <span class="hljs-comment"># Update weights</span><br>        self.optimizer.apply_gradients(<span class="hljs-built_in">zip</span>(gradients, trainable_vars))<br>        <span class="hljs-comment"># Update metrics (includes the metric that tracks the loss)</span><br>        self.compiled_metrics.update_state(y, y_pred)<br><br>        <span class="hljs-keyword">return</span> &#123;m.name: m.result() <span class="hljs-keyword">for</span> m <span class="hljs-keyword">in</span> self.metrics&#125;<br><br><br>model = build_model(FLAGS.model_config)<br>model.<span class="hljs-built_in">compile</span>(<br>    optimizer=tf.keras.optimizers.RMSprop(FLAGS.lr),<br>    loss=&#123;<br>        <span class="hljs-string">&quot;a&quot;</span>: tf.keras.losses.BinaryCrossentropy(name=<span class="hljs-string">&#x27;loss&#x27;</span>, label_smoothing=<span class="hljs-number">0.1</span>),<br>        <span class="hljs-string">&quot;b&quot;</span>: tf.keras.losses.BinaryCrossentropy(name=<span class="hljs-string">&#x27;loss&#x27;</span>),<br>    &#125;,<br>    metrics=&#123;<br>        <span class="hljs-string">&quot;a&quot;</span>: [tf.keras.metrics.BinaryCrossentropy(), tf.keras.metrics.AUC(name=<span class="hljs-string">&#x27;auc&#x27;</span>)],<br>        <span class="hljs-string">&quot;b&quot;</span>: [tf.keras.metrics.BinaryCrossentropy(), tf.keras.metrics.AUC(name=<span class="hljs-string">&#x27;auc&#x27;</span>)],<br>    &#125;,<br>    <span class="hljs-comment"># run_eagerly=True</span><br>)<br></code></pre></td></tr></table></figure>
+                <h2 id="代码实现">代码实现</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">LossesDWAModel</span>(tf.keras.Model):<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, temperature=<span class="hljs-number">1</span>, *args, **kwargs</span>):<br>        <span class="hljs-built_in">super</span>().__init__(*args, **kwargs)<br><br>        self.t = tf.constant(temperature, dtype=tf.float32)  <span class="hljs-comment"># 温度系数</span><br>        self.loss_ws = [tf.Variable(<span class="hljs-number">0.0</span>, trainable=<span class="hljs-literal">False</span>, name=<span class="hljs-built_in">str</span>(i) + <span class="hljs-string">&#x27;_loss_ws&#x27;</span>)<br>                        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(self.output_names))]<br>        self.loss_1 = <span class="hljs-literal">None</span>  <span class="hljs-comment"># t-1 step loss</span><br>        self.loss_2 = <span class="hljs-literal">None</span>  <span class="hljs-comment"># t-2 step loss</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">train_step</span>(<span class="hljs-params">self, data</span>):<br>        <span class="hljs-comment"># Unpack the data. Its structure depends on your model and</span><br>        <span class="hljs-comment"># on what you pass to `fit()`.</span><br>        x, y = data<br><br>        <span class="hljs-keyword">with</span> tf.GradientTape() <span class="hljs-keyword">as</span> tape:<br>            y_pred = self(x, training=<span class="hljs-literal">True</span>)  <span class="hljs-comment"># Forward pass</span><br>            <span class="hljs-comment"># Compute the loss value</span><br>            <span class="hljs-comment"># (the loss function is configured in `compile()`)</span><br><br>            task_loss = []  <span class="hljs-comment"># 当前batch内各任务损失</span><br>            last_w = []  <span class="hljs-comment"># t-1 step w</span><br>            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(self.output_names)):<br>                target_name = self.output_names[i]<br>                loss_i = self.loss[target_name](y_true=y[target_name], y_pred=y_pred[i])<br>                task_loss.append(loss_i)<br>                <span class="hljs-keyword">if</span> self.loss_1 <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span> <span class="hljs-keyword">and</span> self.loss_2 <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>                    last_w.append(self.loss_1[i] / self.loss_2[i])<br>                <span class="hljs-keyword">else</span>:<br>                    last_w.append(tf.constant(<span class="hljs-number">1.0</span>, dtype=tf.float32))<br><br>            loss_weights_mid = tf.math.exp(tf.divide(last_w, self.t))<br>            loss_weights = tf.divide(loss_weights_mid, tf.reduce_sum(loss_weights_mid))<br><br>            <span class="hljs-comment"># 归一化损失权重</span><br>            total_loss = <span class="hljs-number">0.0</span><br>            factor = tf.divide(tf.constant(<span class="hljs-built_in">len</span>(self.output_names), dtype=tf.float32), tf.reduce_sum(loss_weights))<br>            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(self.output_names)):<br>                lw = tf.multiply(factor, loss_weights[i])<br>                self.loss_ws[i].assign(lw)<br>                total_loss = tf.add(total_loss, tf.multiply(lw, task_loss[i]))<br><br>            <span class="hljs-comment"># 更新loss_1 loss_2</span><br>            self.loss_2 = self.loss_1<br>            self.loss_1 = task_loss<br><br>        trainable_vars = self.trainable_variables<br>        gradients = tape.gradient(total_loss, trainable_vars)<br>        <span class="hljs-comment"># Update weights</span><br>        self.optimizer.apply_gradients(<span class="hljs-built_in">zip</span>(gradients, trainable_vars))<br>        <span class="hljs-comment"># Update metrics (includes the metric that tracks the loss)</span><br>        self.compiled_metrics.update_state(y, y_pred)<br><br>        <span class="hljs-keyword">return</span> &#123;m.name: m.result() <span class="hljs-keyword">for</span> m <span class="hljs-keyword">in</span> self.metrics&#125;<br></code></pre></td></tr></table></figure>
 <h2 id="论文">论文</h2>
-<p><img src="/img/uwl/c-01.png" srcset="/img/loading.gif" lazyload /> <img src="/img/uwl/c-03.png" srcset="/img/loading.gif" lazyload /> <img
-src="/img/uwl/c-04.png" srcset="/img/loading.gif" lazyload /> <img src="/img/uwl/c-05.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img src="/img/dwa/DWA-01.png" srcset="/img/loading.gif" lazyload /> <img src="/img/dwa/DWA-04.png" srcset="/img/loading.gif" lazyload />
+<img src="/img/dwa/DWA-05.png" srcset="/img/loading.gif" lazyload /></p>
 
                 
               </div>
@@ -409,8 +356,8 @@ src="/img/uwl/c-04.png" srcset="/img/loading.gif" lazyload /> <img src="/img/uwl
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Multi-Task Learning Using Uncertainty to Weigh Losses for Scene Geometry and Semantics</div>
-      <div>http://example.com/2022/11/24/Multi-Task-Learning-Using-Uncertainty-to-Weigh-Losses-for-Scene-Geometry-and-Semantics/</div>
+      <div>End-to-End Multi-Task Learning with Attention</div>
+      <div>http://example.com/2022/11/29/End-to-End-Multi-Task-Learning-with-Attention/</div>
     </div>
     <div class="license-meta">
       
@@ -422,7 +369,7 @@ src="/img/uwl/c-04.png" srcset="/img/loading.gif" lazyload /> <img src="/img/uwl
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年11月24日</div>
+          <div>2022年11月29日</div>
         </div>
       
       
@@ -459,18 +406,12 @@ src="/img/uwl/c-04.png" srcset="/img/loading.gif" lazyload /> <img src="/img/uwl
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/11/29/GradNorm-Gradient-Normalization-for-Adaptive-Loss-Balancing-in-Deep-Multitask-Networks/" title="GradNorm: Gradient Normalization for Adaptive Loss Balancing in Deep Multitask Networks">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">GradNorm: Gradient Normalization for Adaptive Loss Balancing in Deep Multitask Networks</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/09/13/hello-world/" title="Hello World">
-                        <span class="hidden-mobile">Hello World</span>
+                      <a href="/2022/11/29/GradNorm-Gradient-Normalization-for-Adaptive-Loss-Balancing-in-Deep-Multitask-Networks/" title="GradNorm: Gradient Normalization for Adaptive Loss Balancing in Deep Multitask Networks">
+                        <span class="hidden-mobile">GradNorm: Gradient Normalization for Adaptive Loss Balancing in Deep Multitask Networks</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -483,7 +424,7 @@ src="/img/uwl/c-04.png" srcset="/img/loading.gif" lazyload /> <img src="/img/uwl
             
   <article id="comments" lazyload>
     
-  <div id="SOHUCS" sid='http://example.com/2022/11/24/Multi-Task-Learning-Using-Uncertainty-to-Weigh-Losses-for-Scene-Geometry-and-Semantics/'></div>
+  <div id="SOHUCS" sid='http://example.com/2022/11/29/End-to-End-Multi-Task-Learning-with-Attention/'></div>
   <script type="text/javascript">
     Fluid.utils.loadComments('#SOHUCS', function() {
       Fluid.utils.createScript("https://changyan.sohu.com/upload/changyan.js", function() {
